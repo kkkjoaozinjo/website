@@ -331,13 +331,11 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 
 <script>
 // ── CONFIG — TROCA PELA URL DO RAILWAY DEPOIS DO DEPLOY ──
-const API = "website-production-5b8f.up.railway.app";
-// ── CLIENT ID DO DISCORD DEVELOPER PORTAL ──
+const API = "https://website-production-5b8f.up.railway.app";
 const CLIENT_ID = "1465283558342918235";
-const REDIRECT  = location.origin + location.pathname; // callback na mesma página
-
+const REDIRECT = "https://commandvirex.netlify.app/index.html";
 let TOKEN = localStorage.getItem("virex_token") || "";
-let ME    = null;
+let ME = null;
 
 // ── OAUTH ─────────────────────────────────────────────────
 function loginDiscord() {
