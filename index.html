@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VIREX STORE — Painel</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0f14;--surf:#151820;--card:#1a1e2a;--bdr:#252b3b;
+  --acc:#5865f2;--pink:#eb459e;--green:#57f287;--red:#ed4245;--yellow:#fee75c;
+  --txt:#e8eaf0;--muted:#7a8099;
+  --font:'Rajdhani',sans-serif;--mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh}
+
+/* ── LOGIN ── */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;
+  background:radial-gradient(ellipse at 50% 0%,#1a1e3a,var(--bg) 70%)}
+.lbox{background:var(--card);border:1px solid var(--bdr);border-radius:16px;
+  padding:48px 40px;width:380px;text-align:center;box-shadow:0 0 60px rgba(88,101,242,.15)}
+.logo{font-size:2.6rem;font-weight:700;letter-spacing:3px;
+  background:linear-gradient(90deg,var(--acc),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.logo-sub{color:var(--muted);font-size:.9rem;margin-bottom:32px}
+.btn-discord{display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#5865f2;border:none;border-radius:10px;color:#fff;cursor:pointer;
+  font-family:var(--font);font-size:1.05rem;font-weight:700;padding:14px;width:100%;
+  letter-spacing:.5px;transition:background .2s,transform .1s}
+.btn-discord:hover{background:#4752c4}
+.btn-discord:active{transform:scale(.98)}
+.btn-discord svg{width:22px;height:22px}
+#lerr{color:var(--red);font-size:.85rem;margin-top:14px;min-height:18px}
+
+/* ── APP ── */
+#app{display:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;
+  background:var(--surf);border-bottom:1px solid var(--bdr);
+  padding:0 28px;height:58px;position:sticky;top:0;z-index:100;gap:12px}
+.brand{font-size:1.2rem;font-weight:700;letter-spacing:2px;
+  background:linear-gradient(90deg,var(--acc),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+nav{display:flex;gap:2px;flex-wrap:wrap}
+nav button{background:transparent;border:none;border-radius:8px;color:var(--muted);
+  cursor:pointer;font-family:var(--font);font-size:.95rem;font-weight:600;
+  padding:7px 16px;transition:color .2s,background .2s;letter-spacing:.3px;white-space:nowrap}
+nav button:hover{color:var(--txt);background:var(--card)}
+nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
+.user-tag{display:flex;align-items:center;gap:8px;background:var(--card);
+  border:1px solid var(--bdr);border-radius:20px;padding:4px 14px 4px 6px;
+  font-size:.85rem;white-space:nowrap}
+.avatar{width:26px;height:26px;border-radius:50%;background:var(--bdr)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 20px}
+.page{display:none}.page.active{display:block}
+
+/* ── STATS ── */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-bottom:28px}
+.sc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:18px 22px}
+.sc .lbl{color:var(--muted);font-size:.8rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.sc .val{font-size:1.9rem;font-weight:700}
+.sc .val.b{color:var(--acc)}.sc .val.g{color:var(--green)}.sc .val.p{color:var(--pink)}.sc .val.y{color:var(--yellow)}
+
+/* ── SECTION ── */
+.stitle{font-size:1rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);margin:28px 0 14px;border-left:3px solid var(--acc);padding-left:10px}
+.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:22px;margin-bottom:14px}
+
+/* ── FORM ── */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{color:var(--muted);font-size:.8rem;letter-spacing:.5px;text-transform:uppercase}
+.fg input,.fg select,.fg textarea{
+  background:var(--surf);border:1px solid var(--bdr);border-radius:8px;
+  color:var(--txt);font-family:var(--mono);font-size:.9rem;padding:10px 13px;
+  outline:none;transition:border-color .2s;width:100%}
+.fg textarea{resize:vertical;min-height:90px;font-family:var(--font);font-size:.95rem}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--acc)}
+.fg select option{background:var(--card)}
+
+/* ── BUTTONS ── */
+.btn{border:none;border-radius:8px;cursor:pointer;font-family:var(--font);
+  font-size:.95rem;font-weight:700;padding:10px 22px;letter-spacing:.5px;
+  transition:opacity .2s,transform .1s}
+.btn:hover{opacity:.85}.btn:active{transform:scale(.98)}
+.btn-g{background:var(--green);color:#000}
+.btn-r{background:rgba(237,66,69,.15);border:1px solid rgba(237,66,69,.3);color:var(--red)}
+.btn-b{background:var(--acc);color:#fff}
+.btn-y{background:rgba(254,231,92,.15);border:1px solid rgba(254,231,92,.3);color:var(--yellow)}
+.btn-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+
+/* ── AUTOMSG CARDS ── */
+.amc{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;
+  padding:15px 18px;margin-bottom:10px;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:14px}
+.amc .canal{font-weight:700;color:var(--acc);margin-bottom:3px}
+.amc .prev{color:var(--muted);font-size:.88rem;max-width:480px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.amc .meta{display:flex;gap:8px;margin-top:7px;flex-wrap:wrap}
+.mtag{background:var(--card);border-radius:5px;color:var(--muted);
+  font-family:var(--mono);font-size:.75rem;padding:2px 8px}
+
+/* ── LOGS TABLE ── */
+.ltable{width:100%;border-collapse:collapse}
+.ltable th{color:var(--muted);font-size:.78rem;letter-spacing:1px;text-transform:uppercase;
+  text-align:left;padding:9px 13px;border-bottom:1px solid var(--bdr)}
+.ltable td{padding:11px 13px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.9rem;vertical-align:middle}
+.ltable tr:hover td{background:rgba(255,255,255,.02)}
+.badge{border-radius:5px;font-size:.76rem;font-weight:700;letter-spacing:.5px;padding:3px 9px;text-transform:uppercase}
+.badge.automsg_criar{background:rgba(87,242,135,.12);color:var(--green)}
+.badge.automsg_parar{background:rgba(237,66,69,.12);color:var(--red)}
+.badge.ping_silencioso{background:rgba(254,231,92,.12);color:var(--yellow)}
+.badge.editar_msg{background:rgba(88,101,242,.12);color:var(--acc)}
+.badge.automsg_editar{background:rgba(235,69,158,.12);color:var(--pink)}
+
+/* ── GUILD LIST ── */
+.gitem{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--bdr)}
+.gitem:last-child{border-bottom:none}
+.gicon{width:40px;height:40px;border-radius:50%;background:var(--bdr);object-fit:cover}
+.gname{font-weight:700;font-size:1rem}
+.gid{color:var(--muted);font-family:var(--mono);font-size:.78rem}
+.gmeta{margin-left:auto;color:var(--muted);font-size:.88rem}
+
+/* ── PING ── */
+.ping-box{text-align:center;padding:20px 0}
+.ping-box .warn{color:var(--red);font-size:.9rem;margin-top:8px}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;border-radius:10px;
+  color:#000;font-family:var(--font);font-weight:700;font-size:.95rem;
+  padding:12px 22px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:999}
+.toast.show{opacity:1}
+.toast.ok{background:var(--green)}.toast.err{background:var(--red);color:#fff}
+
+/* ── LOADER ── */
+.empty{color:var(--muted);text-align:center;padding:38px;font-size:.95rem}
+.spin{display:inline-block;width:18px;height:18px;border:2px solid var(--bdr);
+  border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+@media(max-width:650px){
+  .topbar{flex-wrap:wrap;height:auto;padding:10px 14px;gap:8px}
+  nav button{padding:6px 10px;font-size:.85rem}
+  .wrap{padding:16px 10px}
+  .amc{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+  <div class="lbox">
+    <div class="logo">VIREX</div>
+    <div class="logo-sub">Painel de Controle do Bot</div>
+    <button class="btn-discord" onclick="loginDiscord()">
+      <svg viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60.1 4.9A58.6 58.6 0 0 0 45.8.9a40 40 0 0 0-1.8 3.7 54.2 54.2 0 0 0-16.3 0A39 39 0 0 0 25.8.9 58.5 58.5 0 0 0 11.4 5C1.6 19.6-1 33.8.3 47.9a59 59 0 0 0 18 9.1 43 43 0 0 0 3.7-6l-5.8-2.8.2-.2 5.9 2.9a38.5 38.5 0 0 0 20.5 0l5.9-2.9.1.2-5.7 2.8a42.5 42.5 0 0 0 3.7 6 58.7 58.7 0 0 0 18-9.1C66.4 31.5 62.9 17.4 60.1 4.9ZM23.7 39.4c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z"/>
+      </svg>
+      Entrar com Discord
+    </button>
+    <div id="lerr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="brand">VIREX STORE</div>
+    <nav>
+      <button class="active" onclick="go('dash',this)">Dashboard</button>
+      <button onclick="go('automsg',this)">Msg Auto</button>
+      <button onclick="go('ping',this)">Ping</button>
+      <button onclick="go('editmsg',this)">Editar Msg</button>
+      <button onclick="go('logs',this)">Logs</button>
+    </nav>
+    <div class="user-tag">
+      <img class="avatar" id="uavatar" src="" alt="">
+      <span id="uname">...</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dash">
+      <div class="sgrid">
+        <div class="sc"><div class="lbl">Servidores</div><div class="val b" id="d-guilds">—</div></div>
+        <div class="sc"><div class="lbl">Total Membros</div><div class="val g" id="d-members">—</div></div>
+        <div class="sc"><div class="lbl">Msgs Automáticas</div><div class="val p" id="d-auto">—</div></div>
+        <div class="sc"><div class="lbl">Ações Registradas</div><div class="val y" id="d-logs">—</div></div>
+      </div>
+      <div class="stitle">Servidores</div>
+      <div class="card" id="guild-list"><div class="empty"><span class="spin"></span></div></div>
+    </div>
+
+    <!-- MSG AUTO -->
+    <div class="page" id="page-automsg">
+      <div class="stitle">Nova Mensagem Automática</div>
+      <div class="card">
+        <div class="fgrid">
+          <div class="fg">
+            <label>Servidor</label>
+            <select id="am-guild" onchange="carregarCanais('am-guild','am-canal')"></select>
+          </div>
+          <div class="fg">
+            <label>Canal</label>
+            <select id="am-canal"></select>
+          </div>
+          <div class="fg">
+            <label>Intervalo</label>
+            <input id="am-intervalo" placeholder="ex: 30s, 5m, 2h" value="10m">
+          </div>
+          <div class="fg">
+            <label>Menção (opcional)</label>
+            <input id="am-mencao" placeholder="@everyone | @here | ID do cargo">
+          </div>
+        </div>
+        <div class="fg" style="margin-top:14px">
+          <label>Mensagem</label>
+          <textarea id="am-msg" placeholder="Digite a mensagem aqui..."></textarea>
+        </div>
+        <div class="fg" style="margin-top:14px">
+          <label>URL do Banner (opcional)</label>
+          <input id="am-banner" placeholder="https://...">
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-g" onclick="criarAutoMsg()">▶ Ativar Mensagem</button>
+        </div>
+      </div>
+
+      <div class="stitle">Mensagens Ativas</div>
+      <button class="btn btn-b" style="margin-bottom:14px" onclick="carregarAutoMsgs()">🔄 Atualizar</button>
+      <div id="am-list"><div class="empty"><span class="spin"></span></div></div>
+
+      <!-- EDITAR MODAL -->
+      <div id="edit-am-box" style="display:none">
+        <div class="stitle">Editar Mensagem Automática</div>
+        <div class="card">
+          <input type="hidden" id="edit-am-cid">
+          <div class="fgrid">
+            <div class="fg">
+              <label>Novo Intervalo (vazio = manter)</label>
+              <input id="edit-am-intervalo" placeholder="ex: 5m">
+            </div>
+            <div class="fg">
+              <label>Nova Menção (vazio = manter)</label>
+              <input id="edit-am-mencao" placeholder="@everyone | @here | ID">
+            </div>
+          </div>
+          <div class="fg" style="margin-top:14px">
+            <label>Nova Mensagem</label>
+            <textarea id="edit-am-msg"></textarea>
+          </div>
+          <div class="fg" style="margin-top:14px">
+            <label>Novo Banner (vazio = manter)</label>
+            <input id="edit-am-banner" placeholder="https://...">
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-g" onclick="salvarEditAutoMsg()">💾 Salvar</button>
+            <button class="btn btn-r" onclick="document.getElementById('edit-am-box').style.display='none'">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PING -->
+    <div class="page" id="page-ping">
+      <div class="stitle">Ping Silencioso</div>
+      <div class="card ping-box">
+        <div class="fg" style="max-width:340px;margin:0 auto 18px">
+          <label>Servidor</label>
+          <select id="ping-guild"></select>
+        </div>
+        <p style="color:var(--muted);font-size:.9rem;margin-bottom:18px">
+          Envia um <code style="background:var(--bdr);padding:1px 6px;border-radius:4px">.</code> em todos os canais e apaga após 1 segundo.<br>Serve para mencionar membros online.
+        </p>
+        <button class="btn btn-y" onclick="enviarPing()">📢 Disparar Ping Silencioso</button>
+        <div class="warn" id="ping-warn"></div>
+      </div>
+    </div>
+
+    <!-- EDITAR MSG -->
+    <div class="page" id="page-editmsg">
+      <div class="stitle">Editar Mensagem do Bot</div>
+      <div class="card">
+        <div class="fgrid">
+          <div class="fg">
+            <label>Servidor</label>
+            <select id="em-guild" onchange="carregarCanais('em-guild','em-canal')"></select>
+          </div>
+          <div class="fg">
+            <label>Canal</label>
+            <select id="em-canal"></select>
+          </div>
+          <div class="fg">
+            <label>ID da Mensagem</label>
+            <input id="em-msgid" placeholder="ID da mensagem do bot">
+          </div>
+        </div>
+        <div class="fg" style="margin-top:14px">
+          <label>Novo Conteúdo</label>
+          <textarea id="em-conteudo" placeholder="Novo texto da mensagem..."></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-g" onclick="editarMsg()">💾 Salvar Edição</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOGS -->
+    <div class="page" id="page-logs">
+      <div class="stitle">Histórico de Ações</div>
+      <button class="btn btn-b" style="margin-bottom:14px" onclick="carregarLogs()">🔄 Atualizar</button>
+      <div class="card" style="padding:0;overflow:auto">
+        <table class="ltable">
+          <thead>
+            <tr>
+              <th>Hora</th><th>Ação</th><th>Detalhe</th><th>Usuário</th>
+            </tr>
+          </thead>
+          <tbody id="logs-body"><tr><td colspan="4" class="empty"><span class="spin"></span></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG — TROCA PELA URL DO RAILWAY DEPOIS DO DEPLOY ──
+const API = "https://SEU-BOT.up.railway.app";
+// ── CLIENT ID DO DISCORD DEVELOPER PORTAL ──
+const CLIENT_ID = "SEU_CLIENT_ID_AQUI";
+const REDIRECT  = location.origin + location.pathname; // callback na mesma página
+
+let TOKEN = localStorage.getItem("virex_token") || "";
+let ME    = null;
+
+// ── OAUTH ─────────────────────────────────────────────────
+function loginDiscord() {
+  const url = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=code&scope=identify`;
+  location.href = url;
+}
+
+async function handleCallback() {
+  const params = new URLSearchParams(location.search);
+  const code = params.get("code");
+  if (!code) return;
+  history.replaceState({}, "", location.pathname);
+  document.getElementById("lerr").textContent = "⏳ Autenticando...";
+  try {
+    const r = await fetch(API + "/api/oauth/callback", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code })
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Erro desconhecido");
+    TOKEN = d.access_token;
+    localStorage.setItem("virex_token", TOKEN);
+    ME = d;
+    iniciarApp();
+  } catch(e) {
+    document.getElementById("lerr").textContent = "❌ " + e.message;
+  }
+}
+
+async function verificarToken() {
+  if (!TOKEN) return false;
+  try {
+    const r = await fetch(API + "/api/me", { headers: { "X-Discord-Token": TOKEN } });
+    if (!r.ok) { TOKEN = ""; localStorage.removeItem("virex_token"); return false; }
+    ME = await r.json();
+    return true;
+  } catch { return false; }
+}
+
+// ── INIT ──────────────────────────────────────────────────
+window.addEventListener("load", async () => {
+  await handleCallback();
+  if (!ME && TOKEN) {
+    const ok = await verificarToken();
+    if (ok) iniciarApp();
+  }
+});
+
+function iniciarApp() {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display   = "block";
+  const av = ME.avatar
+    ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`
+    : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("uavatar").src  = av;
+  document.getElementById("uname").textContent = ME.username;
+  carregarDash();
+  popularGuilds();
+}
+
+// ── API HELPER ─────────────────────────────────────────────
+async function api(path, opts = {}) {
+  const r = await fetch(API + path, {
+    ...opts,
+    headers: { "X-Discord-Token": TOKEN, "Content-Type": "application/json", ...(opts.headers||{}) }
+  });
+  return r;
+}
+
+// ── NAVIGATE ──────────────────────────────────────────────
+function go(id, btn) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+  document.getElementById("page-" + id).classList.add("active");
+  btn.classList.add("active");
+  if (id === "logs")    carregarLogs();
+  if (id === "automsg") carregarAutoMsgs();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────
+async function carregarDash() {
+  const [sr, lr] = await Promise.all([api("/api/status"), api("/api/logs")]);
+  const s = await sr.json();
+  const l = await lr.json();
+  document.getElementById("d-guilds").textContent  = s.servidores.length;
+  document.getElementById("d-members").textContent = s.total_membros.toLocaleString();
+  document.getElementById("d-auto").textContent    = s.msgs_auto;
+  document.getElementById("d-logs").textContent    = l.logs.length;
+  const gl = document.getElementById("guild-list");
+  if (!s.servidores.length) { gl.innerHTML = '<div class="empty">Bot não está em nenhum servidor.</div>'; return; }
+  gl.innerHTML = s.servidores.map(g => `
+    <div class="gitem">
+      ${g.icon ? `<img class="gicon" src="${g.icon}" alt="">` : `<div class="gicon"></div>`}
+      <div>
+        <div class="gname">${g.nome}</div>
+        <div class="gid">ID: ${g.id}</div>
+      </div>
+      <div class="gmeta">👥 ${g.membros.toLocaleString()} membros</div>
+    </div>`).join("");
+}
+
+// ── GUILDS/CANAIS ─────────────────────────────────────────
+async function popularGuilds() {
+  const r = await api("/api/status");
+  const d = await r.json();
+  ["am-guild","ping-guild","em-guild"].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = d.servidores.map(g => `<option value="${g.id}">${g.nome}</option>`).join("");
+  });
+  carregarCanais("am-guild", "am-canal");
+  carregarCanais("em-guild", "em-canal");
+}
+
+async function carregarCanais(guildSelId, canalSelId) {
+  const gid  = document.getElementById(guildSelId).value;
+  const csel = document.getElementById(canalSelId);
+  csel.innerHTML = "<option>Carregando...</option>";
+  const r = await api(`/api/canais?guild_id=${gid}`);
+  const d = await r.json();
+  csel.innerHTML = (d.canais||[]).map(c => `<option value="${c.id}">#${c.nome}</option>`).join("");
+}
+
+// ── MSG AUTO ──────────────────────────────────────────────
+async function criarAutoMsg() {
+  const gid = document.getElementById("am-guild").value;
+  const cid = document.getElementById("am-canal").value;
+  const body = {
+    guild_id: gid, canal_id: cid,
+    intervalo: document.getElementById("am-intervalo").value.trim(),
+    mencao:    document.getElementById("am-mencao").value.trim(),
+    mensagem:  document.getElementById("am-msg").value.trim(),
+    banner:    document.getElementById("am-banner").value.trim() || null
+  };
+  if (!body.mensagem) return toast("❌ Digite a mensagem!", false);
+  const r = await api("/api/automsg/criar", { method:"POST", body: JSON.stringify(body) });
+  const d = await r.json();
+  if (d.ok) { toast("✅ Mensagem automática ativada!"); carregarAutoMsgs(); }
+  else toast("❌ " + (d.error||"Erro"), false);
+}
+
+async function carregarAutoMsgs() {
+  document.getElementById("am-list").innerHTML = '<div class="empty"><span class="spin"></span></div>';
+  const r = await api("/api/automsg");
+  const d = await r.json();
+  const div = document.getElementById("am-list");
+  if (!d.msgs.length) { div.innerHTML = '<div class="empty">Nenhuma mensagem automática ativa.</div>'; return; }
+  div.innerHTML = d.msgs.map(m => `
+    <div class="amc">
+      <div>
+        <div class="canal"># ${m.canal_nome} <span style="color:var(--muted);font-size:.78rem;font-family:var(--mono)">(${m.canal_id})</span></div>
+        <div class="prev">${esc(m.conteudo)}</div>
+        <div class="meta">
+          <span class="mtag">⏱ ${fmtSeg(m.intervalo)}</span>
+          ${m.mencao ? `<span class="mtag">📢 ${esc(m.mencao)}</span>` : ""}
+          ${m.banner ? `<span class="mtag">🖼 banner</span>` : ""}
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="btn btn-y" onclick="abrirEditAM('${m.canal_id}','${esc(m.conteudo)}','${fmtSeg(m.intervalo)}')">✏️</button>
+        <button class="btn btn-r" onclick="pararAutoMsg('${m.canal_id}')">🛑</button>
+      </div>
+    </div>`).join("");
+}
+
+function abrirEditAM(cid, msg, intervalo) {
+  document.getElementById("edit-am-cid").value      = cid;
+  document.getElementById("edit-am-msg").value      = msg;
+  document.getElementById("edit-am-intervalo").value = "";
+  document.getElementById("edit-am-mencao").value   = "";
+  document.getElementById("edit-am-banner").value   = "";
+  document.getElementById("edit-am-box").style.display = "block";
+  document.getElementById("edit-am-box").scrollIntoView({behavior:"smooth"});
+}
+
+async function salvarEditAutoMsg() {
+  const cid = document.getElementById("edit-am-cid").value;
+  const body = {
+    canal_id:  cid,
+    mensagem:  document.getElementById("edit-am-msg").value.trim(),
+    intervalo: document.getElementById("edit-am-intervalo").value.trim() || null,
+    mencao:    document.getElementById("edit-am-mencao").value.trim() || null,
+    banner:    document.getElementById("edit-am-banner").value.trim() || null,
+  };
+  const r = await api("/api/automsg/editar", { method:"POST", body: JSON.stringify(body) });
+  const d = await r.json();
+  if (d.ok) { toast("✅ Atualizada!"); document.getElementById("edit-am-box").style.display="none"; carregarAutoMsgs(); }
+  else toast("❌ " + (d.error||"Erro"), false);
+}
+
+async function pararAutoMsg(cid) {
+  if (!confirm("Parar esta mensagem automática?")) return;
+  const r = await api("/api/automsg/parar", { method:"POST", body: JSON.stringify({canal_id:cid}) });
+  const d = await r.json();
+  if (d.ok) { toast("🛑 Parada!"); carregarAutoMsgs(); }
+  else toast("❌ " + (d.error||"Erro"), false);
+}
+
+// ── PING ──────────────────────────────────────────────────
+async function enviarPing() {
+  const gid = document.getElementById("ping-guild").value;
+  document.getElementById("ping-warn").textContent = "⏳ Disparando ping...";
+  const r = await api("/api/ping", { method:"POST", body: JSON.stringify({guild_id:gid}) });
+  const d = await r.json();
+  document.getElementById("ping-warn").textContent = "";
+  if (d.ok) toast("✅ Ping silencioso disparado em todos os canais!");
+  else toast("❌ " + (d.error||"Erro"), false);
+}
+
+// ── EDITAR MSG ────────────────────────────────────────────
+async function editarMsg() {
+  const gid = document.getElementById("em-guild").value;
+  const cid = document.getElementById("em-canal").value;
+  const mid = document.getElementById("em-msgid").value.trim();
+  const txt = document.getElementById("em-conteudo").value.trim();
+  if (!mid || !txt) return toast("❌ Preencha todos os campos!", false);
+  const r = await api("/api/editar_msg", { method:"POST", body: JSON.stringify({guild_id:gid,canal_id:cid,msg_id:mid,conteudo:txt}) });
+  const d = await r.json();
+  if (d.ok) toast("✅ Mensagem editada!");
+  else toast("❌ " + (d.error||"Erro"), false);
+}
+
+// ── LOGS ──────────────────────────────────────────────────
+async function carregarLogs() {
+  const r = await api("/api/logs");
+  const d = await r.json();
+  const tb = document.getElementById("logs-body");
+  if (!d.logs.length) { tb.innerHTML = '<tr><td colspan="4" class="empty">Nenhuma ação registrada.</td></tr>'; return; }
+  tb.innerHTML = d.logs.map(l => `
+    <tr>
+      <td style="font-family:var(--mono);font-size:.78rem;color:var(--muted);white-space:nowrap">${l.hora}</td>
+      <td><span class="badge ${l.acao}">${l.acao.replace(/_/g," ")}</span></td>
+      <td style="color:var(--muted)">${esc(l.detalhe)}</td>
+      <td>${esc(l.usuario)}</td>
+    </tr>`).join("");
+}
+
+// ── UTILS ─────────────────────────────────────────────────
+function fmtSeg(s){if(s>=3600)return (s/3600)+"h";if(s>=60)return (s/60)+"m";return s+"s"}
+function esc(t){return String(t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function toast(msg,ok=true){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.className="toast show "+(ok?"ok":"err");
+  setTimeout(()=>t.classList.remove("show"),3000)
+}
+</script>
+</body>
+</html>
