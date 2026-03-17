@@ -14,6 +14,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh}
+
+/* ── LOGIN ── */
 #login{display:flex;align-items:center;justify-content:center;min-height:100vh;
   background:radial-gradient(ellipse at 50% 0%,#1a1e3a,var(--bg) 70%)}
 .lbox{background:var(--card);border:1px solid var(--bdr);border-radius:16px;
@@ -29,6 +31,36 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .btn-discord:hover{background:#4752c4}.btn-discord:active{transform:scale(.98)}
 .btn-discord svg{width:22px;height:22px}
 #lerr{color:var(--red);font-size:.85rem;margin-top:14px;min-height:18px}
+
+/* ── SELEÇÃO DE SERVIDOR ── */
+#servidor-select{display:none;min-height:100vh;
+  background:radial-gradient(ellipse at 50% 0%,#1a1e3a,var(--bg) 70%);
+  align-items:center;justify-content:center;padding:24px}
+.ss-box{width:100%;max-width:640px}
+.ss-header{text-align:center;margin-bottom:32px}
+.ss-header .logo{font-size:2rem;margin-bottom:6px}
+.ss-header p{color:var(--muted);font-size:.95rem}
+.ss-header .user-info{display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:16px;background:var(--card);border:1px solid var(--bdr);border-radius:12px;
+  padding:10px 20px;width:fit-content;margin-left:auto;margin-right:auto}
+.ss-header .user-info img{width:32px;height:32px;border-radius:50%}
+.ss-header .user-info span{font-weight:700}
+.guilds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.guild-card{background:var(--card);border:2px solid var(--bdr);border-radius:14px;
+  padding:20px 16px;text-align:center;cursor:pointer;
+  transition:border-color .2s,transform .15s,box-shadow .2s}
+.guild-card:hover{border-color:var(--acc);transform:translateY(-3px);box-shadow:0 8px 24px rgba(88,101,242,.2)}
+.guild-card:active{transform:scale(.97)}
+.guild-card img{width:64px;height:64px;border-radius:50%;margin-bottom:10px;background:var(--bdr)}
+.guild-card .gname{font-weight:700;font-size:1rem;margin-bottom:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.guild-card .gmembers{color:var(--muted);font-size:.82rem}
+.guild-card .gno-icon{width:64px;height:64px;border-radius:50%;background:var(--acc);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 10px;
+  font-size:1.4rem;font-weight:700;color:#fff}
+#ss-loading{text-align:center;padding:40px;color:var(--muted)}
+
+/* ── APP ── */
 #app{display:none}
 .topbar{display:flex;align-items:center;justify-content:space-between;
   background:var(--surf);border-bottom:1px solid var(--bdr);
@@ -36,6 +68,12 @@ body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:10
 .brand{font-size:1.1rem;font-weight:700;letter-spacing:2px;
   background:linear-gradient(90deg,var(--acc),var(--pink));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+.server-badge{display:flex;align-items:center;gap:8px;background:var(--card);
+  border:1px solid var(--bdr);border-radius:10px;padding:5px 12px;cursor:pointer;
+  transition:border-color .2s;font-size:.88rem;font-weight:600}
+.server-badge:hover{border-color:var(--acc)}
+.server-badge img{width:22px;height:22px;border-radius:50%;background:var(--bdr)}
+.server-badge .change{color:var(--muted);font-size:.76rem;margin-left:4px}
 nav{display:flex;gap:2px;flex-wrap:wrap}
 nav button{background:transparent;border:none;border-radius:8px;color:var(--muted);
   cursor:pointer;font-family:var(--font);font-size:.88rem;font-weight:600;
@@ -92,11 +130,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 .badge.ping_silencioso,.badge.timeout,.badge.slowmode{background:rgba(249,168,37,.12);color:var(--orange)}
 .badge.editar_msg,.badge.automsg_editar,.badge.dar_cargo{background:rgba(88,101,242,.12);color:var(--acc)}
 .badge.limpar_msgs,.badge.remover_cargo,.badge.lockdown_off,.badge.dm_massa{background:rgba(235,69,158,.12);color:var(--pink)}
-.gitem{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr)}
-.gitem:last-child{border-bottom:none}
-.gicon{width:38px;height:38px;border-radius:50%;background:var(--bdr);object-fit:cover}
-.gname{font-weight:700}.gid{color:var(--muted);font-family:var(--mono);font-size:.76rem}
-.gmeta{margin-left:auto;color:var(--muted);font-size:.86rem}
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
 .info-item{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:12px 16px}
 .info-item .k{color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
@@ -104,8 +137,12 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 .member-card{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:16px;display:flex;gap:14px;align-items:flex-start}
 .member-card img{width:56px;height:56px;border-radius:50%;background:var(--bdr)}
 .member-card .roles{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.role-tag{background:rgba(88,101,242,.15);border:1px solid rgba(88,101,242,.2);border-radius:4px;
-  color:var(--acc);font-size:.73rem;padding:1px 7px}
+.role-tag{background:rgba(88,101,242,.15);border:1px solid rgba(88,101,242,.2);border-radius:4px;color:var(--acc);font-size:.73rem;padding:1px 7px}
+.gitem{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr)}
+.gitem:last-child{border-bottom:none}
+.gicon{width:38px;height:38px;border-radius:50%;background:var(--bdr);object-fit:cover}
+.gname{font-weight:700}.gid{color:var(--muted);font-family:var(--mono);font-size:.76rem}
+.gmeta{margin-left:auto;color:var(--muted);font-size:.86rem}
 .toast{position:fixed;bottom:22px;right:22px;border-radius:10px;color:#000;
   font-family:var(--font);font-weight:700;font-size:.92rem;padding:11px 20px;
   opacity:0;pointer-events:none;transition:opacity .3s;z-index:999}
@@ -114,17 +151,18 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid var(--bdr);
   border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.color-preview{width:32px;height:32px;border-radius:6px;border:1px solid var(--bdr);cursor:pointer}
 @media(max-width:600px){
   .topbar{padding:8px 10px;gap:6px}
   nav button{padding:5px 8px;font-size:.8rem}
   .wrap{padding:12px 8px}
+  .guilds-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
   .amc{flex-direction:column}
 }
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login">
   <div class="lbox">
     <div class="logo">VIREX</div>
@@ -139,9 +177,26 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
   </div>
 </div>
 
+<!-- SELEÇÃO DE SERVIDOR -->
+<div id="servidor-select">
+  <div class="ss-box">
+    <div class="ss-header">
+      <div class="logo">VIREX</div>
+      <p>Selecione o servidor que deseja gerenciar</p>
+      <div class="user-info">
+        <img id="ss-avatar" src="" alt="">
+        <span id="ss-nome">...</span>
+      </div>
+    </div>
+    <div id="ss-loading"><span class="spin"></span> Carregando servidores...</div>
+    <div class="guilds-grid" id="guilds-grid" style="display:none"></div>
+  </div>
+</div>
+
+<!-- APP -->
 <div id="app">
   <div class="topbar">
-    <div class="brand">VIREX STORE</div>
+    <div class="brand">VIREX</div>
     <nav>
       <button class="active" onclick="go('dash',this)">🏠 Dashboard</button>
       <button onclick="go('automsg',this)">📨 Msg Auto</button>
@@ -154,9 +209,16 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
       <button onclick="go('info',this)">📊 Info</button>
       <button onclick="go('logs',this)">📋 Logs</button>
     </nav>
-    <div class="user-tag">
-      <img class="avatar" id="uavatar" src="" alt="">
-      <span id="uname">...</span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="server-badge" onclick="trocarServidor()" title="Trocar servidor">
+        <img id="tb-sicon" src="" alt="">
+        <span id="tb-snome">...</span>
+        <span class="change">↕ trocar</span>
+      </div>
+      <div class="user-tag">
+        <img class="avatar" id="uavatar" src="" alt="">
+        <span id="uname">...</span>
+      </div>
     </div>
   </div>
 
@@ -166,12 +228,12 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
     <div class="page active" id="page-dash">
       <div class="sgrid">
         <div class="sc"><div class="lbl">Servidores</div><div class="val b" id="d-guilds">—</div></div>
-        <div class="sc"><div class="lbl">Total Membros</div><div class="val g" id="d-members">—</div></div>
+        <div class="sc"><div class="lbl">Membros</div><div class="val g" id="d-members">—</div></div>
         <div class="sc"><div class="lbl">Msgs Automáticas</div><div class="val p" id="d-auto">—</div></div>
         <div class="sc"><div class="lbl">Ações no Log</div><div class="val y" id="d-logs">—</div></div>
       </div>
-      <div class="stitle">Servidores</div>
-      <div class="card" id="guild-list"><div class="empty"><span class="spin"></span></div></div>
+      <div class="stitle">Servidor Selecionado</div>
+      <div class="card" id="guild-info-dash"><div class="empty"><span class="spin"></span></div></div>
     </div>
 
     <!-- MSG AUTO -->
@@ -179,7 +241,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
       <div class="stitle">Nova Mensagem Automática</div>
       <div class="card">
         <div class="fgrid">
-          <div class="fg"><label>Servidor</label><select id="am-guild" onchange="carregarCanais('am-guild','am-canal')"></select></div>
           <div class="fg"><label>Canal</label><select id="am-canal"></select></div>
           <div class="fg"><label>Intervalo</label><input id="am-intervalo" placeholder="ex: 30s, 5m, 2h" value="10m"></div>
           <div class="fg"><label>Menção (opcional)</label><input id="am-mencao" placeholder="@everyone | @here | ID do cargo"></div>
@@ -214,7 +275,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
       <div class="stitle">Enviar Anúncio com Embed</div>
       <div class="card">
         <div class="fgrid">
-          <div class="fg"><label>Servidor</label><select id="anun-guild" onchange="carregarCanais('anun-guild','anun-canal')"></select></div>
           <div class="fg"><label>Canal</label><select id="anun-canal"></select></div>
           <div class="fg"><label>Título</label><input id="anun-titulo" placeholder="Título do anúncio"></div>
           <div class="fg"><label>Menção (opcional)</label><input id="anun-mencao" placeholder="@everyone | @here | ID"></div>
@@ -228,7 +288,7 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
             <label>Cor do Embed</label>
             <div style="display:flex;gap:8px;align-items:center">
               <input id="anun-cor" type="color" value="#5865f2" style="width:48px;height:38px;padding:2px;background:var(--surf);border:1px solid var(--bdr);border-radius:8px;cursor:pointer">
-              <span style="color:var(--muted);font-size:.85rem">Clique para escolher a cor</span>
+              <span style="color:var(--muted);font-size:.85rem">Escolha a cor</span>
             </div>
           </div>
         </div>
@@ -241,7 +301,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
       <div class="stitle">Enviar Mensagem em Canal</div>
       <div class="card">
         <div class="fgrid">
-          <div class="fg"><label>Servidor</label><select id="env-guild" onchange="carregarCanais('env-guild','env-canal')"></select></div>
           <div class="fg"><label>Canal</label><select id="env-canal"></select></div>
           <div class="fg"><label>Menção (opcional)</label><input id="env-mencao" placeholder="@everyone | @here | ID do cargo"></div>
         </div>
@@ -254,8 +313,7 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
     <div class="page" id="page-ping">
       <div class="stitle">Ping Silencioso</div>
       <div class="card" style="text-align:center;padding:28px">
-        <div class="fg" style="max-width:320px;margin:0 auto 16px"><label>Servidor</label><select id="ping-guild"></select></div>
-        <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px">Envia um <code style="background:var(--bdr);padding:1px 6px;border-radius:4px">.</code> em todos os canais e apaga após 1 segundo. Serve para notificar membros online.</p>
+        <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px">Envia um <code style="background:var(--bdr);padding:1px 6px;border-radius:4px">.</code> em todos os canais e apaga após 1 segundo.</p>
         <button class="btn btn-y" onclick="enviarPing()">📢 Disparar Ping Silencioso</button>
         <div style="color:var(--red);font-size:.88rem;margin-top:8px" id="ping-warn"></div>
       </div>
@@ -266,7 +324,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
       <div class="stitle">Editar Mensagem do Bot</div>
       <div class="card">
         <div class="fgrid">
-          <div class="fg"><label>Servidor</label><select id="em-guild" onchange="carregarCanais('em-guild','em-canal')"></select></div>
           <div class="fg"><label>Canal</label><select id="em-canal"></select></div>
           <div class="fg"><label>ID da Mensagem</label><input id="em-msgid" placeholder="ID da mensagem do bot"></div>
         </div>
@@ -277,15 +334,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 
     <!-- MODERAÇÃO -->
     <div class="page" id="page-mod">
-      <div class="stitle">Selecionar Servidor</div>
-      <div class="card">
-        <div class="fg" style="max-width:340px">
-          <label>Servidor</label>
-          <select id="mod-guild" onchange="carregarCanais('mod-guild','mod-canal');carregarMembros()"></select>
-        </div>
-      </div>
-
-      <!-- BAN -->
       <div class="stitle">🔨 Banir Membro</div>
       <div class="card">
         <div class="fgrid">
@@ -294,8 +342,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-r" onclick="banirMembro()">🔨 Banir</button></div>
       </div>
-
-      <!-- KICK -->
       <div class="stitle">👢 Kickar Membro</div>
       <div class="card">
         <div class="fgrid">
@@ -304,9 +350,7 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-y" onclick="kickarMembro()">👢 Kickar</button></div>
       </div>
-
-      <!-- TIMEOUT -->
-      <div class="stitle">⏱️ Timeout (Mutar Temporário)</div>
+      <div class="stitle">⏱️ Timeout</div>
       <div class="card">
         <div class="fgrid">
           <div class="fg"><label>ID do Usuário</label><input id="to-uid" placeholder="ID do usuário"></div>
@@ -315,8 +359,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-y" onclick="timeoutMembro()">⏱️ Aplicar Timeout</button></div>
       </div>
-
-      <!-- LIMPAR MENSAGENS -->
       <div class="stitle">🗑️ Limpar Mensagens</div>
       <div class="card">
         <div class="fgrid">
@@ -325,8 +367,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-r" onclick="limparMsgs()">🗑️ Limpar</button></div>
       </div>
-
-      <!-- SLOWMODE -->
       <div class="stitle">🐢 Slowmode</div>
       <div class="card">
         <div class="fgrid">
@@ -335,8 +375,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-b" onclick="aplicarSlowmode()">🐢 Aplicar Slowmode</button></div>
       </div>
-
-      <!-- LOCKDOWN -->
       <div class="stitle">🔒 Lockdown de Canal</div>
       <div class="card">
         <div class="fg" style="max-width:340px;margin-bottom:14px"><label>Canal</label><select id="lock-canal"></select></div>
@@ -349,15 +387,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 
     <!-- CARGOS -->
     <div class="page" id="page-cargos">
-      <div class="stitle">Selecionar Servidor</div>
-      <div class="card">
-        <div class="fg" style="max-width:340px">
-          <label>Servidor</label>
-          <select id="cargo-guild" onchange="carregarCargos();carregarMembros()"></select>
-        </div>
-      </div>
-
-      <!-- DAR CARGO -->
       <div class="stitle">➕ Dar Cargo a Membro</div>
       <div class="card">
         <div class="fgrid">
@@ -366,8 +395,6 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-g" onclick="darCargo()">➕ Dar Cargo</button></div>
       </div>
-
-      <!-- REMOVER CARGO -->
       <div class="stitle">➖ Remover Cargo de Membro</div>
       <div class="card">
         <div class="fgrid">
@@ -376,12 +403,10 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
         </div>
         <div class="btn-row"><button class="btn btn-r" onclick="removerCargo()">➖ Remover Cargo</button></div>
       </div>
-
-      <!-- DM MASSA -->
       <div class="stitle">📩 DM em Massa</div>
       <div class="card">
-        <div class="fg"><label>Mensagem</label><textarea id="dm-msg" placeholder="Mensagem que será enviada pra todos os membros..."></textarea></div>
-        <p style="color:var(--red);font-size:.82rem;margin-top:8px">⚠️ Isso envia DM para TODOS os membros do servidor. Use com cuidado!</p>
+        <div class="fg"><label>Mensagem</label><textarea id="dm-msg" placeholder="Mensagem enviada pra todos os membros..."></textarea></div>
+        <p style="color:var(--red);font-size:.82rem;margin-top:8px">⚠️ Envia DM para TODOS os membros. Use com cuidado!</p>
         <div class="btn-row"><button class="btn btn-p" onclick="dmMassa()">📩 Enviar DM em Massa</button></div>
       </div>
     </div>
@@ -389,14 +414,7 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
     <!-- INFO -->
     <div class="page" id="page-info">
       <div class="stitle">Informações do Servidor</div>
-      <div class="card">
-        <div class="fg" style="max-width:340px;margin-bottom:14px">
-          <label>Servidor</label>
-          <select id="info-guild" onchange="carregarInfoServidor()"></select>
-        </div>
-        <div id="info-servidor-res"><div class="empty">Selecione um servidor acima.</div></div>
-      </div>
-
+      <div class="card" id="info-servidor-res"><div class="empty"><span class="spin"></span></div></div>
       <div class="stitle">Buscar Membro</div>
       <div class="card">
         <div class="fgrid">
@@ -428,9 +446,13 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 const API       = "https://website-production-5b8f.up.railway.app";
 const CLIENT_ID = "1465283558342918235";
 const REDIRECT  = "https://commandvirex.netlify.app/index.html";
-let TOKEN = localStorage.getItem("virex_token") || "";
-let ME = null;
 
+let TOKEN    = localStorage.getItem("virex_token") || "";
+let ME       = null;
+let GUILD_ID = localStorage.getItem("virex_guild") || "";
+let GUILDS   = [];
+
+// ── OAUTH ──
 function loginDiscord() {
   location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=code&scope=identify`;
 }
@@ -442,19 +464,22 @@ async function handleCallback() {
   history.replaceState({}, "", location.pathname);
   document.getElementById("lerr").textContent = "⏳ Autenticando...";
   try {
-    const r = await fetch(API + "/api/oauth/callback", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({code}) });
+    const r = await fetch(API + "/api/oauth/callback", {
+      method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({code})
+    });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || "Erro");
     TOKEN = d.access_token;
     localStorage.setItem("virex_token", TOKEN);
-    ME = d; iniciarApp();
+    ME = d;
+    mostrarSelecaoServidor();
   } catch(e) { document.getElementById("lerr").textContent = "❌ " + e.message; }
 }
 
 async function verificarToken() {
   if (!TOKEN) return false;
   try {
-    const r = await fetch(API + "/api/me", { headers:{"X-Discord-Token":TOKEN} });
+    const r = await fetch(API + "/api/me", { headers: {"X-Discord-Token": TOKEN} });
     if (!r.ok) { TOKEN=""; localStorage.removeItem("virex_token"); return false; }
     ME = await r.json(); return true;
   } catch { return false; }
@@ -462,103 +487,173 @@ async function verificarToken() {
 
 window.addEventListener("load", async () => {
   await handleCallback();
-  if (!ME && TOKEN) { const ok = await verificarToken(); if (ok) iniciarApp(); }
+  if (!ME && TOKEN) {
+    const ok = await verificarToken();
+    if (!ok) return;
+    if (GUILD_ID) {
+      // Já tinha servidor salvo, vai direto pro painel
+      await carregarGuilds();
+      const g = GUILDS.find(x => x.id === GUILD_ID);
+      if (g) { entrarNoServidor(g); return; }
+    }
+    mostrarSelecaoServidor();
+  }
 });
 
-function iniciarApp() {
+// ── SELEÇÃO DE SERVIDOR ──
+async function mostrarSelecaoServidor() {
   document.getElementById("login").style.display = "none";
-  document.getElementById("app").style.display   = "block";
-  const av = ME.avatar ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("servidor-select").style.display = "flex";
+
+  const av = ME.avatar
+    ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`
+    : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("ss-avatar").src = av;
+  document.getElementById("ss-nome").textContent = ME.username;
+
+  await carregarGuilds();
+}
+
+async function carregarGuilds() {
+  const r = await apiReq("/api/status");
+  const d = await r.json();
+  GUILDS = d.servidores || [];
+}
+
+function mostrarGridServidores() {
+  document.getElementById("ss-loading").style.display = "none";
+  const grid = document.getElementById("guilds-grid");
+  grid.style.display = "grid";
+  grid.innerHTML = GUILDS.map(g => `
+    <div class="guild-card" onclick="entrarNoServidor(${JSON.stringify(g).replace(/"/g,'&quot;')})">
+      ${g.icon
+        ? `<img src="${g.icon}" alt="" style="width:64px;height:64px;border-radius:50%;margin-bottom:10px">`
+        : `<div class="gno-icon">${g.nome.charAt(0).toUpperCase()}</div>`
+      }
+      <div class="gname">${g.nome}</div>
+      <div class="gmembers">👥 ${g.membros.toLocaleString()} membros</div>
+    </div>`).join("");
+
+  if (!GUILDS.length) {
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">Bot não está em nenhum servidor.</div>';
+  }
+}
+
+// Chama após carregar guilds
+const _origCarregar = carregarGuilds;
+carregarGuilds = async function() {
+  await _origCarregar();
+  mostrarGridServidores();
+};
+
+function entrarNoServidor(g) {
+  GUILD_ID = g.id;
+  localStorage.setItem("virex_guild", GUILD_ID);
+  document.getElementById("servidor-select").style.display = "none";
+  document.getElementById("app").style.display = "block";
+
+  // Atualiza topbar
+  const av = ME.avatar
+    ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`
+    : `https://cdn.discordapp.com/embed/avatars/0.png`;
   document.getElementById("uavatar").src = av;
   document.getElementById("uname").textContent = ME.username;
-  carregarDash(); popularGuilds();
+  document.getElementById("tb-snome").textContent = g.nome;
+  if (g.icon) document.getElementById("tb-sicon").src = g.icon;
+  else document.getElementById("tb-sicon").style.display = "none";
+
+  carregarTudo();
 }
 
-async function api(path, opts={}) {
-  return fetch(API + path, { ...opts, headers:{"X-Discord-Token":TOKEN,"Content-Type":"application/json",...(opts.headers||{})} });
+function trocarServidor() {
+  localStorage.removeItem("virex_guild");
+  GUILD_ID = "";
+  document.getElementById("app").style.display = "none";
+  document.getElementById("servidor-select").style.display = "flex";
+  document.getElementById("ss-loading").style.display = "block";
+  document.getElementById("guilds-grid").style.display = "none";
+  carregarGuilds();
 }
 
+async function carregarTudo() {
+  await Promise.all([
+    carregarCanaisServidor(),
+    carregarCargos(),
+    carregarDash(),
+    carregarAutoMsgs(),
+    carregarInfoServidor(),
+  ]);
+}
+
+// ── API ──
+async function apiReq(path, opts={}) {
+  return fetch(API + path, {
+    ...opts,
+    headers: {"X-Discord-Token": TOKEN, "Content-Type":"application/json", ...(opts.headers||{})}
+  });
+}
+
+// Alias
+const api = apiReq;
+
+// ── NAVIGATE ──
 function go(id, btn) {
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
   document.getElementById("page-"+id).classList.add("active");
   btn.classList.add("active");
-  if (id==="logs")    carregarLogs();
-  if (id==="automsg") carregarAutoMsgs();
-  if (id==="info")    carregarInfoServidor();
+  if (id==="logs") carregarLogs();
 }
 
-async function carregarDash() {
-  const [sr,lr] = await Promise.all([api("/api/status"), api("/api/logs")]);
-  const s = await sr.json(); const l = await lr.json();
-  document.getElementById("d-guilds").textContent  = s.servidores.length;
-  document.getElementById("d-members").textContent = s.total_membros.toLocaleString();
-  document.getElementById("d-auto").textContent    = s.msgs_auto;
-  document.getElementById("d-logs").textContent    = l.logs.length;
-  const gl = document.getElementById("guild-list");
-  if (!s.servidores.length) { gl.innerHTML='<div class="empty">Bot não está em nenhum servidor.</div>'; return; }
-  gl.innerHTML = s.servidores.map(g=>`
-    <div class="gitem">
-      ${g.icon?`<img class="gicon" src="${g.icon}" alt="">`:`<div class="gicon"></div>`}
-      <div><div class="gname">${g.nome}</div><div class="gid">ID: ${g.id}</div></div>
-      <div class="gmeta">👥 ${g.membros.toLocaleString()}</div>
-    </div>`).join("");
-}
-
-async function popularGuilds() {
-  const r = await api("/api/status"); const d = await r.json();
-  const ids = ["am-guild","ping-guild","em-guild","anun-guild","env-guild","mod-guild","cargo-guild","info-guild"];
-  ids.forEach(id => {
-    const sel = document.getElementById(id);
-    if (sel) sel.innerHTML = d.servidores.map(g=>`<option value="${g.id}">${g.nome}</option>`).join("");
-  });
-  carregarCanais("am-guild","am-canal");
-  carregarCanais("em-guild","em-canal");
-  carregarCanais("anun-guild","anun-canal");
-  carregarCanais("env-guild","env-canal");
-  carregarCanaisMulti("mod-guild");
-}
-
-async function carregarCanais(guildId, canalId) {
-  const gid = document.getElementById(guildId)?.value;
-  const csel = document.getElementById(canalId);
-  if (!gid || !csel) return;
-  csel.innerHTML = "<option>Carregando...</option>";
-  const r = await api(`/api/canais?guild_id=${gid}`);
-  const d = await r.json();
-  csel.innerHTML = (d.canais||[]).map(c=>`<option value="${c.id}">#${c.nome}</option>`).join("");
-}
-
-async function carregarCanaisMulti(guildSelId) {
-  const gid = document.getElementById(guildSelId)?.value;
-  if (!gid) return;
-  const r = await api(`/api/canais?guild_id=${gid}`);
+// ── CANAIS ──
+async function carregarCanaisServidor() {
+  const r = await api(`/api/canais?guild_id=${GUILD_ID}`);
   const d = await r.json();
   const opts = (d.canais||[]).map(c=>`<option value="${c.id}">#${c.nome}</option>`).join("");
-  ["mod-canal","slow-canal","lock-canal"].forEach(id => {
+  ["am-canal","anun-canal","env-canal","em-canal","mod-canal","slow-canal","lock-canal"].forEach(id => {
     const el = document.getElementById(id); if (el) el.innerHTML = opts;
   });
 }
 
 async function carregarCargos() {
-  const gid = document.getElementById("cargo-guild")?.value;
-  if (!gid) return;
-  const r = await api(`/api/cargos?guild_id=${gid}`);
+  const r = await api(`/api/cargos?guild_id=${GUILD_ID}`);
   const d = await r.json();
   const opts = (d.cargos||[]).map(c=>`<option value="${c.id}">${c.nome}</option>`).join("");
   ["dc-cargo","rc-cargo"].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=opts; });
 }
 
-async function carregarMembros() {}
+// ── DASHBOARD ──
+async function carregarDash() {
+  const [sr, lr] = await Promise.all([api("/api/status"), api("/api/logs")]);
+  const s = await sr.json(); const l = await lr.json();
+  document.getElementById("d-guilds").textContent  = s.servidores.length;
+  const g = GUILDS.find(x=>x.id===GUILD_ID) || s.servidores[0] || {};
+  document.getElementById("d-members").textContent = (g.membros||0).toLocaleString();
+  document.getElementById("d-auto").textContent    = s.msgs_auto;
+  document.getElementById("d-logs").textContent    = l.logs.length;
+  const gi = document.getElementById("guild-info-dash");
+  gi.innerHTML = `
+    <div style="display:flex;align-items:center;gap:14px">
+      ${g.icon?`<img src="${g.icon}" style="width:52px;height:52px;border-radius:50%">`:`<div style="width:52px;height:52px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;color:#fff">${(g.nome||'?').charAt(0)}</div>`}
+      <div>
+        <div style="font-size:1.2rem;font-weight:700">${g.nome||'?'}</div>
+        <div style="color:var(--muted);font-family:var(--mono);font-size:.8rem">ID: ${g.id||'?'}</div>
+        <div style="color:var(--muted);font-size:.84rem;margin-top:4px">👥 ${(g.membros||0).toLocaleString()} membros</div>
+      </div>
+      <button class="btn btn-b" style="margin-left:auto" onclick="trocarServidor()">↕ Trocar Servidor</button>
+    </div>`;
+}
 
 // ── MSG AUTO ──
 async function criarAutoMsg() {
-  const body = { guild_id: document.getElementById("am-guild").value, canal_id: document.getElementById("am-canal").value,
-    intervalo: document.getElementById("am-intervalo").value.trim(), mencao: document.getElementById("am-mencao").value.trim(),
-    mensagem: document.getElementById("am-msg").value.trim(), banner: document.getElementById("am-banner").value.trim()||null };
-  if (!body.mensagem) return toast("❌ Digite a mensagem!", false);
-  const r = await api("/api/automsg/criar",{method:"POST",body:JSON.stringify(body)});
-  const d = await r.json();
+  const body = {guild_id:GUILD_ID, canal_id:document.getElementById("am-canal").value,
+    intervalo:document.getElementById("am-intervalo").value.trim(),
+    mencao:document.getElementById("am-mencao").value.trim(),
+    mensagem:document.getElementById("am-msg").value.trim(),
+    banner:document.getElementById("am-banner").value.trim()||null};
+  if (!body.mensagem) return toast("❌ Digite a mensagem!",false);
+  const r=await api("/api/automsg/criar",{method:"POST",body:JSON.stringify(body)});
+  const d=await r.json();
   if (d.ok) { toast("✅ Mensagem automática ativada!"); carregarAutoMsgs(); }
   else toast("❌ "+(d.error||"Erro"),false);
 }
@@ -618,10 +713,13 @@ async function pararAutoMsg(cid) {
 
 // ── ANÚNCIO ──
 async function enviarAnuncio() {
-  const body={guild_id:document.getElementById("anun-guild").value, canal_id:document.getElementById("anun-canal").value,
-    titulo:document.getElementById("anun-titulo").value.trim(), descricao:document.getElementById("anun-desc").value.trim(),
-    mencao:document.getElementById("anun-mencao").value.trim(), imagem:document.getElementById("anun-img").value.trim()||null,
-    thumbnail:document.getElementById("anun-thumb").value.trim()||null, rodape:document.getElementById("anun-rodape").value.trim()||null,
+  const body={guild_id:GUILD_ID, canal_id:document.getElementById("anun-canal").value,
+    titulo:document.getElementById("anun-titulo").value.trim(),
+    descricao:document.getElementById("anun-desc").value.trim(),
+    mencao:document.getElementById("anun-mencao").value.trim(),
+    imagem:document.getElementById("anun-img").value.trim()||null,
+    thumbnail:document.getElementById("anun-thumb").value.trim()||null,
+    rodape:document.getElementById("anun-rodape").value.trim()||null,
     cor:document.getElementById("anun-cor").value.replace("#","")};
   if (!body.descricao && !body.titulo) return toast("❌ Preencha título ou descrição!",false);
   const r=await api("/api/anuncio",{method:"POST",body:JSON.stringify(body)});
@@ -631,8 +729,9 @@ async function enviarAnuncio() {
 
 // ── ENVIAR MSG ──
 async function enviarMsgCanal() {
-  const body={guild_id:document.getElementById("env-guild").value, canal_id:document.getElementById("env-canal").value,
-    mencao:document.getElementById("env-mencao").value.trim(), mensagem:document.getElementById("env-msg").value.trim()};
+  const body={guild_id:GUILD_ID, canal_id:document.getElementById("env-canal").value,
+    mencao:document.getElementById("env-mencao").value.trim(),
+    mensagem:document.getElementById("env-msg").value.trim()};
   if (!body.mensagem) return toast("❌ Digite a mensagem!",false);
   const r=await api("/api/enviar_msg",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
@@ -642,7 +741,7 @@ async function enviarMsgCanal() {
 // ── PING ──
 async function enviarPing() {
   document.getElementById("ping-warn").textContent="⏳ Disparando...";
-  const r=await api("/api/ping",{method:"POST",body:JSON.stringify({guild_id:document.getElementById("ping-guild").value})});
+  const r=await api("/api/ping",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID})});
   const d=await r.json();
   document.getElementById("ping-warn").textContent="";
   if (d.ok) toast("✅ Ping silencioso disparado!"); else toast("❌ "+(d.error||"Erro"),false);
@@ -650,8 +749,9 @@ async function enviarPing() {
 
 // ── EDITAR MSG ──
 async function editarMsg() {
-  const body={guild_id:document.getElementById("em-guild").value, canal_id:document.getElementById("em-canal").value,
-    msg_id:document.getElementById("em-msgid").value.trim(), conteudo:document.getElementById("em-conteudo").value.trim()};
+  const body={guild_id:GUILD_ID, canal_id:document.getElementById("em-canal").value,
+    msg_id:document.getElementById("em-msgid").value.trim(),
+    conteudo:document.getElementById("em-conteudo").value.trim()};
   if (!body.msg_id||!body.conteudo) return toast("❌ Preencha todos os campos!",false);
   const r=await api("/api/editar_msg",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
@@ -663,7 +763,7 @@ async function banirMembro() {
   const uid=document.getElementById("ban-uid").value.trim();
   if (!uid) return toast("❌ Digite o ID!",false);
   if (!confirm(`Banir usuário ${uid}?`)) return;
-  const r=await api("/api/ban",{method:"POST",body:JSON.stringify({guild_id:document.getElementById("mod-guild").value,user_id:uid,motivo:document.getElementById("ban-motivo").value.trim()})});
+  const r=await api("/api/ban",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("ban-motivo").value.trim()})});
   const d=await r.json();
   if (d.ok) toast("🔨 Usuário banido!"); else toast("❌ "+(d.error||"Erro"),false);
 }
@@ -672,7 +772,7 @@ async function kickarMembro() {
   const uid=document.getElementById("kick-uid").value.trim();
   if (!uid) return toast("❌ Digite o ID!",false);
   if (!confirm(`Kickar usuário ${uid}?`)) return;
-  const r=await api("/api/kick",{method:"POST",body:JSON.stringify({guild_id:document.getElementById("mod-guild").value,user_id:uid,motivo:document.getElementById("kick-motivo").value.trim()})});
+  const r=await api("/api/kick",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("kick-motivo").value.trim()})});
   const d=await r.json();
   if (d.ok) toast("👢 Usuário kickado!"); else toast("❌ "+(d.error||"Erro"),false);
 }
@@ -680,8 +780,7 @@ async function kickarMembro() {
 async function timeoutMembro() {
   const uid=document.getElementById("to-uid").value.trim();
   if (!uid) return toast("❌ Digite o ID!",false);
-  const body={guild_id:document.getElementById("mod-guild").value,user_id:uid,
-    minutos:parseInt(document.getElementById("to-min").value)||5, motivo:document.getElementById("to-motivo").value.trim()};
+  const body={guild_id:GUILD_ID,user_id:uid,minutos:parseInt(document.getElementById("to-min").value)||5,motivo:document.getElementById("to-motivo").value.trim()};
   const r=await api("/api/timeout",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
   if (d.ok) toast(`⏱️ Timeout de ${body.minutos}min aplicado!`); else toast("❌ "+(d.error||"Erro"),false);
@@ -690,13 +789,13 @@ async function timeoutMembro() {
 async function limparMsgs() {
   const qtd=parseInt(document.getElementById("limpar-qtd").value)||10;
   if (!confirm(`Deletar ${qtd} mensagens?`)) return;
-  const r=await api("/api/limpar",{method:"POST",body:JSON.stringify({guild_id:document.getElementById("mod-guild").value,canal_id:document.getElementById("mod-canal").value,quantidade:qtd})});
+  const r=await api("/api/limpar",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("mod-canal").value,quantidade:qtd})});
   const d=await r.json();
   if (d.ok) toast(`🗑️ ${d.deletadas} mensagens deletadas!`); else toast("❌ "+(d.error||"Erro"),false);
 }
 
 async function aplicarSlowmode() {
-  const body={guild_id:document.getElementById("mod-guild").value, canal_id:document.getElementById("slow-canal").value, segundos:parseInt(document.getElementById("slow-seg").value)||0};
+  const body={guild_id:GUILD_ID,canal_id:document.getElementById("slow-canal").value,segundos:parseInt(document.getElementById("slow-seg").value)||0};
   const r=await api("/api/slowmode",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
   if (d.ok) toast(`🐢 Slowmode ${body.segundos}s aplicado!`); else toast("❌ "+(d.error||"Erro"),false);
@@ -704,8 +803,7 @@ async function aplicarSlowmode() {
 
 async function lockdown(travar) {
   if (!confirm(travar?"Travar este canal?":"Destravar este canal?")) return;
-  const body={guild_id:document.getElementById("mod-guild").value, canal_id:document.getElementById("lock-canal").value, travar};
-  const r=await api("/api/lockdown",{method:"POST",body:JSON.stringify(body)});
+  const r=await api("/api/lockdown",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("lock-canal").value,travar})});
   const d=await r.json();
   if (d.ok) toast(travar?"🔒 Canal travado!":"🔓 Canal destravado!"); else toast("❌ "+(d.error||"Erro"),false);
 }
@@ -714,8 +812,7 @@ async function lockdown(travar) {
 async function darCargo() {
   const uid=document.getElementById("dc-uid").value.trim();
   if (!uid) return toast("❌ Digite o ID!",false);
-  const body={guild_id:document.getElementById("cargo-guild").value,user_id:uid,cargo_id:document.getElementById("dc-cargo").value};
-  const r=await api("/api/dar_cargo",{method:"POST",body:JSON.stringify(body)});
+  const r=await api("/api/dar_cargo",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,cargo_id:document.getElementById("dc-cargo").value})});
   const d=await r.json();
   if (d.ok) toast("✅ Cargo dado!"); else toast("❌ "+(d.error||"Erro"),false);
 }
@@ -723,8 +820,7 @@ async function darCargo() {
 async function removerCargo() {
   const uid=document.getElementById("rc-uid").value.trim();
   if (!uid) return toast("❌ Digite o ID!",false);
-  const body={guild_id:document.getElementById("cargo-guild").value,user_id:uid,cargo_id:document.getElementById("rc-cargo").value};
-  const r=await api("/api/remover_cargo",{method:"POST",body:JSON.stringify(body)});
+  const r=await api("/api/remover_cargo",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,cargo_id:document.getElementById("rc-cargo").value})});
   const d=await r.json();
   if (d.ok) toast("✅ Cargo removido!"); else toast("❌ "+(d.error||"Erro"),false);
 }
@@ -732,28 +828,28 @@ async function removerCargo() {
 async function dmMassa() {
   const msg=document.getElementById("dm-msg").value.trim();
   if (!msg) return toast("❌ Digite a mensagem!",false);
-  if (!confirm("Enviar DM para TODOS os membros? Isso pode demorar muito.")) return;
-  const r=await api("/api/dm_massa",{method:"POST",body:JSON.stringify({guild_id:document.getElementById("cargo-guild").value,mensagem:msg})});
+  if (!confirm("Enviar DM para TODOS os membros?")) return;
+  const r=await api("/api/dm_massa",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,mensagem:msg})});
   const d=await r.json();
   if (d.ok) toast("📩 DM em massa iniciada!"); else toast("❌ "+(d.error||"Erro"),false);
 }
 
 // ── INFO ──
 async function carregarInfoServidor() {
-  const gid=document.getElementById("info-guild")?.value;
-  if (!gid) return;
-  document.getElementById("info-servidor-res").innerHTML='<div class="empty"><span class="spin"></span></div>';
-  const r=await api(`/api/info_servidor?guild_id=${gid}`);
+  const el=document.getElementById("info-servidor-res");
+  if (!el) return;
+  el.innerHTML='<div class="empty"><span class="spin"></span></div>';
+  const r=await api(`/api/info_servidor?guild_id=${GUILD_ID}`);
   const d=await r.json();
-  if (d.error) { document.getElementById("info-servidor-res").innerHTML=`<div class="empty">${d.error}</div>`; return; }
-  document.getElementById("info-servidor-res").innerHTML=`
+  if (d.error) { el.innerHTML=`<div class="empty">${d.error}</div>`; return; }
+  el.innerHTML=`
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
-      ${d.icon?`<img src="${d.icon}" style="width:56px;height:56px;border-radius:50%">`:`<div style="width:56px;height:56px;border-radius:50%;background:var(--bdr)"></div>`}
+      ${d.icon?`<img src="${d.icon}" style="width:56px;height:56px;border-radius:50%">`:`<div style="width:56px;height:56px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff">${d.nome.charAt(0)}</div>`}
       <div><div style="font-size:1.3rem;font-weight:700">${d.nome}</div><div style="color:var(--muted);font-family:var(--mono);font-size:.8rem">${d.id}</div></div>
     </div>
     <div class="info-grid">
       <div class="info-item"><div class="k">Dono</div><div class="v">${d.dono}</div></div>
-      <div class="info-item"><div class="k">Membros</div><div class="v">${d.membros.toLocaleString()} (${d.humanos} humanos, ${d.bots} bots)</div></div>
+      <div class="info-item"><div class="k">Membros</div><div class="v">${d.membros.toLocaleString()} (${d.humanos} humanos · ${d.bots} bots)</div></div>
       <div class="info-item"><div class="k">Canais</div><div class="v">${d.canais_texto} texto · ${d.canais_voz} voz</div></div>
       <div class="info-item"><div class="k">Cargos</div><div class="v">${d.cargos}</div></div>
       <div class="info-item"><div class="k">Criado em</div><div class="v">${d.criado}</div></div>
@@ -762,18 +858,17 @@ async function carregarInfoServidor() {
 }
 
 async function buscarMembro() {
-  const gid=document.getElementById("info-guild").value;
   const uid=document.getElementById("info-uid").value.trim();
   if (!uid) return toast("❌ Digite o ID!",false);
   document.getElementById("info-membro-res").innerHTML='<div class="empty"><span class="spin"></span></div>';
-  const r=await api(`/api/info_membro?guild_id=${gid}&user_id=${uid}`);
+  const r=await api(`/api/info_membro?guild_id=${GUILD_ID}&user_id=${uid}`);
   const d=await r.json();
   if (d.error) { document.getElementById("info-membro-res").innerHTML=`<div class="empty">${d.error}</div>`; return; }
   document.getElementById("info-membro-res").innerHTML=`
     <div class="member-card">
       <img src="${d.avatar}" alt="">
       <div style="flex:1">
-        <div style="font-size:1.1rem;font-weight:700">${d.nome} ${d.bot?'<span style="background:var(--acc);color:#fff;font-size:.7rem;padding:1px 6px;border-radius:4px;margin-left:4px">BOT</span>':''}</div>
+        <div style="font-size:1.1rem;font-weight:700">${d.nome}${d.bot?' <span style="background:var(--acc);color:#fff;font-size:.7rem;padding:1px 6px;border-radius:4px;margin-left:4px">BOT</span>':''}</div>
         ${d.nick?`<div style="color:var(--muted);font-size:.88rem">Nick: ${d.nick}</div>`:""}
         <div style="color:var(--muted);font-size:.82rem;font-family:var(--mono);margin-top:2px">ID: ${d.id}</div>
         <div style="color:var(--muted);font-size:.82rem;margin-top:6px">📅 Entrou: ${d.entrou} · Conta criada: ${d.conta_criada}</div>
