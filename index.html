@@ -1,300 +1,301 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>VIREX STORE — Painel</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:      #0e1117;
-  --surf:    #161b27;
-  --card:    #1c2333;
-  --card2:   #212840;
-  --bdr:     #2d3555;
-  --acc:     #5865f2;
-  --acc2:    #7289da;
-  --pink:    #eb459e;
-  --green:   #3ba55c;
-  --green2:  #57f287;
-  --red:     #ed4245;
-  --yellow:  #fee75c;
-  --orange:  #f9a825;
-  --txt:     #dcddde;
-  --txt2:    #b9bbbe;
-  --muted:   #72767d;
-  --font:    'Inter', sans-serif;
-  --mono:    'JetBrains Mono', monospace;
-  --sidebar: 260px;
-  --topbar:  60px;
-  --radius:  12px;
-  --shadow:  0 4px 24px rgba(0,0,0,.4);
+/* ── THEMES ── */
+[data-theme="dark"] {
+  --bg:#0e1117;--surf:#161b27;--card:#1c2333;--card2:#212840;--bdr:#2d3555;
+  --txt:#dcddde;--txt2:#b9bbbe;--muted:#72767d;--input-bg:#0e1117;
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--txt); font-family: var(--font); font-size: 14px; line-height: 1.5; min-height: 100vh; }
-::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 3px; }
+[data-theme="light"] {
+  --bg:#f2f3f5;--surf:#ffffff;--card:#ffffff;--card2:#f2f3f5;--bdr:#e3e5e8;
+  --txt:#2e3338;--txt2:#4f5660;--muted:#747f8d;--input-bg:#ffffff;
+}
+:root {
+  --acc:#5865f2;--acc2:#7289da;--pink:#eb459e;--green:#3ba55c;--green2:#57f287;
+  --red:#ed4245;--yellow:#fee75c;--orange:#f9a825;
+  --font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;
+  --sidebar:260px;--topbar:60px;--radius:12px;--shadow:0 4px 24px rgba(0,0,0,.2);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:14px;line-height:1.5;min-height:100vh;transition:background .2s,color .2s}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
 
 /* ── LOGIN ── */
-#login {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0e1117 0%, #161b27 50%, #1a1f35 100%);
-}
-.login-card {
-  background: var(--card);
-  border: 1px solid var(--bdr);
-  border-radius: 20px;
-  padding: 52px 44px;
-  width: 420px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(88,101,242,.1);
-  animation: fadeUp .4s ease;
-}
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
-.login-logo {
-  width: 72px; height: 72px; border-radius: 20px;
-  background: linear-gradient(135deg, var(--acc), var(--pink));
-  display: flex; align-items: center; justify-content: center;
-  margin: 0 auto 20px; font-size: 2rem; font-weight: 800; color: #fff;
-  box-shadow: 0 8px 24px rgba(88,101,242,.4);
-}
-.login-title { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
-.login-sub { color: var(--muted); font-size: .9rem; margin-bottom: 36px; }
-.btn-login {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  background: #5865f2; border: none; border-radius: 12px; color: #fff;
-  cursor: pointer; font-family: var(--font); font-size: .95rem; font-weight: 600;
-  padding: 14px 24px; width: 100%; transition: background .2s, transform .1s, box-shadow .2s;
-  box-shadow: 0 4px 16px rgba(88,101,242,.4);
-}
-.btn-login:hover { background: #4752c4; box-shadow: 0 6px 20px rgba(88,101,242,.5); }
-.btn-login:active { transform: scale(.98); }
-.btn-login svg { width: 20px; height: 20px; flex-shrink: 0; }
-.login-err { color: var(--red); font-size: .85rem; margin-top: 14px; min-height: 18px; }
-.login-footer { color: var(--muted); font-size: .78rem; margin-top: 24px; }
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;
+  background:linear-gradient(135deg,#0e1117,#161b27 50%,#1a1f35)}
+.login-card{background:var(--card);border:1px solid var(--bdr);border-radius:20px;padding:52px 44px;width:420px;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.login-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--acc),var(--pink));
+  display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2rem;font-weight:800;color:#fff;
+  box-shadow:0 8px 24px rgba(88,101,242,.4)}
+.login-title{font-size:1.6rem;font-weight:800;color:var(--txt);margin-bottom:6px}
+.login-sub{color:var(--muted);font-size:.9rem;margin-bottom:36px}
+.btn-login{display:flex;align-items:center;justify-content:center;gap:10px;background:#5865f2;border:none;border-radius:12px;
+  color:#fff;cursor:pointer;font-family:var(--font);font-size:.95rem;font-weight:600;padding:14px 24px;width:100%;
+  transition:background .2s,transform .1s;box-shadow:0 4px 16px rgba(88,101,242,.4)}
+.btn-login:hover{background:#4752c4}.btn-login:active{transform:scale(.98)}
+.btn-login svg{width:20px;height:20px;flex-shrink:0}
+.login-err{color:var(--red);font-size:.85rem;margin-top:14px;min-height:18px}
+.login-footer{color:var(--muted);font-size:.78rem;margin-top:24px}
 
 /* ── SERVER SELECT ── */
-#server-select {
-  display: none; min-height: 100vh;
-  background: linear-gradient(135deg, #0e1117, #161b27 60%, #1a1f35);
-  padding: 32px 20px;
-}
-.ss-header {
-  max-width: 900px; margin: 0 auto 32px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
-}
-.ss-logo { display: flex; align-items: center; gap: 12px; }
-.ss-logo .icon { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg,var(--acc),var(--pink)); display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff; }
-.ss-logo span { font-size: 1.2rem; font-weight: 800; color: #fff; }
-.ss-user { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--bdr); border-radius: 30px; padding: 6px 16px 6px 6px; }
-.ss-user img { width: 30px; height: 30px; border-radius: 50%; }
-.ss-user span { font-size: .88rem; font-weight: 600; }
-.ss-title { max-width: 900px; margin: 0 auto 8px; font-size: 1.5rem; font-weight: 800; color: #fff; }
-.ss-sub { max-width: 900px; margin: 0 auto 24px; color: var(--muted); font-size: .9rem; }
-.server-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-.server-card {
-  background: var(--card); border: 1px solid var(--bdr); border-radius: 16px;
-  padding: 20px; display: flex; align-items: center; gap: 14px;
-  cursor: pointer; transition: border-color .2s, transform .15s, box-shadow .2s;
-}
-.server-card:hover { border-color: var(--acc); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(88,101,242,.2); }
-.server-card:active { transform: scale(.98); }
-.server-card .sicon { width: 50px; height: 50px; border-radius: 14px; object-fit: cover; flex-shrink: 0; background: var(--card2); }
-.server-card .sicon-text { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg,var(--acc),var(--pink)); display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0; }
-.server-card .sinfo { min-width: 0; }
-.server-card .sname { font-weight: 700; font-size: .95rem; color: #fff; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.server-card .smeta { color: var(--muted); font-size: .8rem; margin-top: 2px; }
-.server-card .sarrow { margin-left: auto; color: var(--muted); font-size: 1.2rem; flex-shrink: 0; }
-.ss-loading { max-width: 900px; margin: 0 auto; text-align: center; padding: 60px 0; color: var(--muted); }
+#server-select{display:none;min-height:100vh;background:linear-gradient(135deg,#0e1117,#161b27 60%,#1a1f35);padding:32px 20px}
+.ss-header{max-width:900px;margin:0 auto 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.ss-logo{display:flex;align-items:center;gap:12px}
+.ss-logo .icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff}
+.ss-logo span{font-size:1.2rem;font-weight:800;color:#fff}
+.ss-user{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--bdr);border-radius:30px;padding:6px 16px 6px 6px}
+.ss-user img{width:30px;height:30px;border-radius:50%}
+.ss-user span{font-size:.88rem;font-weight:600;color:#fff}
+.ss-title{max-width:900px;margin:0 auto 8px;font-size:1.5rem;font-weight:800;color:#fff}
+.ss-sub{max-width:900px;margin:0 auto 24px;color:var(--muted);font-size:.9rem}
+.ss-loading{max-width:900px;margin:0 auto;text-align:center;padding:60px 0;color:var(--muted)}
+.server-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.server-card{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:20px;
+  display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s}
+.server-card:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 8px 24px rgba(88,101,242,.2)}
+.server-card:active{transform:scale(.98)}
+.server-card .sicon{width:50px;height:50px;border-radius:14px;object-fit:cover;flex-shrink:0;background:var(--card2)}
+.server-card .sicon-text{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,var(--acc),var(--pink));
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0}
+.server-card .sinfo{min-width:0}
+.server-card .sname{font-weight:700;font-size:.95rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.server-card .smeta{color:var(--muted);font-size:.8rem;margin-top:2px}
+.server-card .sarrow{margin-left:auto;color:var(--muted);font-size:1.2rem;flex-shrink:0}
 
-/* ── APP LAYOUT ── */
-#app { display: none; }
-.layout { display: flex; min-height: 100vh; }
+/* ── APP ── */
+#app{display:none}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--surf);border-right:1px solid var(--bdr);
+  display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:200;
+  overflow-y:auto;transition:transform .25s,background .2s}
+.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:10px;flex-shrink:0}
+.sidebar-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--pink));
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0}
+.sidebar-name{font-weight:800;font-size:1rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-guild{margin:10px;padding:10px 12px;border-radius:10px;background:var(--card);border:1px solid var(--bdr);
+  display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .2s;flex-shrink:0}
+.sidebar-guild:hover{border-color:var(--acc)}
+.sidebar-guild img{width:32px;height:32px;border-radius:8px;flex-shrink:0;background:var(--bdr)}
+.sidebar-guild .gtext{min-width:0;flex:1}
+.sidebar-guild .gname{font-weight:600;font-size:.83rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-guild .gmembers{font-size:.71rem;color:var(--muted)}
+.sidebar-guild .gswitch{font-size:.7rem;color:var(--acc);flex-shrink:0}
+.sidebar-section{padding:4px 10px;margin-top:4px}
+.sidebar-section-title{font-size:.67rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);padding:6px 8px 4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;cursor:pointer;
+  color:var(--txt2);font-size:.86rem;font-weight:500;transition:background .15s,color .15s;margin-bottom:2px;
+  border:none;background:transparent;width:100%;text-align:left;font-family:var(--font)}
+.nav-item:hover{background:var(--card);color:var(--txt)}
+.nav-item.active{background:rgba(88,101,242,.2);color:var(--acc2);font-weight:600}
+.nav-item .icon{font-size:.95rem;width:18px;text-align:center;flex-shrink:0}
+.sidebar-footer{margin-top:auto;padding:10px;border-top:1px solid var(--bdr);display:flex;align-items:center;gap:9px;flex-shrink:0}
+.sidebar-footer img{width:32px;height:32px;border-radius:50%}
+.sidebar-footer .uinfo{flex:1;min-width:0}
+.sidebar-footer .uname{font-weight:600;font-size:.83rem;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sidebar-footer .utag{font-size:.7rem;color:var(--muted)}
+.sidebar-footer-btns{display:flex;gap:4px}
+.icon-btn{background:transparent;border:none;cursor:pointer;font-size:.95rem;padding:5px;border-radius:6px;color:var(--muted);transition:color .15s}
+.icon-btn:hover{color:var(--txt)}
+.icon-btn.logout:hover{color:var(--red)}
 
-/* SIDEBAR */
-.sidebar {
-  width: var(--sidebar); flex-shrink: 0;
-  background: var(--surf); border-right: 1px solid var(--bdr);
-  display: flex; flex-direction: column;
-  position: fixed; left: 0; top: 0; bottom: 0; z-index: 200;
-  transition: transform .25s;
-}
-.sidebar-header {
-  padding: 18px 20px; border-bottom: 1px solid var(--bdr);
-  display: flex; align-items: center; gap: 10px;
-}
-.sidebar-logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg,var(--acc),var(--pink)); display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0; }
-.sidebar-name { font-weight: 800; font-size: 1rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.main{margin-left:var(--sidebar);flex:1;min-width:0}
+.topbar{height:var(--topbar);background:var(--surf);border-bottom:1px solid var(--bdr);
+  display:flex;align-items:center;padding:0 20px;position:sticky;top:0;z-index:100;gap:10px;transition:background .2s}
+.topbar-title{font-size:1rem;font-weight:700;color:var(--txt)}
+.menu-toggle{display:none;background:transparent;border:none;color:var(--txt2);cursor:pointer;font-size:1.2rem;margin-right:6px}
+.content{padding:22px;max-width:1000px}
+.page{display:none}.page.active{display:block}
 
-.sidebar-guild {
-  margin: 12px; padding: 10px 12px; border-radius: 10px;
-  background: var(--card); border: 1px solid var(--bdr);
-  display: flex; align-items: center; gap: 10px; cursor: pointer;
-  transition: border-color .2s;
-}
-.sidebar-guild:hover { border-color: var(--acc); }
-.sidebar-guild img { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; background: var(--bdr); }
-.sidebar-guild .gtext { min-width: 0; flex: 1; }
-.sidebar-guild .gname { font-weight: 600; font-size: .85rem; color: #fff; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.sidebar-guild .gmembers { font-size: .73rem; color: var(--muted); }
-.sidebar-guild .gswitch { font-size: .7rem; color: var(--acc); flex-shrink: 0; }
+/* STATS */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--radius);padding:16px 18px}
+.stat-card .slabel{font-size:.7rem;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.stat-card .sval{font-size:1.7rem;font-weight:800}
+.sval.blue{color:var(--acc2)}.sval.green{color:var(--green2)}.sval.pink{color:var(--pink)}.sval.yellow{color:var(--yellow)}.sval.orange{color:var(--orange)}
 
-.sidebar-section { padding: 4px 12px; margin-top: 8px; }
-.sidebar-section-title { font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); padding: 6px 8px 4px; }
-.nav-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 10px; border-radius: 8px; cursor: pointer;
-  color: var(--txt2); font-size: .88rem; font-weight: 500;
-  transition: background .15s, color .15s; margin-bottom: 2px;
-  border: none; background: transparent; width: 100%; text-align: left;
-  font-family: var(--font);
-}
-.nav-item:hover { background: var(--card); color: #fff; }
-.nav-item.active { background: rgba(88,101,242,.2); color: var(--acc2); font-weight: 600; }
-.nav-item .icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+/* GUILD HERO */
+.guild-hero{border-radius:var(--radius);overflow:hidden;border:1px solid var(--bdr);margin-bottom:20px;position:relative}
+.guild-banner{width:100%;height:100px;object-fit:cover;display:block;background:linear-gradient(135deg,rgba(88,101,242,.3),rgba(235,69,158,.2))}
+.guild-banner-placeholder{width:100%;height:100px;background:linear-gradient(135deg,rgba(88,101,242,.2),rgba(235,69,158,.1))}
+.guild-hero-body{padding:0 20px 16px;display:flex;align-items:flex-end;gap:16px;margin-top:-28px;flex-wrap:wrap}
+.guild-hero-icon{width:56px;height:56px;border-radius:14px;border:3px solid var(--card);object-fit:cover;background:var(--bdr);flex-shrink:0}
+.guild-hero-icon-text{width:56px;height:56px;border-radius:14px;border:3px solid var(--card);background:linear-gradient(135deg,var(--acc),var(--pink));
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:#fff;flex-shrink:0}
+.guild-hero-info{flex:1;min-width:0;padding-top:32px}
+.guild-hero-info .gname{font-size:1.1rem;font-weight:800;color:var(--txt)}
+.guild-hero-info .gid{font-family:var(--mono);font-size:.73rem;color:var(--muted)}
+.guild-hero-actions{margin-left:auto;padding-top:32px;display:flex;gap:8px;flex-wrap:wrap}
 
-.sidebar-footer {
-  margin-top: auto; padding: 12px; border-top: 1px solid var(--bdr);
-  display: flex; align-items: center; gap: 10px;
-}
-.sidebar-footer img { width: 34px; height: 34px; border-radius: 50%; }
-.sidebar-footer .uinfo { flex: 1; min-width: 0; }
-.sidebar-footer .uname { font-weight: 600; font-size: .85rem; color: #fff; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.sidebar-footer .utag { font-size: .72rem; color: var(--muted); }
-.sidebar-footer .logout-btn { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 4px; border-radius: 6px; transition: color .15s; }
-.sidebar-footer .logout-btn:hover { color: var(--red); }
-
-/* MAIN */
-.main { margin-left: var(--sidebar); flex: 1; min-width: 0; }
-.topbar {
-  height: var(--topbar); background: var(--surf); border-bottom: 1px solid var(--bdr);
-  display: flex; align-items: center; padding: 0 24px;
-  position: sticky; top: 0; z-index: 100; gap: 12px;
-}
-.topbar-title { font-size: 1rem; font-weight: 700; color: #fff; }
-.topbar-breadcrumb { color: var(--muted); font-size: .85rem; margin-left: 4px; }
-.menu-toggle { display: none; background: transparent; border: none; color: var(--txt2); cursor: pointer; font-size: 1.3rem; margin-right: 8px; }
-.content { padding: 24px; max-width: 1000px; }
-.page { display: none; } .page.active { display: block; }
-
-/* CARDS */
-.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
-.stat-card { background: var(--card); border: 1px solid var(--bdr); border-radius: var(--radius); padding: 18px 20px; }
-.stat-card .slabel { font-size: .72rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.stat-card .sval { font-size: 1.8rem; font-weight: 800; color: #fff; }
-.stat-card .sval.blue { color: var(--acc2); }
-.stat-card .sval.green { color: var(--green2); }
-.stat-card .sval.pink { color: var(--pink); }
-.stat-card .sval.yellow { color: var(--yellow); }
-
-.section-title { font-size: .8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; margin-top: 28px; display: flex; align-items: center; gap: 8px; }
-.section-title::after { content:''; flex:1; height:1px; background:var(--bdr); }
-
-.panel-card { background: var(--card); border: 1px solid var(--bdr); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; }
+.section-title{font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+  margin-bottom:10px;margin-top:24px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
+.panel-card{background:var(--card);border:1px solid var(--bdr);border-radius:var(--radius);padding:18px;margin-bottom:12px}
 
 /* FORM */
-.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
-.form-group { display: flex; flex-direction: column; gap: 6px; }
-.form-group label { font-size: .75rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--txt2); }
-.form-group input, .form-group select, .form-group textarea {
-  background: var(--bg); border: 1px solid var(--bdr); border-radius: 8px;
-  color: var(--txt); font-family: var(--font); font-size: .88rem; padding: 10px 12px;
-  outline: none; transition: border-color .2s; width: 100%;
-}
-.form-group textarea { resize: vertical; min-height: 90px; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--acc); }
-.form-group select option { background: var(--card); }
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:.73rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--txt2)}
+.form-group input,.form-group select,.form-group textarea{background:var(--input-bg);border:1px solid var(--bdr);border-radius:8px;
+  color:var(--txt);font-family:var(--font);font-size:.88rem;padding:9px 11px;outline:none;transition:border-color .2s,background .2s;width:100%}
+.form-group textarea{resize:vertical;min-height:85px}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--acc)}
+.form-group select option{background:var(--card)}
+
+/* MEMBER SEARCH */
+.member-search-wrap{position:relative}
+.member-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--card);border:1px solid var(--bdr);
+  border-radius:10px;z-index:50;max-height:220px;overflow-y:auto;box-shadow:var(--shadow);display:none}
+.member-dropdown.open{display:block}
+.member-opt{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;transition:background .15s}
+.member-opt:hover{background:var(--card2)}
+.member-opt img{width:28px;height:28px;border-radius:50%}
+.member-opt .mn{font-weight:600;font-size:.85rem}
+.member-opt .mid{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.copy-id-btn{background:var(--card2);border:1px solid var(--bdr);border-radius:6px;color:var(--muted);cursor:pointer;
+  font-size:.75rem;padding:3px 8px;transition:color .15s,background .15s;margin-left:6px}
+.copy-id-btn:hover{color:var(--acc);background:rgba(88,101,242,.1)}
+
+/* CONFIRM MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:none;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--bdr);border-radius:16px;padding:28px;width:360px;text-align:center;animation:fadeUp .2s ease}
+.modal-icon{font-size:2.5rem;margin-bottom:12px}
+.modal-title{font-size:1.1rem;font-weight:800;color:var(--txt);margin-bottom:8px}
+.modal-sub{color:var(--muted);font-size:.88rem;margin-bottom:22px}
+.modal-btns{display:flex;gap:10px;justify-content:center}
+
+/* EMBED PREVIEW */
+.embed-preview{border-left:4px solid #5865f2;background:var(--card2);border-radius:0 8px 8px 0;padding:14px;margin-top:16px}
+.embed-preview .ep-title{font-weight:700;font-size:.95rem;color:var(--acc2);margin-bottom:6px}
+.embed-preview .ep-desc{color:var(--txt2);font-size:.88rem;white-space:pre-wrap;word-break:break-word}
+.embed-preview .ep-img{margin-top:10px;max-width:100%;border-radius:6px;max-height:180px;object-fit:cover}
+.embed-preview .ep-footer{color:var(--muted);font-size:.75rem;margin-top:10px}
 
 /* BUTTONS */
-.btn { border: none; border-radius: 8px; cursor: pointer; font-family: var(--font); font-size: .88rem; font-weight: 600; padding: 9px 18px; transition: filter .15s, transform .1s; }
-.btn:hover { filter: brightness(1.1); } .btn:active { transform: scale(.97); }
-.btn-primary { background: var(--acc); color: #fff; }
-.btn-success { background: var(--green); color: #fff; }
-.btn-danger  { background: var(--red); color: #fff; }
-.btn-warning { background: var(--orange); color: #000; }
-.btn-ghost   { background: var(--card2); border: 1px solid var(--bdr); color: var(--txt2); }
-.btn-ghost:hover { color: #fff; }
-.btn-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.btn{border:none;border-radius:8px;cursor:pointer;font-family:var(--font);font-size:.86rem;font-weight:600;
+  padding:8px 16px;transition:filter .15s,transform .1s}
+.btn:hover{filter:brightness(1.1)}.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--acc);color:#fff}
+.btn-success{background:var(--green);color:#fff}
+.btn-danger{background:var(--red);color:#fff}
+.btn-warning{background:var(--orange);color:#000}
+.btn-ghost{background:var(--card2);border:1px solid var(--bdr);color:var(--txt2)}
+.btn-ghost:hover{color:var(--txt)}
+.btn-sm{padding:5px 11px;font-size:.78rem}
+.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 
-/* AUTOMSG CARDS */
-.amsg-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; transition: border-color .15s; }
-.amsg-card:hover { border-color: var(--acc2); }
-.amsg-card .ch { font-weight: 700; color: var(--acc2); margin-bottom: 3px; font-size: .9rem; }
-.amsg-card .prev { color: var(--muted); font-size: .82rem; max-width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.amsg-card .tags { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
-.tag { background: var(--card); border: 1px solid var(--bdr); border-radius: 5px; color: var(--muted); font-family: var(--mono); font-size: .7rem; padding: 2px 7px; }
+/* AMSG */
+.amsg-card{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:13px 15px;margin-bottom:9px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;transition:border-color .15s}
+.amsg-card:hover{border-color:var(--acc2)}
+.amsg-card .ch{font-weight:700;color:var(--acc2);margin-bottom:2px;font-size:.88rem}
+.amsg-card .prev{color:var(--muted);font-size:.8rem;max-width:420px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.amsg-card .tags{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.tag{background:var(--card);border:1px solid var(--bdr);border-radius:5px;color:var(--muted);font-family:var(--mono);font-size:.68rem;padding:2px 7px}
 
 /* TABLE */
-.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--bdr); }
-table { width: 100%; border-collapse: collapse; }
-thead tr { background: var(--card2); }
-th { padding: 10px 14px; font-size: .72rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); text-align: left; border-bottom: 1px solid var(--bdr); white-space: nowrap; }
-td { padding: 11px 14px; font-size: .85rem; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(255,255,255,.02); }
-.badge { border-radius: 5px; font-size: .7rem; font-weight: 700; letter-spacing: .3px; padding: 3px 8px; text-transform: uppercase; white-space: nowrap; }
-.badge-green   { background: rgba(59,165,92,.2);  color: #57f287; }
-.badge-red     { background: rgba(237,66,69,.2);  color: #f87171; }
-.badge-yellow  { background: rgba(254,231,92,.15);color: var(--yellow); }
-.badge-blue    { background: rgba(88,101,242,.2); color: var(--acc2); }
-.badge-pink    { background: rgba(235,69,158,.2); color: var(--pink); }
-.badge-orange  { background: rgba(249,168,37,.2); color: var(--orange); }
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--bdr)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--card2)}
+th{padding:9px 13px;font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);text-align:left;border-bottom:1px solid var(--bdr);white-space:nowrap}
+td{padding:10px 13px;font-size:.84rem;border-bottom:1px solid rgba(0,0,0,.05);vertical-align:middle}
+[data-theme="dark"] td{border-bottom-color:rgba(255,255,255,.04)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(88,101,242,.04)}
+.badge{border-radius:5px;font-size:.68rem;font-weight:700;letter-spacing:.3px;padding:2px 7px;text-transform:uppercase;white-space:nowrap}
+.badge-green{background:rgba(59,165,92,.2);color:#57f287}
+.badge-red{background:rgba(237,66,69,.2);color:#f87171}
+.badge-yellow{background:rgba(254,231,92,.15);color:var(--yellow)}
+.badge-blue{background:rgba(88,101,242,.2);color:var(--acc2)}
+.badge-pink{background:rgba(235,69,158,.2);color:var(--pink)}
+.badge-orange{background:rgba(249,168,37,.2);color:var(--orange)}
 
-/* SERVER INFO */
-.guild-hero { display: flex; align-items: center; gap: 18px; padding: 20px; background: linear-gradient(135deg, rgba(88,101,242,.12), rgba(235,69,158,.06)); border-radius: var(--radius); border: 1px solid var(--bdr); margin-bottom: 20px; }
-.guild-hero img { width: 64px; height: 64px; border-radius: 16px; }
-.guild-hero .gname { font-size: 1.3rem; font-weight: 800; color: #fff; }
-.guild-hero .gid { font-family: var(--mono); font-size: .76rem; color: var(--muted); margin-top: 2px; }
-.guild-hero .gmeta { font-size: .85rem; color: var(--txt2); margin-top: 6px; }
-.guild-hero .switch-btn { margin-left: auto; flex-shrink: 0; }
+/* MEMBER CARD */
+.member-card{background:var(--surf);border:1px solid var(--bdr);border-radius:12px;padding:16px;display:flex;gap:14px;margin-top:12px}
+.member-card img{width:52px;height:52px;border-radius:50%;flex-shrink:0}
+.member-card .mname{font-weight:700;font-size:.95rem;color:var(--txt)}
+.member-card .mmeta{font-size:.78rem;color:var(--muted);margin-top:3px}
+.role-pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.role-pill{background:rgba(88,101,242,.15);border:1px solid rgba(88,101,242,.25);border-radius:4px;color:var(--acc2);font-size:.7rem;padding:1px 7px}
 
-.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
-.info-item { background: var(--surf); border: 1px solid var(--bdr); border-radius: 8px; padding: 12px 14px; }
-.info-item .ik { font-size: .7rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
-.info-item .iv { font-weight: 700; font-size: .95rem; color: #fff; }
+/* RECENT MEMBERS */
+.recent-member{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--bdr)}
+.recent-member:last-child{border-bottom:none}
+.recent-member img{width:34px;height:34px;border-radius:50%}
+.recent-member .rname{font-weight:600;font-size:.86rem}
+.recent-member .rdate{font-size:.74rem;color:var(--muted);margin-left:auto}
 
-.member-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: 12px; padding: 18px; display: flex; gap: 14px; margin-top: 14px; }
-.member-card img { width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0; }
-.member-card .mname { font-weight: 700; font-size: 1rem; color: #fff; }
-.member-card .mmeta { font-size: .8rem; color: var(--muted); margin-top: 4px; }
-.role-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.role-pill { background: rgba(88,101,242,.15); border: 1px solid rgba(88,101,242,.25); border-radius: 4px; color: var(--acc2); font-size: .72rem; padding: 2px 8px; }
+/* BAN LIST */
+.ban-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bdr)}
+.ban-item:last-child{border-bottom:none}
+.ban-item img{width:36px;height:36px;border-radius:50%}
+.ban-item .bname{font-weight:600;font-size:.86rem}
+.ban-item .bmotivo{font-size:.75rem;color:var(--muted)}
+.ban-item .unban-btn{margin-left:auto;flex-shrink:0}
+
+/* LISTA NEGRA */
+.palavra-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(237,66,69,.15);
+  border:1px solid rgba(237,66,69,.3);border-radius:6px;color:var(--red);font-size:.8rem;padding:3px 10px;margin:3px}
+.palavra-tag .del{cursor:pointer;font-weight:700;opacity:.7;transition:opacity .15s}
+.palavra-tag .del:hover{opacity:1}
+
+/* INFO GRID */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:9px}
+.info-item{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:11px 13px}
+.info-item .ik{font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.info-item .iv{font-weight:700;font-size:.93rem;color:var(--txt)}
 
 /* TOAST */
-.toast { position: fixed; bottom: 24px; right: 24px; border-radius: 10px; font-family: var(--font); font-weight: 600; font-size: .88rem; padding: 12px 20px; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; transform: translateY(8px); z-index: 9999; max-width: 320px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow); }
-.toast.show { opacity: 1; transform: none; }
-.toast.ok  { background: var(--green);  color: #fff; }
-.toast.err { background: var(--red);    color: #fff; }
-.toast.info{ background: var(--acc);    color: #fff; }
+.toast{position:fixed;bottom:22px;right:22px;border-radius:10px;font-family:var(--font);font-weight:600;font-size:.86rem;
+  padding:11px 18px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(8px);
+  z-index:9999;max-width:300px;display:flex;align-items:center;gap:9px;box-shadow:var(--shadow)}
+.toast.show{opacity:1;transform:none}
+.toast.ok{background:var(--green);color:#fff}
+.toast.err{background:var(--red);color:#fff}
+.toast.info{background:var(--acc);color:#fff}
 
-/* EMPTY / LOADER */
-.empty-state { text-align: center; padding: 48px 24px; color: var(--muted); }
-.empty-state .ei { font-size: 2.5rem; margin-bottom: 12px; }
-.empty-state p { font-size: .9rem; }
-.spin { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--bdr); border-top-color: var(--acc); border-radius: 50%; animation: sp .6s linear infinite; }
-@keyframes sp { to { transform: rotate(360deg); } }
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state .ei{font-size:2.2rem;margin-bottom:10px}
+.empty-state p{font-size:.88rem}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid var(--bdr);border-top-color:var(--acc);border-radius:50%;animation:sp .6s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:199}
 
-/* OVERLAY */
-.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 199; }
-
-/* RESPONSIVE */
-@media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); }
-  .sidebar.open { transform: none; }
-  .sidebar-overlay.open { display: block; }
-  .main { margin-left: 0; }
-  .menu-toggle { display: block; }
-  .content { padding: 16px 12px; }
-  .stat-row { grid-template-columns: repeat(2, 1fr); }
-  .amsg-card { flex-direction: column; }
-  .guild-hero { flex-wrap: wrap; }
-  .guild-hero .switch-btn { margin-left: 0; }
-  .server-grid { grid-template-columns: 1fr; }
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:none}
+  .sidebar-overlay.open{display:block}
+  .main{margin-left:0}
+  .menu-toggle{display:block}
+  .content{padding:14px 10px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .amsg-card{flex-direction:column}
+  .server-grid{grid-template-columns:1fr}
+  .guild-hero-actions{margin-left:0;padding-top:0}
 }
 </style>
 </head>
 <body>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal-box">
+    <div class="modal-icon" id="cm-icon">⚠️</div>
+    <div class="modal-title" id="cm-title">Tem certeza?</div>
+    <div class="modal-sub" id="cm-sub">Esta ação não pode ser desfeita.</div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">Cancelar</button>
+      <button class="btn btn-danger" id="cm-ok" onclick="confirmOk()">Confirmar</button>
+    </div>
+  </div>
+</div>
 
 <!-- LOGIN -->
 <div id="login">
@@ -307,25 +308,19 @@ tr:hover td { background: rgba(255,255,255,.02); }
       Entrar com Discord
     </button>
     <div class="login-err" id="lerr"></div>
-    <div class="login-footer">Apenas administradores dos servidores com o bot podem acessar.</div>
+    <div class="login-footer">Apenas administradores com o bot podem acessar.</div>
   </div>
 </div>
 
 <!-- SERVER SELECT -->
 <div id="server-select">
   <div class="ss-header">
-    <div class="ss-logo">
-      <div class="icon">V</div>
-      <span>VIREX STORE</span>
-    </div>
-    <div class="ss-user">
-      <img id="ss-av" src="" alt="">
-      <span id="ss-name">...</span>
-    </div>
+    <div class="ss-logo"><div class="icon">V</div><span>VIREX STORE</span></div>
+    <div class="ss-user"><img id="ss-av" src="" alt=""><span id="ss-name">...</span></div>
   </div>
   <div class="ss-title">Seus Servidores</div>
-  <div class="ss-sub" id="ss-sub">Selecione o servidor que deseja gerenciar</div>
-  <div class="ss-loading" id="ss-loading"><span class="spin"></span> Carregando servidores...</div>
+  <div class="ss-sub" id="ss-sub">Selecione o servidor</div>
+  <div class="ss-loading" id="ss-loading"><span class="spin"></span> Carregando...</div>
   <div class="server-grid" id="server-grid" style="display:none"></div>
 </div>
 
@@ -333,85 +328,53 @@ tr:hover td { background: rgba(255,255,255,.02); }
 <div id="app">
   <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
   <div class="layout">
-
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">V</div>
         <div class="sidebar-name">VIREX STORE</div>
       </div>
-
       <div class="sidebar-guild" onclick="trocarServidor()">
-        <img id="sb-gicon" src="" alt="">
-        <div class="gtext">
-          <div class="gname" id="sb-gname">...</div>
-          <div class="gmembers" id="sb-gmembers">...</div>
-        </div>
+        <img id="sb-gicon" src="" alt="" style="object-fit:cover">
+        <div class="gtext"><div class="gname" id="sb-gname">...</div><div class="gmembers" id="sb-gmembers">...</div></div>
         <div class="gswitch">↕</div>
       </div>
-
       <div class="sidebar-section">
         <div class="sidebar-section-title">Geral</div>
-        <button class="nav-item active" onclick="go('dash',this,'Dashboard')">
-          <span class="icon">🏠</span> Dashboard
-        </button>
-        <button class="nav-item" onclick="go('info',this,'Informações')">
-          <span class="icon">📊</span> Informações
-        </button>
-        <button class="nav-item" onclick="go('logs',this,'Logs')">
-          <span class="icon">📋</span> Logs de Ações
-        </button>
+        <button class="nav-item active" onclick="go('dash',this,'Dashboard')"><span class="icon">🏠</span>Dashboard</button>
+        <button class="nav-item" onclick="go('info',this,'Informações')"><span class="icon">📊</span>Informações</button>
+        <button class="nav-item" onclick="go('logs',this,'Logs')"><span class="icon">📋</span>Logs de Ações</button>
       </div>
-
       <div class="sidebar-section">
         <div class="sidebar-section-title">Mensagens</div>
-        <button class="nav-item" onclick="go('automsg',this,'Mensagem Automática')">
-          <span class="icon">📨</span> Msg Automática
-        </button>
-        <button class="nav-item" onclick="go('anuncio',this,'Anúncio')">
-          <span class="icon">📣</span> Anúncio Embed
-        </button>
-        <button class="nav-item" onclick="go('enviar',this,'Enviar Mensagem')">
-          <span class="icon">💬</span> Enviar Mensagem
-        </button>
-        <button class="nav-item" onclick="go('editmsg',this,'Editar Mensagem')">
-          <span class="icon">✏️</span> Editar Mensagem
-        </button>
-        <button class="nav-item" onclick="go('ping',this,'Ping Silencioso')">
-          <span class="icon">📢</span> Ping Silencioso
-        </button>
+        <button class="nav-item" onclick="go('automsg',this,'Msg Automática')"><span class="icon">📨</span>Msg Automática</button>
+        <button class="nav-item" onclick="go('anuncio',this,'Anúncio')"><span class="icon">📣</span>Anúncio Embed</button>
+        <button class="nav-item" onclick="go('enviar',this,'Enviar Mensagem')"><span class="icon">💬</span>Enviar Mensagem</button>
+        <button class="nav-item" onclick="go('editmsg',this,'Editar Mensagem')"><span class="icon">✏️</span>Editar Mensagem</button>
+        <button class="nav-item" onclick="go('ping',this,'Ping Silencioso')"><span class="icon">📢</span>Ping Silencioso</button>
       </div>
-
       <div class="sidebar-section">
         <div class="sidebar-section-title">Moderação</div>
-        <button class="nav-item" onclick="go('mod',this,'Moderação')">
-          <span class="icon">🛡️</span> Moderar Membros
-        </button>
-        <button class="nav-item" onclick="go('canal',this,'Canais')">
-          <span class="icon">🔧</span> Gerenciar Canais
-        </button>
-        <button class="nav-item" onclick="go('cargos',this,'Cargos')">
-          <span class="icon">🎭</span> Cargos
-        </button>
+        <button class="nav-item" onclick="go('mod',this,'Moderação')"><span class="icon">🛡️</span>Moderar Membros</button>
+        <button class="nav-item" onclick="go('banidos',this,'Banidos')"><span class="icon">🔨</span>Lista de Banidos</button>
+        <button class="nav-item" onclick="go('canal',this,'Canais')"><span class="icon">🔧</span>Gerenciar Canais</button>
+        <button class="nav-item" onclick="go('negra',this,'Lista Negra')"><span class="icon">🚫</span>Lista Negra</button>
+        <button class="nav-item" onclick="go('cargos',this,'Cargos')"><span class="icon">🎭</span>Cargos</button>
       </div>
-
       <div class="sidebar-footer">
         <img id="sb-uav" src="" alt="">
-        <div class="uinfo">
-          <div class="uname" id="sb-uname">...</div>
-          <div class="utag">Administrador</div>
+        <div class="uinfo"><div class="uname" id="sb-uname">...</div><div class="utag">Administrador</div></div>
+        <div class="sidebar-footer-btns">
+          <button class="icon-btn" onclick="toggleTheme()" title="Alternar tema" id="theme-btn">🌙</button>
+          <button class="icon-btn logout" onclick="logout()" title="Sair">⏻</button>
         </div>
-        <button class="logout-btn" onclick="logout()" title="Sair">⏻</button>
       </div>
     </aside>
 
-    <!-- MAIN -->
     <div class="main">
       <div class="topbar">
         <button class="menu-toggle" onclick="openSidebar()">☰</button>
         <div class="topbar-title" id="topbar-title">Dashboard</div>
       </div>
-
       <div class="content">
 
         <!-- DASHBOARD -->
@@ -419,10 +382,13 @@ tr:hover td { background: rgba(255,255,255,.02); }
           <div class="stat-row">
             <div class="stat-card"><div class="slabel">Servidores</div><div class="sval blue" id="d-guilds">—</div></div>
             <div class="stat-card"><div class="slabel">Membros</div><div class="sval green" id="d-members">—</div></div>
+            <div class="stat-card"><div class="slabel">Online</div><div class="sval orange" id="d-online">—</div></div>
             <div class="stat-card"><div class="slabel">Msgs Ativas</div><div class="sval pink" id="d-auto">—</div></div>
             <div class="stat-card"><div class="slabel">Ações Log</div><div class="sval yellow" id="d-logs">—</div></div>
           </div>
           <div id="dash-guild"></div>
+          <div class="section-title">Últimos Membros que Entraram</div>
+          <div class="panel-card" id="recent-members"><div class="empty-state"><span class="spin"></span></div></div>
         </div>
 
         <!-- MSG AUTO -->
@@ -434,13 +400,13 @@ tr:hover td { background: rgba(255,255,255,.02); }
               <div class="form-group"><label>Intervalo</label><input id="am-intervalo" placeholder="ex: 30s, 5m, 2h" value="10m"></div>
               <div class="form-group"><label>Menção (opcional)</label><input id="am-mencao" placeholder="@everyone | @here | ID cargo"></div>
             </div>
-            <div class="form-group" style="margin-top:14px"><label>Mensagem</label><textarea id="am-msg" placeholder="Digite a mensagem..."></textarea></div>
-            <div class="form-group" style="margin-top:14px"><label>URL Banner (opcional)</label><input id="am-banner" placeholder="https://..."></div>
+            <div class="form-group" style="margin-top:12px"><label>Mensagem</label><textarea id="am-msg" placeholder="Digite a mensagem..."></textarea></div>
+            <div class="form-group" style="margin-top:12px"><label>URL Banner (opcional)</label><input id="am-banner" placeholder="https://..."></div>
             <div class="btn-row"><button class="btn btn-primary" onclick="criarAutoMsg()">▶ Ativar Mensagem</button></div>
           </div>
           <div class="section-title">Mensagens Ativas</div>
-          <button class="btn btn-ghost" style="margin-bottom:12px" onclick="carregarAutoMsgs()">↻ Atualizar</button>
-          <div id="am-list"><div class="empty-state"><div class="ei"><span class="spin"></span></div></div></div>
+          <button class="btn btn-ghost btn-sm" style="margin-bottom:10px" onclick="carregarAutoMsgs()">↻ Atualizar</button>
+          <div id="am-list"><div class="empty-state"><span class="spin"></span></div></div>
           <div id="edit-am-box" style="display:none">
             <div class="section-title">Editar Mensagem</div>
             <div class="panel-card">
@@ -449,8 +415,8 @@ tr:hover td { background: rgba(255,255,255,.02); }
                 <div class="form-group"><label>Novo Intervalo (vazio = manter)</label><input id="edit-am-int" placeholder="ex: 5m"></div>
                 <div class="form-group"><label>Nova Menção (vazio = manter)</label><input id="edit-am-men" placeholder="@everyone | @here | ID"></div>
               </div>
-              <div class="form-group" style="margin-top:14px"><label>Nova Mensagem</label><textarea id="edit-am-msg"></textarea></div>
-              <div class="form-group" style="margin-top:14px"><label>Novo Banner (vazio = manter)</label><input id="edit-am-ban" placeholder="https://..."></div>
+              <div class="form-group" style="margin-top:12px"><label>Nova Mensagem</label><textarea id="edit-am-msg"></textarea></div>
+              <div class="form-group" style="margin-top:12px"><label>Novo Banner (vazio = manter)</label><input id="edit-am-ban" placeholder="https://..."></div>
               <div class="btn-row">
                 <button class="btn btn-success" onclick="salvarEditAM()">💾 Salvar</button>
                 <button class="btn btn-ghost" onclick="document.getElementById('edit-am-box').style.display='none'">Cancelar</button>
@@ -465,21 +431,29 @@ tr:hover td { background: rgba(255,255,255,.02); }
           <div class="panel-card">
             <div class="form-grid">
               <div class="form-group"><label>Canal</label><select id="anun-canal"></select></div>
-              <div class="form-group"><label>Título</label><input id="anun-titulo" placeholder="Título do anúncio"></div>
+              <div class="form-group"><label>Título</label><input id="anun-titulo" placeholder="Título" oninput="atualizarPreview()"></div>
               <div class="form-group"><label>Menção (opcional)</label><input id="anun-mencao" placeholder="@everyone | @here | ID"></div>
             </div>
-            <div class="form-group" style="margin-top:14px"><label>Descrição</label><textarea id="anun-desc" placeholder="Conteúdo do anúncio..."></textarea></div>
-            <div class="form-grid" style="margin-top:14px">
-              <div class="form-group"><label>Imagem (URL)</label><input id="anun-img" placeholder="https://..."></div>
+            <div class="form-group" style="margin-top:12px"><label>Descrição</label><textarea id="anun-desc" placeholder="Conteúdo..." oninput="atualizarPreview()"></textarea></div>
+            <div class="form-grid" style="margin-top:12px">
+              <div class="form-group"><label>Imagem (URL)</label><input id="anun-img" placeholder="https://..." oninput="atualizarPreview()"></div>
               <div class="form-group"><label>Thumbnail (URL)</label><input id="anun-thumb" placeholder="https://..."></div>
-              <div class="form-group"><label>Rodapé</label><input id="anun-rodape" placeholder="Texto do rodapé"></div>
+              <div class="form-group"><label>Rodapé</label><input id="anun-rodape" placeholder="Rodapé" oninput="atualizarPreview()"></div>
               <div class="form-group">
                 <label>Cor do Embed</label>
-                <div style="display:flex;gap:10px;align-items:center">
-                  <input id="anun-cor" type="color" value="#5865f2" style="width:44px;height:38px;padding:2px;background:var(--bg);border:1px solid var(--bdr);border-radius:8px;cursor:pointer">
-                  <span style="color:var(--muted);font-size:.82rem">Clique para escolher</span>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <input id="anun-cor" type="color" value="#5865f2" style="width:44px;height:36px;padding:2px;background:var(--input-bg);border:1px solid var(--bdr);border-radius:8px;cursor:pointer" oninput="atualizarPreview()">
+                  <span style="color:var(--muted);font-size:.8rem">Escolha a cor</span>
                 </div>
               </div>
+            </div>
+            <!-- PREVIEW -->
+            <div class="section-title" style="margin-top:18px">Preview</div>
+            <div id="embed-preview" class="embed-preview" style="border-left-color:#5865f2">
+              <div class="ep-title" id="ep-title" style="display:none"></div>
+              <div class="ep-desc" id="ep-desc">Digite algo para ver o preview...</div>
+              <img class="ep-img" id="ep-img" style="display:none" src="" alt="">
+              <div class="ep-footer" id="ep-footer" style="display:none"></div>
             </div>
             <div class="btn-row"><button class="btn btn-primary" onclick="enviarAnuncio()">📣 Enviar Anúncio</button></div>
           </div>
@@ -493,7 +467,7 @@ tr:hover td { background: rgba(255,255,255,.02); }
               <div class="form-group"><label>Canal</label><select id="env-canal"></select></div>
               <div class="form-group"><label>Menção (opcional)</label><input id="env-mencao" placeholder="@everyone | @here | ID cargo"></div>
             </div>
-            <div class="form-group" style="margin-top:14px"><label>Mensagem</label><textarea id="env-msg" placeholder="Digite a mensagem..."></textarea></div>
+            <div class="form-group" style="margin-top:12px"><label>Mensagem</label><textarea id="env-msg" placeholder="Digite a mensagem..."></textarea></div>
             <div class="btn-row"><button class="btn btn-success" onclick="enviarMsgCanal()">💬 Enviar</button></div>
           </div>
         </div>
@@ -506,7 +480,7 @@ tr:hover td { background: rgba(255,255,255,.02); }
               <div class="form-group"><label>Canal</label><select id="em-canal"></select></div>
               <div class="form-group"><label>ID da Mensagem</label><input id="em-mid" placeholder="ID da mensagem"></div>
             </div>
-            <div class="form-group" style="margin-top:14px"><label>Novo Conteúdo</label><textarea id="em-txt" placeholder="Novo texto..."></textarea></div>
+            <div class="form-group" style="margin-top:12px"><label>Novo Conteúdo</label><textarea id="em-txt" placeholder="Novo texto..."></textarea></div>
             <div class="btn-row"><button class="btn btn-success" onclick="editarMsg()">💾 Salvar Edição</button></div>
           </div>
         </div>
@@ -514,44 +488,74 @@ tr:hover td { background: rgba(255,255,255,.02); }
         <!-- PING -->
         <div class="page" id="page-ping">
           <div class="section-title">Ping Silencioso</div>
-          <div class="panel-card" style="text-align:center;padding:36px 24px">
-            <div style="font-size:2.5rem;margin-bottom:12px">📢</div>
-            <div style="font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:8px">Ping Silencioso</div>
-            <p style="color:var(--muted);font-size:.88rem;max-width:400px;margin:0 auto 24px">Envia um <code style="background:var(--card2);padding:1px 6px;border-radius:4px">.</code> em todos os canais de texto e apaga após 1 segundo. Serve para notificar membros online.</p>
-            <button class="btn btn-warning" onclick="enviarPing()">📢 Disparar Ping</button>
-            <div style="color:var(--red);font-size:.85rem;margin-top:10px" id="ping-warn"></div>
+          <div class="panel-card" style="text-align:center;padding:32px 24px">
+            <div style="font-size:2.5rem;margin-bottom:10px">📢</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--txt);margin-bottom:8px">Ping Silencioso</div>
+            <p style="color:var(--muted);font-size:.86rem;max-width:400px;margin:0 auto 20px">Envia <code style="background:var(--card2);padding:1px 6px;border-radius:4px">.</code> em todos os canais e apaga em 1 segundo.</p>
+            <button class="btn btn-warning" onclick="confirmarAcao('Disparar ping silencioso em todos os canais?','📢',enviarPing)">📢 Disparar Ping</button>
+            <div style="color:var(--red);font-size:.84rem;margin-top:8px" id="ping-warn"></div>
           </div>
         </div>
 
         <!-- MODERAÇÃO -->
         <div class="page" id="page-mod">
+          <div class="section-title">Buscar Membro</div>
+          <div class="panel-card">
+            <div class="form-group member-search-wrap">
+              <label>Nome ou ID do Membro</label>
+              <input id="member-search" placeholder="Digite o nome..." autocomplete="off" oninput="buscarMembros(this.value)">
+              <div class="member-dropdown" id="member-dropdown"></div>
+            </div>
+            <div id="membro-selecionado" style="display:none;margin-top:10px">
+              <div class="member-card" id="membro-card-preview"></div>
+            </div>
+          </div>
+
           <div class="section-title">Banir Membro</div>
           <div class="panel-card">
             <div class="form-grid">
-              <div class="form-group"><label>ID do Usuário</label><input id="ban-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>ID do Usuário</label><div style="display:flex;gap:6px"><input id="ban-uid" placeholder="ID do usuário"><button class="copy-id-btn" onclick="usarMembroSelecionado('ban-uid')">usar selecionado</button></div></div>
               <div class="form-group"><label>Motivo (opcional)</label><input id="ban-mot" placeholder="Motivo do ban"></div>
             </div>
-            <div class="btn-row"><button class="btn btn-danger" onclick="banirMembro()">🔨 Banir</button></div>
+            <div class="btn-row"><button class="btn btn-danger" onclick="confirmarAcao('Banir este usuário? Esta ação removerá ele do servidor.','🔨',banirMembro,'ban')">🔨 Banir</button></div>
           </div>
 
           <div class="section-title">Kickar Membro</div>
           <div class="panel-card">
             <div class="form-grid">
-              <div class="form-group"><label>ID do Usuário</label><input id="kick-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>ID do Usuário</label><div style="display:flex;gap:6px"><input id="kick-uid" placeholder="ID do usuário"><button class="copy-id-btn" onclick="usarMembroSelecionado('kick-uid')">usar selecionado</button></div></div>
               <div class="form-group"><label>Motivo (opcional)</label><input id="kick-mot" placeholder="Motivo do kick"></div>
             </div>
-            <div class="btn-row"><button class="btn btn-warning" onclick="kickarMembro()">👢 Kickar</button></div>
+            <div class="btn-row"><button class="btn btn-warning" onclick="confirmarAcao('Kickar este usuário?','👢',kickarMembro,'kick')">👢 Kickar</button></div>
           </div>
 
-          <div class="section-title">Timeout (Mutar Temporário)</div>
+          <div class="section-title">Timeout</div>
           <div class="panel-card">
             <div class="form-grid">
-              <div class="form-group"><label>ID do Usuário</label><input id="to-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>ID do Usuário</label><div style="display:flex;gap:6px"><input id="to-uid" placeholder="ID do usuário"><button class="copy-id-btn" onclick="usarMembroSelecionado('to-uid')">usar selecionado</button></div></div>
               <div class="form-group"><label>Duração (minutos)</label><input id="to-min" type="number" value="5" min="1" max="40320"></div>
               <div class="form-group"><label>Motivo (opcional)</label><input id="to-mot" placeholder="Motivo"></div>
             </div>
-            <div class="btn-row"><button class="btn btn-warning" onclick="timeoutMembro()">⏱️ Aplicar Timeout</button></div>
+            <div class="btn-row"><button class="btn btn-warning" onclick="confirmarAcao('Aplicar timeout neste usuário?','⏱️',timeoutMembro,'timeout')">⏱️ Aplicar Timeout</button></div>
           </div>
+
+          <div class="section-title">Histórico de Punições</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><div style="display:flex;gap:6px"><input id="hist-uid" placeholder="ID do usuário"><button class="copy-id-btn" onclick="usarMembroSelecionado('hist-uid')">usar selecionado</button></div></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-ghost" onclick="verHistorico()">📋 Ver Histórico</button></div>
+            <div id="historico-res" style="margin-top:12px"></div>
+          </div>
+        </div>
+
+        <!-- BANIDOS -->
+        <div class="page" id="page-banidos">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <div class="section-title" style="margin:0">Lista de Banidos</div>
+            <button class="btn btn-ghost btn-sm" onclick="carregarBanidos()">↻ Atualizar</button>
+          </div>
+          <div class="panel-card" id="ban-list"><div class="empty-state"><span class="spin"></span></div></div>
         </div>
 
         <!-- CANAIS -->
@@ -562,9 +566,8 @@ tr:hover td { background: rgba(255,255,255,.02); }
               <div class="form-group"><label>Canal</label><select id="lim-canal"></select></div>
               <div class="form-group"><label>Quantidade (máx 100)</label><input id="lim-qtd" type="number" value="10" min="1" max="100"></div>
             </div>
-            <div class="btn-row"><button class="btn btn-danger" onclick="limparMsgs()">🗑️ Limpar Mensagens</button></div>
+            <div class="btn-row"><button class="btn btn-danger" onclick="confirmarAcao('Limpar mensagens neste canal?','🗑️',limparMsgs)">🗑️ Limpar Mensagens</button></div>
           </div>
-
           <div class="section-title">Slowmode</div>
           <div class="panel-card">
             <div class="form-grid">
@@ -573,14 +576,28 @@ tr:hover td { background: rgba(255,255,255,.02); }
             </div>
             <div class="btn-row"><button class="btn btn-primary" onclick="aplicarSlowmode()">🐢 Aplicar Slowmode</button></div>
           </div>
-
-          <div class="section-title">Lockdown de Canal</div>
+          <div class="section-title">Lockdown</div>
           <div class="panel-card">
-            <div class="form-group" style="max-width:320px;margin-bottom:14px"><label>Canal</label><select id="lock-canal"></select></div>
+            <div class="form-group" style="max-width:300px;margin-bottom:12px"><label>Canal</label><select id="lock-canal"></select></div>
             <div class="btn-row">
-              <button class="btn btn-danger" onclick="lockdown(true)">🔒 Travar Canal</button>
+              <button class="btn btn-danger" onclick="confirmarAcao('Travar este canal para todos?','🔒',()=>lockdown(true))">🔒 Travar Canal</button>
               <button class="btn btn-success" onclick="lockdown(false)">🔓 Destravar Canal</button>
             </div>
+          </div>
+        </div>
+
+        <!-- LISTA NEGRA -->
+        <div class="page" id="page-negra">
+          <div class="section-title">Lista Negra de Palavras</div>
+          <div class="panel-card">
+            <p style="color:var(--muted);font-size:.86rem;margin-bottom:14px">Palavras que o bot apaga automaticamente quando enviadas no servidor.</p>
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <input id="nova-palavra" placeholder="Digite uma palavra..." style="flex:1;background:var(--input-bg);border:1px solid var(--bdr);border-radius:8px;color:var(--txt);font-family:var(--font);font-size:.88rem;padding:9px 11px;outline:none"
+                onkeydown="if(event.key==='Enter')adicionarPalavra()">
+              <button class="btn btn-danger" onclick="adicionarPalavra()">+ Adicionar</button>
+            </div>
+            <div id="palavras-lista" style="margin-bottom:14px"></div>
+            <button class="btn btn-success" onclick="salvarListaNegra()">💾 Salvar Lista</button>
           </div>
         </div>
 
@@ -589,26 +606,24 @@ tr:hover td { background: rgba(255,255,255,.02); }
           <div class="section-title">Dar Cargo</div>
           <div class="panel-card">
             <div class="form-grid">
-              <div class="form-group"><label>ID do Usuário</label><input id="dc-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>ID do Usuário</label><div style="display:flex;gap:6px"><input id="dc-uid" placeholder="ID do usuário"><button class="copy-id-btn" onclick="usarMembroSelecionado('dc-uid')">usar selecionado</button></div></div>
               <div class="form-group"><label>Cargo</label><select id="dc-cargo"></select></div>
             </div>
             <div class="btn-row"><button class="btn btn-success" onclick="darCargo()">➕ Dar Cargo</button></div>
           </div>
-
           <div class="section-title">Remover Cargo</div>
           <div class="panel-card">
             <div class="form-grid">
-              <div class="form-group"><label>ID do Usuário</label><input id="rc-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>ID do Usuário</label><div style="display:flex;gap:6px"><input id="rc-uid" placeholder="ID do usuário"><button class="copy-id-btn" onclick="usarMembroSelecionado('rc-uid')">usar selecionado</button></div></div>
               <div class="form-group"><label>Cargo</label><select id="rc-cargo"></select></div>
             </div>
             <div class="btn-row"><button class="btn btn-danger" onclick="removerCargo()">➖ Remover Cargo</button></div>
           </div>
-
           <div class="section-title">DM em Massa</div>
           <div class="panel-card">
-            <div class="form-group"><label>Mensagem</label><textarea id="dm-msg" placeholder="Mensagem enviada para todos os membros..."></textarea></div>
-            <p style="color:var(--red);font-size:.8rem;margin-top:8px">⚠️ Isso envia DM para TODOS os membros. Use com cuidado!</p>
-            <div class="btn-row"><button class="btn btn-warning" onclick="dmMassa()">📩 Enviar DM em Massa</button></div>
+            <div class="form-group"><label>Mensagem</label><textarea id="dm-msg" placeholder="Mensagem para todos os membros..."></textarea></div>
+            <p style="color:var(--red);font-size:.78rem;margin-top:8px">⚠️ Envia DM para TODOS os membros. Use com cuidado!</p>
+            <div class="btn-row"><button class="btn btn-warning" onclick="confirmarAcao('Enviar DM para TODOS os membros do servidor?','📩',dmMassa)">📩 Enviar DM em Massa</button></div>
           </div>
         </div>
 
@@ -617,19 +632,21 @@ tr:hover td { background: rgba(255,255,255,.02); }
           <div id="info-guild-res"></div>
           <div class="section-title">Buscar Membro</div>
           <div class="panel-card">
-            <div class="form-grid">
-              <div class="form-group"><label>ID do Usuário</label><input id="info-uid" placeholder="ID do usuário"></div>
+            <div class="form-group member-search-wrap">
+              <label>Nome ou ID</label>
+              <input id="info-search" placeholder="Digite o nome..." autocomplete="off" oninput="buscarMembrosInfo(this.value)">
+              <div class="member-dropdown" id="info-dropdown"></div>
             </div>
-            <div class="btn-row"><button class="btn btn-primary" onclick="buscarMembro()">🔍 Buscar</button></div>
+            <div class="btn-row"><button class="btn btn-primary" onclick="buscarMembroInfo()">🔍 Buscar</button></div>
             <div id="info-member-res"></div>
           </div>
         </div>
 
         <!-- LOGS -->
         <div class="page" id="page-logs">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
             <div class="section-title" style="margin:0">Histórico de Ações</div>
-            <button class="btn btn-ghost" onclick="carregarLogs()">↻ Atualizar</button>
+            <button class="btn btn-ghost btn-sm" onclick="carregarLogs()">↻ Atualizar</button>
           </div>
           <div class="table-wrap">
             <table>
@@ -639,10 +656,10 @@ tr:hover td { background: rgba(255,255,255,.02); }
           </div>
         </div>
 
-      </div><!-- content -->
-    </div><!-- main -->
-  </div><!-- layout -->
-</div><!-- app -->
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -655,12 +672,44 @@ let TOKEN    = localStorage.getItem("vx_token") || "";
 let ME       = null;
 let GUILD_ID = localStorage.getItem("vx_guild") || "";
 let GUILDS   = [];
+let MEMBRO_SEL = null;
+let palavrasNegras = [];
+let confirmCallback = null;
+
+// ── THEME ──
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const next = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("vx_theme", next);
+  document.getElementById("theme-btn").textContent = next === "dark" ? "🌙" : "☀️";
+}
+(function(){
+  const t = localStorage.getItem("vx_theme") || "dark";
+  document.documentElement.setAttribute("data-theme", t);
+  window.addEventListener("load", ()=>{
+    const btn = document.getElementById("theme-btn");
+    if(btn) btn.textContent = t==="dark"?"🌙":"☀️";
+  });
+})();
+
+// ── CONFIRM MODAL ──
+function confirmarAcao(msg, icon, cb, tipo) {
+  document.getElementById("cm-sub").textContent = msg;
+  document.getElementById("cm-icon").textContent = icon || "⚠️";
+  document.getElementById("cm-title").textContent = "Tem certeza?";
+  const btn = document.getElementById("cm-ok");
+  btn.className = "btn " + (tipo==="ban"||tipo==="kick"||tipo==="timeout" ? "btn-danger" : "btn-warning");
+  confirmCallback = cb;
+  document.getElementById("confirm-modal").classList.add("open");
+}
+function closeConfirm() { document.getElementById("confirm-modal").classList.remove("open"); }
+function confirmOk()    { closeConfirm(); if(confirmCallback) confirmCallback(); }
 
 // ── OAUTH ──
 function loginDiscord() {
   location.href = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT)}&response_type=code&scope=identify`;
 }
-
 async function handleCallback() {
   const p = new URLSearchParams(location.search);
   const code = p.get("code");
@@ -668,189 +717,245 @@ async function handleCallback() {
   history.replaceState({}, "", location.pathname);
   document.getElementById("lerr").textContent = "⏳ Autenticando...";
   try {
-    const r = await fetch(API + "/api/oauth/callback", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({code}) });
+    const r = await fetch(API+"/api/oauth/callback",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({code})});
     const d = await r.json();
-    if (!r.ok) throw new Error(d.error || "Erro");
-    TOKEN = d.access_token;
-    localStorage.setItem("vx_token", TOKEN);
-    ME = d;
+    if (!r.ok) throw new Error(d.error||"Erro");
+    TOKEN=d.access_token; localStorage.setItem("vx_token",TOKEN); ME=d;
     await mostrarSelecao();
-  } catch(e) { document.getElementById("lerr").textContent = "❌ " + e.message; }
+  } catch(e) { document.getElementById("lerr").textContent="❌ "+e.message; }
 }
-
 async function checkToken() {
   if (!TOKEN) return false;
   try {
-    const r = await fetch(API + "/api/me", { headers: {"X-Discord-Token": TOKEN} });
-    if (!r.ok) { TOKEN=""; localStorage.removeItem("vx_token"); return false; }
-    ME = await r.json(); return true;
-  } catch { return false; }
+    const r=await fetch(API+"/api/me",{headers:{"X-Discord-Token":TOKEN}});
+    if (!r.ok){TOKEN="";localStorage.removeItem("vx_token");return false;}
+    ME=await r.json(); return true;
+  } catch{return false;}
 }
-
-window.addEventListener("load", async () => {
+window.addEventListener("load",async()=>{
   await handleCallback();
-  if (!ME && TOKEN) {
-    const ok = await checkToken();
-    if (!ok) return;
-    if (GUILD_ID) {
-      await fetchGuilds();
-      const g = GUILDS.find(x=>x.id===GUILD_ID);
-      if (g) { entrar(g); return; }
-    }
+  if (!ME&&TOKEN){
+    const ok=await checkToken();
+    if(!ok)return;
+    if(GUILD_ID){await fetchGuilds();const g=GUILDS.find(x=>x.id===GUILD_ID);if(g){entrar(g);return;}}
     await mostrarSelecao();
   }
 });
 
-async function fetchGuilds() {
-  const r = await req("/api/status");
-  const d = await r.json();
-  GUILDS = d.servidores || [];
+async function fetchGuilds(){
+  const r=await req("/api/status"); const d=await r.json(); GUILDS=d.servidores||[];
 }
-
-async function mostrarSelecao() {
-  document.getElementById("login").style.display = "none";
-  document.getElementById("server-select").style.display = "block";
-  const av = ME.avatar ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/0.png`;
-  document.getElementById("ss-av").src = av;
-  document.getElementById("ss-name").textContent = ME.username;
-  await fetchGuilds();
-  renderGuilds();
+async function mostrarSelecao(){
+  document.getElementById("login").style.display="none";
+  document.getElementById("server-select").style.display="block";
+  const av=ME.avatar?`https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`:`https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("ss-av").src=av;
+  document.getElementById("ss-name").textContent=ME.username;
+  await fetchGuilds(); renderGuilds();
 }
-
-function renderGuilds() {
-  document.getElementById("ss-loading").style.display = "none";
-  const grid = document.getElementById("server-grid");
-  grid.style.display = "grid";
-  document.getElementById("ss-sub").textContent = `${GUILDS.length} servidor${GUILDS.length!==1?"es":""} disponíve${GUILDS.length!==1?"is":"l"}`;
-  if (!GUILDS.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="ei">😔</div><p>O bot não está em nenhum servidor.</p></div>'; return; }
-  grid.innerHTML = GUILDS.map(g => `
-    <div class="server-card" onclick='entrar(${JSON.stringify(g)})'>
-      ${g.icon ? `<img class="sicon" src="${g.icon}" alt="">` : `<div class="sicon-text">${g.nome.charAt(0).toUpperCase()}</div>`}
-      <div class="sinfo">
-        <div class="sname">${g.nome}</div>
-        <div class="smeta">👥 ${g.membros.toLocaleString()} membros</div>
-      </div>
+function renderGuilds(){
+  document.getElementById("ss-loading").style.display="none";
+  const grid=document.getElementById("server-grid");
+  grid.style.display="grid";
+  document.getElementById("ss-sub").textContent=`${GUILDS.length} servidor${GUILDS.length!==1?"es":""} disponíve${GUILDS.length!==1?"is":"l"}`;
+  if(!GUILDS.length){grid.innerHTML='<div class="empty-state" style="grid-column:1/-1"><div class="ei">😔</div><p>Bot não está em nenhum servidor.</p></div>';return;}
+  grid.innerHTML=GUILDS.map(g=>`
+    <div class="server-card" onclick='entrar(${JSON.stringify(g).replace(/'/g,"&#39;")})'>
+      ${g.icon?`<img class="sicon" src="${g.icon}" alt="">`:`<div class="sicon-text">${g.nome.charAt(0).toUpperCase()}</div>`}
+      <div class="sinfo"><div class="sname">${g.nome}</div><div class="smeta">👥 ${g.membros.toLocaleString()}</div></div>
       <div class="sarrow">›</div>
     </div>`).join("");
 }
-
-function entrar(g) {
-  GUILD_ID = g.id;
-  localStorage.setItem("vx_guild", GUILD_ID);
-  document.getElementById("server-select").style.display = "none";
-  document.getElementById("app").style.display = "block";
-
-  const av = ME.avatar ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/0.png`;
-  document.getElementById("sb-uav").src = av;
-  document.getElementById("sb-uname").textContent = ME.username;
-  document.getElementById("sb-gname").textContent = g.nome;
-  document.getElementById("sb-gmembers").textContent = `👥 ${g.membros.toLocaleString()} membros`;
-  if (g.icon) document.getElementById("sb-gicon").src = g.icon;
-  else { const el = document.getElementById("sb-gicon"); el.style.background = "linear-gradient(135deg,#5865f2,#eb459e)"; el.style.display="flex"; el.style.alignItems="center"; el.style.justifyContent="center"; el.style.color="#fff"; el.style.fontWeight="800"; el.textContent = g.nome.charAt(0).toUpperCase(); }
-
+function entrar(g){
+  GUILD_ID=g.id; localStorage.setItem("vx_guild",GUILD_ID);
+  document.getElementById("server-select").style.display="none";
+  document.getElementById("app").style.display="block";
+  const av=ME.avatar?`https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`:`https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("sb-uav").src=av;
+  document.getElementById("sb-uname").textContent=ME.username;
+  document.getElementById("sb-gname").textContent=g.nome;
+  document.getElementById("sb-gmembers").textContent=`👥 ${g.membros.toLocaleString()}`;
+  const gi=document.getElementById("sb-gicon");
+  if(g.icon){gi.src=g.icon;gi.style.borderRadius="8px";}
+  else{gi.src="";gi.style.background="linear-gradient(135deg,#5865f2,#eb459e)";gi.style.borderRadius="8px";}
   carregarTudo();
 }
-
-function trocarServidor() {
-  localStorage.removeItem("vx_guild");
-  GUILD_ID = "";
-  document.getElementById("app").style.display = "none";
-  document.getElementById("server-select").style.display = "block";
-  document.getElementById("ss-loading").style.display = "block";
-  document.getElementById("server-grid").style.display = "none";
+function trocarServidor(){
+  localStorage.removeItem("vx_guild"); GUILD_ID="";
+  document.getElementById("app").style.display="none";
+  document.getElementById("server-select").style.display="block";
+  document.getElementById("ss-loading").style.display="block";
+  document.getElementById("server-grid").style.display="none";
   fetchGuilds().then(renderGuilds);
 }
+function logout(){ localStorage.removeItem("vx_token"); localStorage.removeItem("vx_guild"); location.reload(); }
 
-function logout() {
-  localStorage.removeItem("vx_token");
-  localStorage.removeItem("vx_guild");
-  location.reload();
+async function carregarTudo(){
+  await Promise.all([carregarCanais(),carregarCargos(),carregarDash(),carregarAutoMsgs(),carregarInfoGuild(),carregarListaNegra()]);
 }
+function openSidebar(){document.getElementById("sidebar").classList.add("open");document.getElementById("overlay").classList.add("open");}
+function closeSidebar(){document.getElementById("sidebar").classList.remove("open");document.getElementById("overlay").classList.remove("open");}
 
-async function carregarTudo() {
-  await Promise.all([carregarCanais(), carregarCargos(), carregarDash(), carregarAutoMsgs(), carregarInfoGuild()]);
-}
-
-// ── SIDEBAR ──
-function openSidebar()  { document.getElementById("sidebar").classList.add("open"); document.getElementById("overlay").classList.add("open"); }
-function closeSidebar() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("overlay").classList.remove("open"); }
-
-// ── NAV ──
-function go(id, btn, title) {
+function go(id,btn,title){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));
   document.getElementById("page-"+id).classList.add("active");
   btn.classList.add("active");
-  document.getElementById("topbar-title").textContent = title;
+  document.getElementById("topbar-title").textContent=title;
   closeSidebar();
-  if (id==="logs") carregarLogs();
+  if(id==="logs") carregarLogs();
+  if(id==="banidos") carregarBanidos();
 }
 
-// ── API ──
-async function req(path, opts={}) {
-  return fetch(API+path, { ...opts, headers:{"X-Discord-Token":TOKEN,"Content-Type":"application/json",...(opts.headers||{})} });
+async function req(path,opts={}){
+  return fetch(API+path,{...opts,headers:{"X-Discord-Token":TOKEN,"Content-Type":"application/json",...(opts.headers||{})}});
 }
 
 // ── CANAIS / CARGOS ──
-async function carregarCanais() {
-  const r = await req(`/api/canais?guild_id=${GUILD_ID}`);
-  const d = await r.json();
-  const opts = (d.canais||[]).map(c=>`<option value="${c.id}">#${c.nome}</option>`).join("");
+async function carregarCanais(){
+  const r=await req(`/api/canais?guild_id=${GUILD_ID}`); const d=await r.json();
+  const opts=(d.canais||[]).map(c=>`<option value="${c.id}">#${c.nome}</option>`).join("");
   ["am-canal","anun-canal","env-canal","em-canal","lim-canal","slow-canal","lock-canal"].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
 }
-
-async function carregarCargos() {
-  const r = await req(`/api/cargos?guild_id=${GUILD_ID}`);
-  const d = await r.json();
-  const opts = (d.cargos||[]).map(c=>`<option value="${c.id}">${c.nome}</option>`).join("");
+async function carregarCargos(){
+  const r=await req(`/api/cargos?guild_id=${GUILD_ID}`); const d=await r.json();
+  const opts=(d.cargos||[]).map(c=>`<option value="${c.id}">${c.nome}</option>`).join("");
   ["dc-cargo","rc-cargo"].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
 }
 
-// ── DASHBOARD ──
-async function carregarDash() {
-  const [sr,lr] = await Promise.all([req("/api/status"),req("/api/logs")]);
-  const s=await sr.json(); const l=await lr.json();
-  const g = GUILDS.find(x=>x.id===GUILD_ID)||{};
-  document.getElementById("d-guilds").textContent  = s.servidores.length;
-  document.getElementById("d-members").textContent = (g.membros||0).toLocaleString();
-  document.getElementById("d-auto").textContent    = s.msgs_auto;
-  document.getElementById("d-logs").textContent    = l.logs.length;
-  const el=document.getElementById("dash-guild");
-  el.innerHTML=`
-    <div class="guild-hero">
-      ${g.icon?`<img src="${g.icon}" alt="" style="width:64px;height:64px;border-radius:16px">`:`<div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--acc),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;color:#fff;flex-shrink:0">${(g.nome||'?').charAt(0)}</div>`}
-      <div>
-        <div class="gname">${g.nome||'?'}</div>
-        <div class="gid">${g.id||''}</div>
-        <div class="gmeta">👥 ${(g.membros||0).toLocaleString()} membros</div>
-      </div>
-      <button class="btn btn-ghost switch-btn" onclick="trocarServidor()">↕ Trocar Servidor</button>
+// ── MEMBER SEARCH ──
+let searchTimeout;
+async function buscarMembros(q){
+  clearTimeout(searchTimeout);
+  const dd=document.getElementById("member-dropdown");
+  if(!q){dd.classList.remove("open");return;}
+  searchTimeout=setTimeout(async()=>{
+    const r=await req(`/api/membros?guild_id=${GUILD_ID}&q=${encodeURIComponent(q)}`);
+    const d=await r.json();
+    if(!d.membros?.length){dd.innerHTML='<div style="padding:12px;color:var(--muted);font-size:.84rem">Nenhum membro encontrado</div>';dd.classList.add("open");return;}
+    dd.innerHTML=d.membros.map(m=>`
+      <div class="member-opt" onclick="selecionarMembro(${JSON.stringify(m).replace(/"/g,'&quot;')})">
+        <img src="${m.avatar}" alt="">
+        <div><div class="mn">${esc(m.nome)}</div><div class="mid">${m.id} <button class="copy-id-btn" onclick="event.stopPropagation();copyText('${m.id}')">📋 copiar</button></div></div>
+      </div>`).join("");
+    dd.classList.add("open");
+  },300);
+}
+
+async function buscarMembrosInfo(q){
+  clearTimeout(searchTimeout);
+  const dd=document.getElementById("info-dropdown");
+  if(!q){dd.classList.remove("open");return;}
+  searchTimeout=setTimeout(async()=>{
+    const r=await req(`/api/membros?guild_id=${GUILD_ID}&q=${encodeURIComponent(q)}`);
+    const d=await r.json();
+    if(!d.membros?.length){dd.innerHTML='<div style="padding:12px;color:var(--muted);font-size:.84rem">Nenhum encontrado</div>';dd.classList.add("open");return;}
+    dd.innerHTML=d.membros.map(m=>`
+      <div class="member-opt" onclick="selecionarMembroInfo('${m.id}')">
+        <img src="${m.avatar}" alt="">
+        <div><div class="mn">${esc(m.nome)}</div><div class="mid">${m.id}</div></div>
+      </div>`).join("");
+    dd.classList.add("open");
+  },300);
+}
+
+function selecionarMembro(m){
+  MEMBRO_SEL=m;
+  document.getElementById("member-search").value=m.nome;
+  document.getElementById("member-dropdown").classList.remove("open");
+  const el=document.getElementById("membro-selecionado");
+  el.style.display="block";
+  document.getElementById("membro-card-preview").innerHTML=`
+    <img src="${m.avatar}" alt="">
+    <div>
+      <div class="mname">${esc(m.nome)}</div>
+      ${m.nick?`<div class="mmeta">Nick: ${esc(m.nick)}</div>`:""}
+      <div class="mmeta" style="font-family:var(--mono);font-size:.73rem">ID: ${m.id} <button class="copy-id-btn" onclick="copyText('${m.id}')">📋 copiar</button></div>
     </div>`;
 }
 
+function selecionarMembroInfo(uid){
+  document.getElementById("info-search").value=uid;
+  document.getElementById("info-dropdown").classList.remove("open");
+  buscarMembroInfo(uid);
+}
+
+function usarMembroSelecionado(inputId){
+  if(!MEMBRO_SEL) return toast("Selecione um membro na busca acima!","err");
+  document.getElementById(inputId).value=MEMBRO_SEL.id;
+}
+
+function copyText(txt){
+  navigator.clipboard.writeText(txt).then(()=>toast("ID copiado!","info")).catch(()=>{
+    const el=document.createElement("textarea");el.value=txt;document.body.appendChild(el);el.select();document.execCommand("copy");document.body.removeChild(el);
+    toast("ID copiado!","info");
+  });
+}
+
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".member-search-wrap")){
+    document.querySelectorAll(".member-dropdown").forEach(d=>d.classList.remove("open"));
+  }
+});
+
+// ── DASHBOARD ──
+async function carregarDash(){
+  const [sr,lr,or_]=await Promise.all([req("/api/status"),req("/api/logs"),req(`/api/membros/online?guild_id=${GUILD_ID}`)]);
+  const s=await sr.json(); const l=await lr.json(); const o=await or_.json();
+  const g=GUILDS.find(x=>x.id===GUILD_ID)||{};
+  document.getElementById("d-guilds").textContent=s.servidores.length;
+  document.getElementById("d-members").textContent=(g.membros||0).toLocaleString();
+  document.getElementById("d-online").textContent=(o.online||0).toLocaleString();
+  document.getElementById("d-auto").textContent=s.msgs_auto;
+  document.getElementById("d-logs").textContent=l.logs.length;
+  const el=document.getElementById("dash-guild");
+  const banner=g.banner||null;
+  el.innerHTML=`
+    <div class="guild-hero">
+      ${banner?`<img class="guild-banner" src="${banner}" alt="">`:`<div class="guild-banner-placeholder"></div>`}
+      <div class="guild-hero-body">
+        ${g.icon?`<img class="guild-hero-icon" src="${g.icon}" alt="">`:`<div class="guild-hero-icon-text">${(g.nome||'?').charAt(0)}</div>`}
+        <div class="guild-hero-info"><div class="gname">${g.nome||'?'}</div><div class="gid">${g.id||''}</div></div>
+        <div class="guild-hero-actions">
+          <button class="btn btn-ghost btn-sm" onclick="trocarServidor()">↕ Trocar</button>
+        </div>
+      </div>
+    </div>`;
+  // Últimos membros
+  const rr=await req(`/api/membros/recentes?guild_id=${GUILD_ID}`);
+  const rd=await rr.json();
+  const rm=document.getElementById("recent-members");
+  if(!rd.membros?.length){rm.innerHTML='<div class="empty-state"><div class="ei">👥</div><p>Nenhum membro recente.</p></div>';return;}
+  rm.innerHTML=rd.membros.map(m=>`
+    <div class="recent-member">
+      <img src="${m.avatar}" alt="">
+      <div><div class="rname">${esc(m.nome)}</div><div style="font-size:.73rem;color:var(--muted);font-family:var(--mono)">${m.id} <button class="copy-id-btn" onclick="copyText('${m.id}')">📋</button></div></div>
+      <div class="rdate">${m.entrou}</div>
+    </div>`).join("");
+}
+
 // ── MSG AUTO ──
-async function criarAutoMsg() {
+async function criarAutoMsg(){
   const body={guild_id:GUILD_ID,canal_id:document.getElementById("am-canal").value,
     intervalo:document.getElementById("am-intervalo").value.trim(),
     mencao:document.getElementById("am-mencao").value.trim(),
     mensagem:document.getElementById("am-msg").value.trim(),
     banner:document.getElementById("am-banner").value.trim()||null};
-  if (!body.mensagem) return toast("Digite a mensagem!","err");
+  if(!body.mensagem)return toast("Digite a mensagem!","err");
   const r=await req("/api/automsg/criar",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) { toast("Mensagem automática ativada!","ok"); carregarAutoMsgs(); }
+  if(d.ok){toast("Mensagem automática ativada!","ok");carregarAutoMsgs();}
   else toast(d.error||"Erro","err");
 }
-
-async function carregarAutoMsgs() {
+async function carregarAutoMsgs(){
   document.getElementById("am-list").innerHTML='<div class="empty-state"><span class="spin"></span></div>';
   const r=await req("/api/automsg"); const d=await r.json();
   const div=document.getElementById("am-list");
-  if (!d.msgs.length){div.innerHTML='<div class="empty-state"><div class="ei">📭</div><p>Nenhuma mensagem automática ativa.</p></div>';return;}
+  if(!d.msgs.length){div.innerHTML='<div class="empty-state"><div class="ei">📭</div><p>Nenhuma mensagem automática ativa.</p></div>';return;}
   div.innerHTML=d.msgs.map(m=>`
     <div class="amsg-card">
       <div>
-        <div class="ch"># ${m.canal_nome} <span style="color:var(--muted);font-size:.72rem;font-family:var(--mono)">${m.canal_id}</span></div>
+        <div class="ch"># ${m.canal_nome} <span style="color:var(--muted);font-size:.7rem;font-family:var(--mono)">${m.canal_id}</span></div>
         <div class="prev">${esc(m.conteudo)}</div>
         <div class="tags">
           <span class="tag">⏱ ${fmtSeg(m.intervalo)}</span>
@@ -858,14 +963,13 @@ async function carregarAutoMsgs() {
           ${m.banner?`<span class="tag">🖼 banner</span>`:""}
         </div>
       </div>
-      <div style="display:flex;gap:6px;flex-shrink:0">
-        <button class="btn btn-ghost" style="padding:7px 12px" onclick="abrirEditAM('${m.canal_id}','${esc(m.conteudo)}')">✏️</button>
-        <button class="btn btn-danger"  style="padding:7px 12px" onclick="pararAutoMsg('${m.canal_id}')">🛑</button>
+      <div style="display:flex;gap:5px;flex-shrink:0">
+        <button class="btn btn-ghost btn-sm" onclick="abrirEditAM('${m.canal_id}','${esc(m.conteudo)}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="confirmarAcao('Parar esta mensagem automática?','🛑',()=>pararAutoMsg('${m.canal_id}'))">🛑</button>
       </div>
     </div>`).join("");
 }
-
-function abrirEditAM(cid,msg) {
+function abrirEditAM(cid,msg){
   document.getElementById("edit-am-cid").value=cid;
   document.getElementById("edit-am-msg").value=msg;
   document.getElementById("edit-am-int").value="";
@@ -874,8 +978,7 @@ function abrirEditAM(cid,msg) {
   document.getElementById("edit-am-box").style.display="block";
   document.getElementById("edit-am-box").scrollIntoView({behavior:"smooth"});
 }
-
-async function salvarEditAM() {
+async function salvarEditAM(){
   const body={canal_id:document.getElementById("edit-am-cid").value,
     mensagem:document.getElementById("edit-am-msg").value.trim(),
     intervalo:document.getElementById("edit-am-int").value.trim()||null,
@@ -883,20 +986,35 @@ async function salvarEditAM() {
     banner:document.getElementById("edit-am-ban").value.trim()||null};
   const r=await req("/api/automsg/editar",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if(d.ok){toast("Mensagem atualizada!","ok");document.getElementById("edit-am-box").style.display="none";carregarAutoMsgs();}
+  if(d.ok){toast("Atualizada!","ok");document.getElementById("edit-am-box").style.display="none";carregarAutoMsgs();}
   else toast(d.error||"Erro","err");
 }
-
-async function pararAutoMsg(cid) {
-  if (!confirm("Parar esta mensagem automática?")) return;
+async function pararAutoMsg(cid){
   const r=await req("/api/automsg/parar",{method:"POST",body:JSON.stringify({canal_id:cid})});
   const d=await r.json();
   if(d.ok){toast("Mensagem parada!","ok");carregarAutoMsgs();}
   else toast(d.error||"Erro","err");
 }
 
+// ── EMBED PREVIEW ──
+function atualizarPreview(){
+  const titulo=document.getElementById("anun-titulo").value;
+  const desc=document.getElementById("anun-desc").value;
+  const img=document.getElementById("anun-img").value;
+  const rodape=document.getElementById("anun-rodape").value;
+  const cor=document.getElementById("anun-cor").value;
+  document.getElementById("embed-preview").style.borderLeftColor=cor;
+  const et=document.getElementById("ep-title");
+  if(titulo){et.textContent=titulo;et.style.display="block";}else{et.style.display="none";}
+  document.getElementById("ep-desc").textContent=desc||"Digite algo para ver o preview...";
+  const ei=document.getElementById("ep-img");
+  if(img){ei.src=img;ei.style.display="block";}else{ei.style.display="none";}
+  const ef=document.getElementById("ep-footer");
+  if(rodape){ef.textContent=rodape;ef.style.display="block";}else{ef.style.display="none";}
+}
+
 // ── ANÚNCIO ──
-async function enviarAnuncio() {
+async function enviarAnuncio(){
   const body={guild_id:GUILD_ID,canal_id:document.getElementById("anun-canal").value,
     titulo:document.getElementById("anun-titulo").value.trim(),
     descricao:document.getElementById("anun-desc").value.trim(),
@@ -912,7 +1030,7 @@ async function enviarAnuncio() {
 }
 
 // ── ENVIAR MSG ──
-async function enviarMsgCanal() {
+async function enviarMsgCanal(){
   const body={guild_id:GUILD_ID,canal_id:document.getElementById("env-canal").value,
     mencao:document.getElementById("env-mencao").value.trim(),
     mensagem:document.getElementById("env-msg").value.trim()};
@@ -923,16 +1041,16 @@ async function enviarMsgCanal() {
 }
 
 // ── PING ──
-async function enviarPing() {
-  document.getElementById("ping-warn").textContent="⏳ Disparando ping...";
+async function enviarPing(){
+  document.getElementById("ping-warn").textContent="⏳ Disparando...";
   const r=await req("/api/ping",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID})});
   const d=await r.json();
   document.getElementById("ping-warn").textContent="";
-  if(d.ok)toast("Ping silencioso disparado!","ok");else toast(d.error||"Erro","err");
+  if(d.ok)toast("Ping disparado!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── EDITAR MSG ──
-async function editarMsg() {
+async function editarMsg(){
   const body={guild_id:GUILD_ID,canal_id:document.getElementById("em-canal").value,
     msg_id:document.getElementById("em-mid").value.trim(),
     conteudo:document.getElementById("em-txt").value.trim()};
@@ -946,7 +1064,6 @@ async function editarMsg() {
 async function banirMembro(){
   const uid=document.getElementById("ban-uid").value.trim();
   if(!uid)return toast("Digite o ID!","err");
-  if(!confirm(`Banir usuário ${uid}?`))return;
   const r=await req("/api/ban",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("ban-mot").value.trim()})});
   const d=await r.json();
   if(d.ok)toast("Usuário banido!","ok");else toast(d.error||"Erro","err");
@@ -954,7 +1071,6 @@ async function banirMembro(){
 async function kickarMembro(){
   const uid=document.getElementById("kick-uid").value.trim();
   if(!uid)return toast("Digite o ID!","err");
-  if(!confirm(`Kickar usuário ${uid}?`))return;
   const r=await req("/api/kick",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("kick-mot").value.trim()})});
   const d=await r.json();
   if(d.ok)toast("Usuário kickado!","ok");else toast(d.error||"Erro","err");
@@ -967,9 +1083,45 @@ async function timeoutMembro(){
   const d=await r.json();
   if(d.ok)toast(`Timeout de ${body.minutos}min aplicado!`,"ok");else toast(d.error||"Erro","err");
 }
+async function verHistorico(){
+  const uid=document.getElementById("hist-uid").value.trim();
+  if(!uid)return toast("Digite o ID!","err");
+  const r=await req(`/api/punicoes?user_id=${uid}`); const d=await r.json();
+  const el=document.getElementById("historico-res");
+  if(!d.punicoes?.length){el.innerHTML='<div class="empty-state"><div class="ei">✅</div><p>Nenhuma punição registrada.</p></div>';return;}
+  el.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Hora</th><th>Tipo</th><th>Motivo</th><th>Moderador</th></tr></thead><tbody>`+
+    d.punicoes.map(p=>`<tr>
+      <td style="font-family:var(--mono);font-size:.73rem;color:var(--muted)">${p.hora}</td>
+      <td><span class="badge ${p.tipo==='ban'?'badge-red':p.tipo==='kick'?'badge-yellow':'badge-orange'}">${p.tipo}</span></td>
+      <td style="color:var(--txt2)">${esc(p.motivo)}</td>
+      <td>${esc(p.moderador)}</td>
+    </tr>`).join("")+`</tbody></table></div>`;
+}
+
+// ── BANIDOS ──
+async function carregarBanidos(){
+  document.getElementById("ban-list").innerHTML='<div class="empty-state"><span class="spin"></span></div>';
+  const r=await req(`/api/banidos?guild_id=${GUILD_ID}`); const d=await r.json();
+  const el=document.getElementById("ban-list");
+  if(d.error){el.innerHTML=`<div class="empty-state"><p>${d.error}</p></div>`;return;}
+  if(!d.banidos?.length){el.innerHTML='<div class="empty-state"><div class="ei">✅</div><p>Nenhum usuário banido.</p></div>';return;}
+  el.innerHTML=d.banidos.map(b=>`
+    <div class="ban-item">
+      <img src="${b.avatar}" alt="">
+      <div><div class="bname">${esc(b.nome)}</div><div class="bmotivo">${esc(b.motivo)}</div><div style="font-size:.72rem;color:var(--muted);font-family:var(--mono)">${b.id} <button class="copy-id-btn" onclick="copyText('${b.id}')">📋</button></div></div>
+      <button class="btn btn-success btn-sm unban-btn" onclick="confirmarAcao('Desbanir ${esc(b.nome)}?','✅',()=>desbanir('${b.id}'))">Desbanir</button>
+    </div>`).join("");
+}
+async function desbanir(uid){
+  const r=await req("/api/unban",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid})});
+  const d=await r.json();
+  if(d.ok){toast("Usuário desbanido!","ok");carregarBanidos();}
+  else toast(d.error||"Erro","err");
+}
+
+// ── CANAIS ──
 async function limparMsgs(){
   const qtd=parseInt(document.getElementById("lim-qtd").value)||10;
-  if(!confirm(`Deletar ${qtd} mensagens?`))return;
   const r=await req("/api/limpar",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("lim-canal").value,quantidade:qtd})});
   const d=await r.json();
   if(d.ok)toast(`${d.deletadas} mensagens deletadas!`,"ok");else toast(d.error||"Erro","err");
@@ -981,10 +1133,35 @@ async function aplicarSlowmode(){
   if(d.ok)toast(`Slowmode ${body.segundos}s aplicado!`,"ok");else toast(d.error||"Erro","err");
 }
 async function lockdown(travar){
-  if(!confirm(travar?"Travar este canal?":"Destravar este canal?"))return;
   const r=await req("/api/lockdown",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("lock-canal").value,travar})});
   const d=await r.json();
   if(d.ok)toast(travar?"Canal travado!":"Canal destravado!","ok");else toast(d.error||"Erro","err");
+}
+
+// ── LISTA NEGRA ──
+async function carregarListaNegra(){
+  const r=await req(`/api/lista_negra?guild_id=${GUILD_ID}`); const d=await r.json();
+  palavrasNegras=d.palavras||[];
+  renderPalavras();
+}
+function renderPalavras(){
+  const el=document.getElementById("palavras-lista");
+  if(!palavrasNegras.length){el.innerHTML='<p style="color:var(--muted);font-size:.84rem">Nenhuma palavra adicionada.</p>';return;}
+  el.innerHTML=palavrasNegras.map((p,i)=>`
+    <span class="palavra-tag">${esc(p)}<span class="del" onclick="removerPalavra(${i})">✕</span></span>`).join("");
+}
+function adicionarPalavra(){
+  const inp=document.getElementById("nova-palavra");
+  const val=inp.value.trim().toLowerCase();
+  if(!val)return;
+  if(!palavrasNegras.includes(val)){palavrasNegras.push(val);renderPalavras();}
+  inp.value="";
+}
+function removerPalavra(i){ palavrasNegras.splice(i,1); renderPalavras(); }
+async function salvarListaNegra(){
+  const r=await req("/api/lista_negra",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,palavras:palavrasNegras})});
+  const d=await r.json();
+  if(d.ok)toast(`Lista salva! ${d.total} palavras.`,"ok");else toast(d.error||"Erro","err");
 }
 
 // ── CARGOS ──
@@ -1005,7 +1182,6 @@ async function removerCargo(){
 async function dmMassa(){
   const msg=document.getElementById("dm-msg").value.trim();
   if(!msg)return toast("Digite a mensagem!","err");
-  if(!confirm("Enviar DM para TODOS os membros?"))return;
   const r=await req("/api/dm_massa",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,mensagem:msg})});
   const d=await r.json();
   if(d.ok)toast("DM em massa iniciada!","ok");else toast(d.error||"Erro","err");
@@ -1015,62 +1191,65 @@ async function dmMassa(){
 async function carregarInfoGuild(){
   const el=document.getElementById("info-guild-res");
   if(!el)return;
-  const r=await req(`/api/info_servidor?guild_id=${GUILD_ID}`);
-  const d=await r.json();
+  const r=await req(`/api/info_servidor?guild_id=${GUILD_ID}`); const d=await r.json();
   if(d.error){el.innerHTML=`<div class="empty-state"><p>${d.error}</p></div>`;return;}
   el.innerHTML=`
     <div class="guild-hero">
-      ${d.icon?`<img src="${d.icon}" style="width:64px;height:64px;border-radius:16px">`:`<div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--acc),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;color:#fff;flex-shrink:0">${d.nome.charAt(0)}</div>`}
-      <div><div class="gname">${d.nome}</div><div class="gid">${d.id}</div></div>
+      ${d.banner?`<img class="guild-banner" src="${d.banner}" alt="">`:`<div class="guild-banner-placeholder"></div>`}
+      <div class="guild-hero-body">
+        ${d.icon?`<img class="guild-hero-icon" src="${d.icon}" alt="">`:`<div class="guild-hero-icon-text">${d.nome.charAt(0)}</div>`}
+        <div class="guild-hero-info"><div class="gname">${d.nome}</div><div class="gid">${d.id}</div></div>
+      </div>
     </div>
     <div class="info-grid">
       <div class="info-item"><div class="ik">Dono</div><div class="iv">${d.dono}</div></div>
       <div class="info-item"><div class="ik">Membros</div><div class="iv">${d.membros.toLocaleString()}</div></div>
+      <div class="info-item"><div class="ik">Online</div><div class="iv" style="color:var(--green2)">${d.online.toLocaleString()}</div></div>
       <div class="info-item"><div class="ik">Humanos / Bots</div><div class="iv">${d.humanos} / ${d.bots}</div></div>
-      <div class="info-item"><div class="ik">Canais Texto</div><div class="iv">${d.canais_texto}</div></div>
-      <div class="info-item"><div class="ik">Canais Voz</div><div class="iv">${d.canais_voz}</div></div>
+      <div class="info-item"><div class="ik">Canais</div><div class="iv">${d.canais_texto} texto · ${d.canais_voz} voz</div></div>
       <div class="info-item"><div class="ik">Cargos</div><div class="iv">${d.cargos}</div></div>
       <div class="info-item"><div class="ik">Criado em</div><div class="iv">${d.criado}</div></div>
-      <div class="info-item"><div class="ik">Boost</div><div class="iv">Nível ${d.boost_level} · ${d.boosts} boosts</div></div>
+      <div class="info-item"><div class="ik">Boost</div><div class="iv">Nível ${d.boost_level} · ${d.boosts}</div></div>
     </div>`;
 }
 
-async function buscarMembro(){
-  const uid=document.getElementById("info-uid").value.trim();
-  if(!uid)return toast("Digite o ID!","err");
+let infoUidSel = "";
+async function buscarMembroInfo(uid){
+  if(uid) infoUidSel=uid;
+  const id=infoUidSel||document.getElementById("info-search").value.trim();
+  if(!id)return toast("Digite o nome ou ID!","err");
   document.getElementById("info-member-res").innerHTML='<div class="empty-state"><span class="spin"></span></div>';
-  const r=await req(`/api/info_membro?guild_id=${GUILD_ID}&user_id=${uid}`);
-  const d=await r.json();
+  const r=await req(`/api/info_membro?guild_id=${GUILD_ID}&user_id=${id}`); const d=await r.json();
   if(d.error){document.getElementById("info-member-res").innerHTML=`<div class="empty-state"><p>${d.error}</p></div>`;return;}
+  const puns=d.punicoes||[];
   document.getElementById("info-member-res").innerHTML=`
     <div class="member-card">
       <img src="${d.avatar}" alt="">
-      <div>
-        <div class="mname">${d.nome} ${d.bot?'<span class="badge badge-blue">BOT</span>':''}</div>
+      <div style="flex:1">
+        <div class="mname">${d.nome}${d.bot?' <span class="badge badge-blue">BOT</span>':''}</div>
         ${d.nick?`<div class="mmeta">Nick: ${d.nick}</div>`:""}
-        <div class="mmeta" style="font-family:var(--mono);font-size:.75rem">ID: ${d.id}</div>
-        <div class="mmeta" style="margin-top:6px">📅 Entrou: ${d.entrou} · Conta criada: ${d.conta_criada}</div>
+        <div class="mmeta" style="font-family:var(--mono);font-size:.73rem">ID: ${d.id} <button class="copy-id-btn" onclick="copyText('${d.id}')">📋 copiar</button></div>
+        <div class="mmeta" style="margin-top:5px">📅 Entrou: ${d.entrou} · Conta criada: ${d.conta_criada}</div>
         <div class="role-pills">${d.cargos.map(r=>`<span class="role-pill">${r}</span>`).join("")}</div>
+        ${puns.length?`<div style="margin-top:10px;font-size:.78rem;color:var(--red)">⚠️ ${puns.length} punição(ões) registrada(s)</div>`:""}
       </div>
     </div>`;
 }
 
 // ── LOGS ──
-const LOG_BADGES = {
-  automsg_criar:'badge-green', anuncio:'badge-green', enviar_msg:'badge-green',
-  automsg_parar:'badge-red', ban:'badge-red', kick:'badge-red', lockdown_on:'badge-red',
-  ping_silencioso:'badge-yellow', timeout:'badge-yellow', slowmode:'badge-yellow',
-  editar_msg:'badge-blue', automsg_editar:'badge-blue', dar_cargo:'badge-blue',
-  limpar_msgs:'badge-pink', remover_cargo:'badge-pink', lockdown_off:'badge-green', dm_massa:'badge-orange'
-};
+const LB={automsg_criar:'badge-green',anuncio:'badge-green',enviar_msg:'badge-green',unban:'badge-green',lockdown_off:'badge-green',
+  automsg_parar:'badge-red',ban:'badge-red',kick:'badge-red',lockdown_on:'badge-red',
+  ping_silencioso:'badge-yellow',timeout:'badge-yellow',slowmode:'badge-yellow',lista_negra:'badge-yellow',
+  editar_msg:'badge-blue',automsg_editar:'badge-blue',dar_cargo:'badge-blue',
+  limpar_msgs:'badge-pink',remover_cargo:'badge-pink',dm_massa:'badge-orange'};
 async function carregarLogs(){
   const r=await req("/api/logs"); const d=await r.json();
   const tb=document.getElementById("logs-body");
-  if(!d.logs.length){tb.innerHTML='<tr><td colspan="4"><div class="empty-state"><div class="ei">📋</div><p>Nenhuma ação registrada.</p></div></td></tr>';return;}
+  if(!d.logs.length){tb.innerHTML='<tr><td colspan="4"><div class="empty-state"><div class="ei">📋</div><p>Nenhuma ação.</p></div></td></tr>';return;}
   tb.innerHTML=d.logs.map(l=>`
     <tr>
-      <td style="font-family:var(--mono);font-size:.75rem;color:var(--muted);white-space:nowrap">${l.hora}</td>
-      <td><span class="badge ${LOG_BADGES[l.acao]||'badge-blue'}">${l.acao.replace(/_/g," ")}</span></td>
+      <td style="font-family:var(--mono);font-size:.73rem;color:var(--muted);white-space:nowrap">${l.hora}</td>
+      <td><span class="badge ${LB[l.acao]||'badge-blue'}">${l.acao.replace(/_/g," ")}</span></td>
       <td style="color:var(--txt2)">${esc(l.detalhe)}</td>
       <td style="font-weight:600">${esc(l.usuario)}</td>
     </tr>`).join("");
@@ -1081,8 +1260,8 @@ function fmtSeg(s){if(s>=3600)return(s/3600)+"h";if(s>=60)return(s/60)+"m";retur
 function esc(t){return String(t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
 function toast(msg,type="ok"){
   const t=document.getElementById("toast");
-  const icons={ok:"✅",err:"❌",info:"ℹ️"};
-  t.innerHTML=`<span>${icons[type]||""}</span><span>${msg}</span>`;
+  const ic={ok:"✅",err:"❌",info:"ℹ️"};
+  t.innerHTML=`<span>${ic[type]||""}</span><span>${msg}</span>`;
   t.className=`toast ${type} show`;
   clearTimeout(t._t);
   t._t=setTimeout(()=>t.classList.remove("show"),3200);
