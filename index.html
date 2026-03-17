@@ -4,159 +4,293 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>VIREX STORE — Painel</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#0d0f14;--surf:#151820;--card:#1a1e2a;--bdr:#252b3b;
-  --acc:#5865f2;--pink:#eb459e;--green:#57f287;--red:#ed4245;--yellow:#fee75c;
-  --orange:#f9a825;--txt:#e8eaf0;--muted:#7a8099;
-  --font:'Rajdhani',sans-serif;--mono:'JetBrains Mono',monospace;
+:root {
+  --bg:      #0e1117;
+  --surf:    #161b27;
+  --card:    #1c2333;
+  --card2:   #212840;
+  --bdr:     #2d3555;
+  --acc:     #5865f2;
+  --acc2:    #7289da;
+  --pink:    #eb459e;
+  --green:   #3ba55c;
+  --green2:  #57f287;
+  --red:     #ed4245;
+  --yellow:  #fee75c;
+  --orange:  #f9a825;
+  --txt:     #dcddde;
+  --txt2:    #b9bbbe;
+  --muted:   #72767d;
+  --font:    'Inter', sans-serif;
+  --mono:    'JetBrains Mono', monospace;
+  --sidebar: 260px;
+  --topbar:  60px;
+  --radius:  12px;
+  --shadow:  0 4px 24px rgba(0,0,0,.4);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);font-family:var(--font);min-height:100vh}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--txt); font-family: var(--font); font-size: 14px; line-height: 1.5; min-height: 100vh; }
+::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 3px; }
 
 /* ── LOGIN ── */
-#login{display:flex;align-items:center;justify-content:center;min-height:100vh;
-  background:radial-gradient(ellipse at 50% 0%,#1a1e3a,var(--bg) 70%)}
-.lbox{background:var(--card);border:1px solid var(--bdr);border-radius:16px;
-  padding:48px 40px;width:380px;text-align:center;box-shadow:0 0 60px rgba(88,101,242,.15)}
-.logo{font-size:2.6rem;font-weight:700;letter-spacing:3px;
-  background:linear-gradient(90deg,var(--acc),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
-.logo-sub{color:var(--muted);font-size:.9rem;margin-bottom:32px}
-.btn-discord{display:flex;align-items:center;justify-content:center;gap:10px;
-  background:#5865f2;border:none;border-radius:10px;color:#fff;cursor:pointer;
-  font-family:var(--font);font-size:1.05rem;font-weight:700;padding:14px;width:100%;
-  letter-spacing:.5px;transition:background .2s,transform .1s}
-.btn-discord:hover{background:#4752c4}.btn-discord:active{transform:scale(.98)}
-.btn-discord svg{width:22px;height:22px}
-#lerr{color:var(--red);font-size:.85rem;margin-top:14px;min-height:18px}
+#login {
+  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0e1117 0%, #161b27 50%, #1a1f35 100%);
+}
+.login-card {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-radius: 20px;
+  padding: 52px 44px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(88,101,242,.1);
+  animation: fadeUp .4s ease;
+}
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+.login-logo {
+  width: 72px; height: 72px; border-radius: 20px;
+  background: linear-gradient(135deg, var(--acc), var(--pink));
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 2rem; font-weight: 800; color: #fff;
+  box-shadow: 0 8px 24px rgba(88,101,242,.4);
+}
+.login-title { font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
+.login-sub { color: var(--muted); font-size: .9rem; margin-bottom: 36px; }
+.btn-login {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: #5865f2; border: none; border-radius: 12px; color: #fff;
+  cursor: pointer; font-family: var(--font); font-size: .95rem; font-weight: 600;
+  padding: 14px 24px; width: 100%; transition: background .2s, transform .1s, box-shadow .2s;
+  box-shadow: 0 4px 16px rgba(88,101,242,.4);
+}
+.btn-login:hover { background: #4752c4; box-shadow: 0 6px 20px rgba(88,101,242,.5); }
+.btn-login:active { transform: scale(.98); }
+.btn-login svg { width: 20px; height: 20px; flex-shrink: 0; }
+.login-err { color: var(--red); font-size: .85rem; margin-top: 14px; min-height: 18px; }
+.login-footer { color: var(--muted); font-size: .78rem; margin-top: 24px; }
 
-/* ── SELEÇÃO DE SERVIDOR ── */
-#servidor-select{display:none;min-height:100vh;
-  background:radial-gradient(ellipse at 50% 0%,#1a1e3a,var(--bg) 70%);
-  align-items:center;justify-content:center;padding:24px}
-.ss-box{width:100%;max-width:640px}
-.ss-header{text-align:center;margin-bottom:32px}
-.ss-header .logo{font-size:2rem;margin-bottom:6px}
-.ss-header p{color:var(--muted);font-size:.95rem}
-.ss-header .user-info{display:flex;align-items:center;justify-content:center;gap:10px;
-  margin-top:16px;background:var(--card);border:1px solid var(--bdr);border-radius:12px;
-  padding:10px 20px;width:fit-content;margin-left:auto;margin-right:auto}
-.ss-header .user-info img{width:32px;height:32px;border-radius:50%}
-.ss-header .user-info span{font-weight:700}
-.guilds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.guild-card{background:var(--card);border:2px solid var(--bdr);border-radius:14px;
-  padding:20px 16px;text-align:center;cursor:pointer;
-  transition:border-color .2s,transform .15s,box-shadow .2s}
-.guild-card:hover{border-color:var(--acc);transform:translateY(-3px);box-shadow:0 8px 24px rgba(88,101,242,.2)}
-.guild-card:active{transform:scale(.97)}
-.guild-card img{width:64px;height:64px;border-radius:50%;margin-bottom:10px;background:var(--bdr)}
-.guild-card .gname{font-weight:700;font-size:1rem;margin-bottom:4px;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.guild-card .gmembers{color:var(--muted);font-size:.82rem}
-.guild-card .gno-icon{width:64px;height:64px;border-radius:50%;background:var(--acc);
-  display:flex;align-items:center;justify-content:center;margin:0 auto 10px;
-  font-size:1.4rem;font-weight:700;color:#fff}
-#ss-loading{text-align:center;padding:40px;color:var(--muted)}
+/* ── SERVER SELECT ── */
+#server-select {
+  display: none; min-height: 100vh;
+  background: linear-gradient(135deg, #0e1117, #161b27 60%, #1a1f35);
+  padding: 32px 20px;
+}
+.ss-header {
+  max-width: 900px; margin: 0 auto 32px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.ss-logo { display: flex; align-items: center; gap: 12px; }
+.ss-logo .icon { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg,var(--acc),var(--pink)); display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff; }
+.ss-logo span { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.ss-user { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--bdr); border-radius: 30px; padding: 6px 16px 6px 6px; }
+.ss-user img { width: 30px; height: 30px; border-radius: 50%; }
+.ss-user span { font-size: .88rem; font-weight: 600; }
+.ss-title { max-width: 900px; margin: 0 auto 8px; font-size: 1.5rem; font-weight: 800; color: #fff; }
+.ss-sub { max-width: 900px; margin: 0 auto 24px; color: var(--muted); font-size: .9rem; }
+.server-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.server-card {
+  background: var(--card); border: 1px solid var(--bdr); border-radius: 16px;
+  padding: 20px; display: flex; align-items: center; gap: 14px;
+  cursor: pointer; transition: border-color .2s, transform .15s, box-shadow .2s;
+}
+.server-card:hover { border-color: var(--acc); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(88,101,242,.2); }
+.server-card:active { transform: scale(.98); }
+.server-card .sicon { width: 50px; height: 50px; border-radius: 14px; object-fit: cover; flex-shrink: 0; background: var(--card2); }
+.server-card .sicon-text { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg,var(--acc),var(--pink)); display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0; }
+.server-card .sinfo { min-width: 0; }
+.server-card .sname { font-weight: 700; font-size: .95rem; color: #fff; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.server-card .smeta { color: var(--muted); font-size: .8rem; margin-top: 2px; }
+.server-card .sarrow { margin-left: auto; color: var(--muted); font-size: 1.2rem; flex-shrink: 0; }
+.ss-loading { max-width: 900px; margin: 0 auto; text-align: center; padding: 60px 0; color: var(--muted); }
 
-/* ── APP ── */
-#app{display:none}
-.topbar{display:flex;align-items:center;justify-content:space-between;
-  background:var(--surf);border-bottom:1px solid var(--bdr);
-  padding:0 20px;height:58px;position:sticky;top:0;z-index:100;gap:10px;flex-wrap:wrap}
-.brand{font-size:1.1rem;font-weight:700;letter-spacing:2px;
-  background:linear-gradient(90deg,var(--acc),var(--pink));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
-.server-badge{display:flex;align-items:center;gap:8px;background:var(--card);
-  border:1px solid var(--bdr);border-radius:10px;padding:5px 12px;cursor:pointer;
-  transition:border-color .2s;font-size:.88rem;font-weight:600}
-.server-badge:hover{border-color:var(--acc)}
-.server-badge img{width:22px;height:22px;border-radius:50%;background:var(--bdr)}
-.server-badge .change{color:var(--muted);font-size:.76rem;margin-left:4px}
-nav{display:flex;gap:2px;flex-wrap:wrap}
-nav button{background:transparent;border:none;border-radius:8px;color:var(--muted);
-  cursor:pointer;font-family:var(--font);font-size:.88rem;font-weight:600;
-  padding:6px 12px;transition:color .2s,background .2s;white-space:nowrap}
-nav button:hover{color:var(--txt);background:var(--card)}
-nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
-.user-tag{display:flex;align-items:center;gap:8px;background:var(--card);
-  border:1px solid var(--bdr);border-radius:20px;padding:4px 12px 4px 5px;font-size:.82rem;white-space:nowrap}
-.avatar{width:24px;height:24px;border-radius:50%;background:var(--bdr)}
-.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
-.page{display:none}.page.active{display:block}
-.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:24px}
-.sc{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:16px 20px}
-.sc .lbl{color:var(--muted);font-size:.78rem;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
-.sc .val{font-size:1.8rem;font-weight:700}
-.val.b{color:var(--acc)}.val.g{color:var(--green)}.val.p{color:var(--pink)}.val.y{color:var(--yellow)}.val.o{color:var(--orange)}
-.stitle{font-size:.95rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--muted);margin:24px 0 12px;border-left:3px solid var(--acc);padding-left:10px}
-.card{background:var(--card);border:1px solid var(--bdr);border-radius:12px;padding:20px;margin-bottom:12px}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fg label{color:var(--muted);font-size:.78rem;letter-spacing:.5px;text-transform:uppercase}
-.fg input,.fg select,.fg textarea{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;
-  color:var(--txt);font-family:var(--mono);font-size:.88rem;padding:9px 12px;
-  outline:none;transition:border-color .2s;width:100%}
-.fg textarea{resize:vertical;min-height:85px;font-family:var(--font);font-size:.92rem}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--acc)}
-.fg select option{background:var(--card)}
-.btn{border:none;border-radius:8px;cursor:pointer;font-family:var(--font);
-  font-size:.92rem;font-weight:700;padding:9px 20px;letter-spacing:.5px;
-  transition:opacity .2s,transform .1s}
-.btn:hover{opacity:.85}.btn:active{transform:scale(.98)}
-.btn-g{background:var(--green);color:#000}
-.btn-r{background:rgba(237,66,69,.15);border:1px solid rgba(237,66,69,.3);color:var(--red)}
-.btn-b{background:var(--acc);color:#fff}
-.btn-y{background:rgba(249,168,37,.15);border:1px solid rgba(249,168,37,.3);color:var(--orange)}
-.btn-p{background:rgba(235,69,158,.15);border:1px solid rgba(235,69,158,.3);color:var(--pink)}
-.btn-row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.amc{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;
-  padding:14px 16px;margin-bottom:9px;display:flex;align-items:flex-start;
-  justify-content:space-between;gap:12px}
-.amc .canal{font-weight:700;color:var(--acc);margin-bottom:2px}
-.amc .prev{color:var(--muted);font-size:.86rem;max-width:460px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.amc .meta{display:flex;gap:7px;margin-top:6px;flex-wrap:wrap}
-.mtag{background:var(--card);border-radius:5px;color:var(--muted);font-family:var(--mono);font-size:.73rem;padding:2px 7px}
-.ltable{width:100%;border-collapse:collapse}
-.ltable th{color:var(--muted);font-size:.76rem;letter-spacing:1px;text-transform:uppercase;
-  text-align:left;padding:8px 12px;border-bottom:1px solid var(--bdr)}
-.ltable td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);font-size:.88rem;vertical-align:middle}
-.ltable tr:hover td{background:rgba(255,255,255,.02)}
-.badge{border-radius:5px;font-size:.73rem;font-weight:700;letter-spacing:.5px;padding:2px 8px;text-transform:uppercase}
-.badge.automsg_criar,.badge.anuncio,.badge.enviar_msg{background:rgba(87,242,135,.12);color:var(--green)}
-.badge.automsg_parar,.badge.ban,.badge.kick,.badge.lockdown_on{background:rgba(237,66,69,.12);color:var(--red)}
-.badge.ping_silencioso,.badge.timeout,.badge.slowmode{background:rgba(249,168,37,.12);color:var(--orange)}
-.badge.editar_msg,.badge.automsg_editar,.badge.dar_cargo{background:rgba(88,101,242,.12);color:var(--acc)}
-.badge.limpar_msgs,.badge.remover_cargo,.badge.lockdown_off,.badge.dm_massa{background:rgba(235,69,158,.12);color:var(--pink)}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
-.info-item{background:var(--surf);border:1px solid var(--bdr);border-radius:8px;padding:12px 16px}
-.info-item .k{color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.info-item .v{font-weight:700;font-size:1rem}
-.member-card{background:var(--surf);border:1px solid var(--bdr);border-radius:10px;padding:16px;display:flex;gap:14px;align-items:flex-start}
-.member-card img{width:56px;height:56px;border-radius:50%;background:var(--bdr)}
-.member-card .roles{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-.role-tag{background:rgba(88,101,242,.15);border:1px solid rgba(88,101,242,.2);border-radius:4px;color:var(--acc);font-size:.73rem;padding:1px 7px}
-.gitem{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr)}
-.gitem:last-child{border-bottom:none}
-.gicon{width:38px;height:38px;border-radius:50%;background:var(--bdr);object-fit:cover}
-.gname{font-weight:700}.gid{color:var(--muted);font-family:var(--mono);font-size:.76rem}
-.gmeta{margin-left:auto;color:var(--muted);font-size:.86rem}
-.toast{position:fixed;bottom:22px;right:22px;border-radius:10px;color:#000;
-  font-family:var(--font);font-weight:700;font-size:.92rem;padding:11px 20px;
-  opacity:0;pointer-events:none;transition:opacity .3s;z-index:999}
-.toast.show{opacity:1}.toast.ok{background:var(--green)}.toast.err{background:var(--red);color:#fff}
-.empty{color:var(--muted);text-align:center;padding:32px;font-size:.92rem}
-.spin{display:inline-block;width:16px;height:16px;border:2px solid var(--bdr);
-  border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:600px){
-  .topbar{padding:8px 10px;gap:6px}
-  nav button{padding:5px 8px;font-size:.8rem}
-  .wrap{padding:12px 8px}
-  .guilds-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
-  .amc{flex-direction:column}
+/* ── APP LAYOUT ── */
+#app { display: none; }
+.layout { display: flex; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar); flex-shrink: 0;
+  background: var(--surf); border-right: 1px solid var(--bdr);
+  display: flex; flex-direction: column;
+  position: fixed; left: 0; top: 0; bottom: 0; z-index: 200;
+  transition: transform .25s;
+}
+.sidebar-header {
+  padding: 18px 20px; border-bottom: 1px solid var(--bdr);
+  display: flex; align-items: center; gap: 10px;
+}
+.sidebar-logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg,var(--acc),var(--pink)); display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:800;color:#fff;flex-shrink:0; }
+.sidebar-name { font-weight: 800; font-size: 1rem; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.sidebar-guild {
+  margin: 12px; padding: 10px 12px; border-radius: 10px;
+  background: var(--card); border: 1px solid var(--bdr);
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  transition: border-color .2s;
+}
+.sidebar-guild:hover { border-color: var(--acc); }
+.sidebar-guild img { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; background: var(--bdr); }
+.sidebar-guild .gtext { min-width: 0; flex: 1; }
+.sidebar-guild .gname { font-weight: 600; font-size: .85rem; color: #fff; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.sidebar-guild .gmembers { font-size: .73rem; color: var(--muted); }
+.sidebar-guild .gswitch { font-size: .7rem; color: var(--acc); flex-shrink: 0; }
+
+.sidebar-section { padding: 4px 12px; margin-top: 8px; }
+.sidebar-section-title { font-size: .68rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); padding: 6px 8px 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 8px; cursor: pointer;
+  color: var(--txt2); font-size: .88rem; font-weight: 500;
+  transition: background .15s, color .15s; margin-bottom: 2px;
+  border: none; background: transparent; width: 100%; text-align: left;
+  font-family: var(--font);
+}
+.nav-item:hover { background: var(--card); color: #fff; }
+.nav-item.active { background: rgba(88,101,242,.2); color: var(--acc2); font-weight: 600; }
+.nav-item .icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+
+.sidebar-footer {
+  margin-top: auto; padding: 12px; border-top: 1px solid var(--bdr);
+  display: flex; align-items: center; gap: 10px;
+}
+.sidebar-footer img { width: 34px; height: 34px; border-radius: 50%; }
+.sidebar-footer .uinfo { flex: 1; min-width: 0; }
+.sidebar-footer .uname { font-weight: 600; font-size: .85rem; color: #fff; white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.sidebar-footer .utag { font-size: .72rem; color: var(--muted); }
+.sidebar-footer .logout-btn { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 4px; border-radius: 6px; transition: color .15s; }
+.sidebar-footer .logout-btn:hover { color: var(--red); }
+
+/* MAIN */
+.main { margin-left: var(--sidebar); flex: 1; min-width: 0; }
+.topbar {
+  height: var(--topbar); background: var(--surf); border-bottom: 1px solid var(--bdr);
+  display: flex; align-items: center; padding: 0 24px;
+  position: sticky; top: 0; z-index: 100; gap: 12px;
+}
+.topbar-title { font-size: 1rem; font-weight: 700; color: #fff; }
+.topbar-breadcrumb { color: var(--muted); font-size: .85rem; margin-left: 4px; }
+.menu-toggle { display: none; background: transparent; border: none; color: var(--txt2); cursor: pointer; font-size: 1.3rem; margin-right: 8px; }
+.content { padding: 24px; max-width: 1000px; }
+.page { display: none; } .page.active { display: block; }
+
+/* CARDS */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.stat-card { background: var(--card); border: 1px solid var(--bdr); border-radius: var(--radius); padding: 18px 20px; }
+.stat-card .slabel { font-size: .72rem; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.stat-card .sval { font-size: 1.8rem; font-weight: 800; color: #fff; }
+.stat-card .sval.blue { color: var(--acc2); }
+.stat-card .sval.green { color: var(--green2); }
+.stat-card .sval.pink { color: var(--pink); }
+.stat-card .sval.yellow { color: var(--yellow); }
+
+.section-title { font-size: .8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; margin-top: 28px; display: flex; align-items: center; gap: 8px; }
+.section-title::after { content:''; flex:1; height:1px; background:var(--bdr); }
+
+.panel-card { background: var(--card); border: 1px solid var(--bdr); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; }
+
+/* FORM */
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: .75rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--txt2); }
+.form-group input, .form-group select, .form-group textarea {
+  background: var(--bg); border: 1px solid var(--bdr); border-radius: 8px;
+  color: var(--txt); font-family: var(--font); font-size: .88rem; padding: 10px 12px;
+  outline: none; transition: border-color .2s; width: 100%;
+}
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--acc); }
+.form-group select option { background: var(--card); }
+
+/* BUTTONS */
+.btn { border: none; border-radius: 8px; cursor: pointer; font-family: var(--font); font-size: .88rem; font-weight: 600; padding: 9px 18px; transition: filter .15s, transform .1s; }
+.btn:hover { filter: brightness(1.1); } .btn:active { transform: scale(.97); }
+.btn-primary { background: var(--acc); color: #fff; }
+.btn-success { background: var(--green); color: #fff; }
+.btn-danger  { background: var(--red); color: #fff; }
+.btn-warning { background: var(--orange); color: #000; }
+.btn-ghost   { background: var(--card2); border: 1px solid var(--bdr); color: var(--txt2); }
+.btn-ghost:hover { color: #fff; }
+.btn-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+/* AUTOMSG CARDS */
+.amsg-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; transition: border-color .15s; }
+.amsg-card:hover { border-color: var(--acc2); }
+.amsg-card .ch { font-weight: 700; color: var(--acc2); margin-bottom: 3px; font-size: .9rem; }
+.amsg-card .prev { color: var(--muted); font-size: .82rem; max-width: 420px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.amsg-card .tags { display: flex; gap: 6px; margin-top: 7px; flex-wrap: wrap; }
+.tag { background: var(--card); border: 1px solid var(--bdr); border-radius: 5px; color: var(--muted); font-family: var(--mono); font-size: .7rem; padding: 2px 7px; }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--bdr); }
+table { width: 100%; border-collapse: collapse; }
+thead tr { background: var(--card2); }
+th { padding: 10px 14px; font-size: .72rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); text-align: left; border-bottom: 1px solid var(--bdr); white-space: nowrap; }
+td { padding: 11px 14px; font-size: .85rem; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,.02); }
+.badge { border-radius: 5px; font-size: .7rem; font-weight: 700; letter-spacing: .3px; padding: 3px 8px; text-transform: uppercase; white-space: nowrap; }
+.badge-green   { background: rgba(59,165,92,.2);  color: #57f287; }
+.badge-red     { background: rgba(237,66,69,.2);  color: #f87171; }
+.badge-yellow  { background: rgba(254,231,92,.15);color: var(--yellow); }
+.badge-blue    { background: rgba(88,101,242,.2); color: var(--acc2); }
+.badge-pink    { background: rgba(235,69,158,.2); color: var(--pink); }
+.badge-orange  { background: rgba(249,168,37,.2); color: var(--orange); }
+
+/* SERVER INFO */
+.guild-hero { display: flex; align-items: center; gap: 18px; padding: 20px; background: linear-gradient(135deg, rgba(88,101,242,.12), rgba(235,69,158,.06)); border-radius: var(--radius); border: 1px solid var(--bdr); margin-bottom: 20px; }
+.guild-hero img { width: 64px; height: 64px; border-radius: 16px; }
+.guild-hero .gname { font-size: 1.3rem; font-weight: 800; color: #fff; }
+.guild-hero .gid { font-family: var(--mono); font-size: .76rem; color: var(--muted); margin-top: 2px; }
+.guild-hero .gmeta { font-size: .85rem; color: var(--txt2); margin-top: 6px; }
+.guild-hero .switch-btn { margin-left: auto; flex-shrink: 0; }
+
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.info-item { background: var(--surf); border: 1px solid var(--bdr); border-radius: 8px; padding: 12px 14px; }
+.info-item .ik { font-size: .7rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.info-item .iv { font-weight: 700; font-size: .95rem; color: #fff; }
+
+.member-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: 12px; padding: 18px; display: flex; gap: 14px; margin-top: 14px; }
+.member-card img { width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0; }
+.member-card .mname { font-weight: 700; font-size: 1rem; color: #fff; }
+.member-card .mmeta { font-size: .8rem; color: var(--muted); margin-top: 4px; }
+.role-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.role-pill { background: rgba(88,101,242,.15); border: 1px solid rgba(88,101,242,.25); border-radius: 4px; color: var(--acc2); font-size: .72rem; padding: 2px 8px; }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; right: 24px; border-radius: 10px; font-family: var(--font); font-weight: 600; font-size: .88rem; padding: 12px 20px; opacity: 0; pointer-events: none; transition: opacity .3s, transform .3s; transform: translateY(8px); z-index: 9999; max-width: 320px; display: flex; align-items: center; gap: 10px; box-shadow: var(--shadow); }
+.toast.show { opacity: 1; transform: none; }
+.toast.ok  { background: var(--green);  color: #fff; }
+.toast.err { background: var(--red);    color: #fff; }
+.toast.info{ background: var(--acc);    color: #fff; }
+
+/* EMPTY / LOADER */
+.empty-state { text-align: center; padding: 48px 24px; color: var(--muted); }
+.empty-state .ei { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-state p { font-size: .9rem; }
+.spin { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--bdr); border-top-color: var(--acc); border-radius: 50%; animation: sp .6s linear infinite; }
+@keyframes sp { to { transform: rotate(360deg); } }
+
+/* OVERLAY */
+.sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 199; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: none; }
+  .sidebar-overlay.open { display: block; }
+  .main { margin-left: 0; }
+  .menu-toggle { display: block; }
+  .content { padding: 16px 12px; }
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+  .amsg-card { flex-direction: column; }
+  .guild-hero { flex-wrap: wrap; }
+  .guild-hero .switch-btn { margin-left: 0; }
+  .server-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -164,281 +298,351 @@ nav button.active{color:var(--acc);background:rgba(88,101,242,.12)}
 
 <!-- LOGIN -->
 <div id="login">
-  <div class="lbox">
-    <div class="logo">VIREX</div>
-    <div class="logo-sub">Painel de Controle do Bot</div>
-    <button class="btn-discord" onclick="loginDiscord()">
-      <svg viewBox="0 0 71 55" fill="white" xmlns="http://www.w3.org/2000/svg">
-        <path d="M60.1 4.9A58.6 58.6 0 0 0 45.8.9a40 40 0 0 0-1.8 3.7 54.2 54.2 0 0 0-16.3 0A39 39 0 0 0 25.8.9 58.5 58.5 0 0 0 11.4 5C1.6 19.6-1 33.8.3 47.9a59 59 0 0 0 18 9.1 43 43 0 0 0 3.7-6l-5.8-2.8.2-.2 5.9 2.9a38.5 38.5 0 0 0 20.5 0l5.9-2.9.1.2-5.7 2.8a42.5 42.5 0 0 0 3.7 6 58.7 58.7 0 0 0 18-9.1C66.4 31.5 62.9 17.4 60.1 4.9ZM23.7 39.4c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z"/>
-      </svg>
+  <div class="login-card">
+    <div class="login-logo">V</div>
+    <div class="login-title">VIREX STORE</div>
+    <div class="login-sub">Painel de administração do bot</div>
+    <button class="btn-login" onclick="loginDiscord()">
+      <svg viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.6 58.6 0 0 0 45.8.9a40 40 0 0 0-1.8 3.7 54.2 54.2 0 0 0-16.3 0A39 39 0 0 0 25.8.9 58.5 58.5 0 0 0 11.4 5C1.6 19.6-1 33.8.3 47.9a59 59 0 0 0 18 9.1 43 43 0 0 0 3.7-6l-5.8-2.8.2-.2 5.9 2.9a38.5 38.5 0 0 0 20.5 0l5.9-2.9.1.2-5.7 2.8a42.5 42.5 0 0 0 3.7 6 58.7 58.7 0 0 0 18-9.1C66.4 31.5 62.9 17.4 60.1 4.9ZM23.7 39.4c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Zm23.6 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.5 0 6.4 3.2 6.3 7.2 0 4-2.8 7.2-6.3 7.2Z"/></svg>
       Entrar com Discord
     </button>
-    <div id="lerr"></div>
+    <div class="login-err" id="lerr"></div>
+    <div class="login-footer">Apenas administradores dos servidores com o bot podem acessar.</div>
   </div>
 </div>
 
-<!-- SELEÇÃO DE SERVIDOR -->
-<div id="servidor-select">
-  <div class="ss-box">
-    <div class="ss-header">
-      <div class="logo">VIREX</div>
-      <p>Selecione o servidor que deseja gerenciar</p>
-      <div class="user-info">
-        <img id="ss-avatar" src="" alt="">
-        <span id="ss-nome">...</span>
-      </div>
+<!-- SERVER SELECT -->
+<div id="server-select">
+  <div class="ss-header">
+    <div class="ss-logo">
+      <div class="icon">V</div>
+      <span>VIREX STORE</span>
     </div>
-    <div id="ss-loading"><span class="spin"></span> Carregando servidores...</div>
-    <div class="guilds-grid" id="guilds-grid" style="display:none"></div>
+    <div class="ss-user">
+      <img id="ss-av" src="" alt="">
+      <span id="ss-name">...</span>
+    </div>
   </div>
+  <div class="ss-title">Seus Servidores</div>
+  <div class="ss-sub" id="ss-sub">Selecione o servidor que deseja gerenciar</div>
+  <div class="ss-loading" id="ss-loading"><span class="spin"></span> Carregando servidores...</div>
+  <div class="server-grid" id="server-grid" style="display:none"></div>
 </div>
 
 <!-- APP -->
 <div id="app">
-  <div class="topbar">
-    <div class="brand">VIREX</div>
-    <nav>
-      <button class="active" onclick="go('dash',this)">🏠 Dashboard</button>
-      <button onclick="go('automsg',this)">📨 Msg Auto</button>
-      <button onclick="go('anuncio',this)">📣 Anúncio</button>
-      <button onclick="go('enviar',this)">💬 Enviar Msg</button>
-      <button onclick="go('ping',this)">📢 Ping</button>
-      <button onclick="go('editmsg',this)">✏️ Editar Msg</button>
-      <button onclick="go('mod',this)">🛡️ Moderação</button>
-      <button onclick="go('cargos',this)">🎭 Cargos</button>
-      <button onclick="go('info',this)">📊 Info</button>
-      <button onclick="go('logs',this)">📋 Logs</button>
-    </nav>
-    <div style="display:flex;align-items:center;gap:8px">
-      <div class="server-badge" onclick="trocarServidor()" title="Trocar servidor">
-        <img id="tb-sicon" src="" alt="">
-        <span id="tb-snome">...</span>
-        <span class="change">↕ trocar</span>
-      </div>
-      <div class="user-tag">
-        <img class="avatar" id="uavatar" src="" alt="">
-        <span id="uname">...</span>
-      </div>
-    </div>
-  </div>
+  <div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+  <div class="layout">
 
-  <div class="wrap">
-
-    <!-- DASHBOARD -->
-    <div class="page active" id="page-dash">
-      <div class="sgrid">
-        <div class="sc"><div class="lbl">Servidores</div><div class="val b" id="d-guilds">—</div></div>
-        <div class="sc"><div class="lbl">Membros</div><div class="val g" id="d-members">—</div></div>
-        <div class="sc"><div class="lbl">Msgs Automáticas</div><div class="val p" id="d-auto">—</div></div>
-        <div class="sc"><div class="lbl">Ações no Log</div><div class="val y" id="d-logs">—</div></div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">V</div>
+        <div class="sidebar-name">VIREX STORE</div>
       </div>
-      <div class="stitle">Servidor Selecionado</div>
-      <div class="card" id="guild-info-dash"><div class="empty"><span class="spin"></span></div></div>
-    </div>
 
-    <!-- MSG AUTO -->
-    <div class="page" id="page-automsg">
-      <div class="stitle">Nova Mensagem Automática</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>Canal</label><select id="am-canal"></select></div>
-          <div class="fg"><label>Intervalo</label><input id="am-intervalo" placeholder="ex: 30s, 5m, 2h" value="10m"></div>
-          <div class="fg"><label>Menção (opcional)</label><input id="am-mencao" placeholder="@everyone | @here | ID do cargo"></div>
+      <div class="sidebar-guild" onclick="trocarServidor()">
+        <img id="sb-gicon" src="" alt="">
+        <div class="gtext">
+          <div class="gname" id="sb-gname">...</div>
+          <div class="gmembers" id="sb-gmembers">...</div>
         </div>
-        <div class="fg" style="margin-top:12px"><label>Mensagem</label><textarea id="am-msg" placeholder="Digite a mensagem..."></textarea></div>
-        <div class="fg" style="margin-top:12px"><label>URL do Banner (opcional)</label><input id="am-banner" placeholder="https://..."></div>
-        <div class="btn-row"><button class="btn btn-g" onclick="criarAutoMsg()">▶ Ativar Mensagem</button></div>
+        <div class="gswitch">↕</div>
       </div>
-      <div class="stitle">Mensagens Ativas</div>
-      <button class="btn btn-b" style="margin-bottom:12px" onclick="carregarAutoMsgs()">🔄 Atualizar</button>
-      <div id="am-list"><div class="empty"><span class="spin"></span></div></div>
-      <div id="edit-am-box" style="display:none">
-        <div class="stitle">Editar Mensagem Automática</div>
-        <div class="card">
-          <input type="hidden" id="edit-am-cid">
-          <div class="fgrid">
-            <div class="fg"><label>Novo Intervalo (vazio = manter)</label><input id="edit-am-intervalo" placeholder="ex: 5m"></div>
-            <div class="fg"><label>Nova Menção (vazio = manter)</label><input id="edit-am-mencao" placeholder="@everyone | @here | ID"></div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Geral</div>
+        <button class="nav-item active" onclick="go('dash',this,'Dashboard')">
+          <span class="icon">🏠</span> Dashboard
+        </button>
+        <button class="nav-item" onclick="go('info',this,'Informações')">
+          <span class="icon">📊</span> Informações
+        </button>
+        <button class="nav-item" onclick="go('logs',this,'Logs')">
+          <span class="icon">📋</span> Logs de Ações
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Mensagens</div>
+        <button class="nav-item" onclick="go('automsg',this,'Mensagem Automática')">
+          <span class="icon">📨</span> Msg Automática
+        </button>
+        <button class="nav-item" onclick="go('anuncio',this,'Anúncio')">
+          <span class="icon">📣</span> Anúncio Embed
+        </button>
+        <button class="nav-item" onclick="go('enviar',this,'Enviar Mensagem')">
+          <span class="icon">💬</span> Enviar Mensagem
+        </button>
+        <button class="nav-item" onclick="go('editmsg',this,'Editar Mensagem')">
+          <span class="icon">✏️</span> Editar Mensagem
+        </button>
+        <button class="nav-item" onclick="go('ping',this,'Ping Silencioso')">
+          <span class="icon">📢</span> Ping Silencioso
+        </button>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Moderação</div>
+        <button class="nav-item" onclick="go('mod',this,'Moderação')">
+          <span class="icon">🛡️</span> Moderar Membros
+        </button>
+        <button class="nav-item" onclick="go('canal',this,'Canais')">
+          <span class="icon">🔧</span> Gerenciar Canais
+        </button>
+        <button class="nav-item" onclick="go('cargos',this,'Cargos')">
+          <span class="icon">🎭</span> Cargos
+        </button>
+      </div>
+
+      <div class="sidebar-footer">
+        <img id="sb-uav" src="" alt="">
+        <div class="uinfo">
+          <div class="uname" id="sb-uname">...</div>
+          <div class="utag">Administrador</div>
+        </div>
+        <button class="logout-btn" onclick="logout()" title="Sair">⏻</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <div class="topbar">
+        <button class="menu-toggle" onclick="openSidebar()">☰</button>
+        <div class="topbar-title" id="topbar-title">Dashboard</div>
+      </div>
+
+      <div class="content">
+
+        <!-- DASHBOARD -->
+        <div class="page active" id="page-dash">
+          <div class="stat-row">
+            <div class="stat-card"><div class="slabel">Servidores</div><div class="sval blue" id="d-guilds">—</div></div>
+            <div class="stat-card"><div class="slabel">Membros</div><div class="sval green" id="d-members">—</div></div>
+            <div class="stat-card"><div class="slabel">Msgs Ativas</div><div class="sval pink" id="d-auto">—</div></div>
+            <div class="stat-card"><div class="slabel">Ações Log</div><div class="sval yellow" id="d-logs">—</div></div>
           </div>
-          <div class="fg" style="margin-top:12px"><label>Nova Mensagem</label><textarea id="edit-am-msg"></textarea></div>
-          <div class="fg" style="margin-top:12px"><label>Novo Banner (vazio = manter)</label><input id="edit-am-banner" placeholder="https://..."></div>
-          <div class="btn-row">
-            <button class="btn btn-g" onclick="salvarEditAutoMsg()">💾 Salvar</button>
-            <button class="btn btn-r" onclick="document.getElementById('edit-am-box').style.display='none'">Cancelar</button>
-          </div>
+          <div id="dash-guild"></div>
         </div>
-      </div>
-    </div>
 
-    <!-- ANÚNCIO -->
-    <div class="page" id="page-anuncio">
-      <div class="stitle">Enviar Anúncio com Embed</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>Canal</label><select id="anun-canal"></select></div>
-          <div class="fg"><label>Título</label><input id="anun-titulo" placeholder="Título do anúncio"></div>
-          <div class="fg"><label>Menção (opcional)</label><input id="anun-mencao" placeholder="@everyone | @here | ID"></div>
-        </div>
-        <div class="fg" style="margin-top:12px"><label>Descrição</label><textarea id="anun-desc" placeholder="Conteúdo do anúncio..."></textarea></div>
-        <div class="fgrid" style="margin-top:12px">
-          <div class="fg"><label>URL da Imagem (opcional)</label><input id="anun-img" placeholder="https://..."></div>
-          <div class="fg"><label>URL Thumbnail (opcional)</label><input id="anun-thumb" placeholder="https://..."></div>
-          <div class="fg"><label>Rodapé (opcional)</label><input id="anun-rodape" placeholder="Texto do rodapé"></div>
-          <div class="fg">
-            <label>Cor do Embed</label>
-            <div style="display:flex;gap:8px;align-items:center">
-              <input id="anun-cor" type="color" value="#5865f2" style="width:48px;height:38px;padding:2px;background:var(--surf);border:1px solid var(--bdr);border-radius:8px;cursor:pointer">
-              <span style="color:var(--muted);font-size:.85rem">Escolha a cor</span>
+        <!-- MSG AUTO -->
+        <div class="page" id="page-automsg">
+          <div class="section-title">Nova Mensagem Automática</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>Canal</label><select id="am-canal"></select></div>
+              <div class="form-group"><label>Intervalo</label><input id="am-intervalo" placeholder="ex: 30s, 5m, 2h" value="10m"></div>
+              <div class="form-group"><label>Menção (opcional)</label><input id="am-mencao" placeholder="@everyone | @here | ID cargo"></div>
+            </div>
+            <div class="form-group" style="margin-top:14px"><label>Mensagem</label><textarea id="am-msg" placeholder="Digite a mensagem..."></textarea></div>
+            <div class="form-group" style="margin-top:14px"><label>URL Banner (opcional)</label><input id="am-banner" placeholder="https://..."></div>
+            <div class="btn-row"><button class="btn btn-primary" onclick="criarAutoMsg()">▶ Ativar Mensagem</button></div>
+          </div>
+          <div class="section-title">Mensagens Ativas</div>
+          <button class="btn btn-ghost" style="margin-bottom:12px" onclick="carregarAutoMsgs()">↻ Atualizar</button>
+          <div id="am-list"><div class="empty-state"><div class="ei"><span class="spin"></span></div></div></div>
+          <div id="edit-am-box" style="display:none">
+            <div class="section-title">Editar Mensagem</div>
+            <div class="panel-card">
+              <input type="hidden" id="edit-am-cid">
+              <div class="form-grid">
+                <div class="form-group"><label>Novo Intervalo (vazio = manter)</label><input id="edit-am-int" placeholder="ex: 5m"></div>
+                <div class="form-group"><label>Nova Menção (vazio = manter)</label><input id="edit-am-men" placeholder="@everyone | @here | ID"></div>
+              </div>
+              <div class="form-group" style="margin-top:14px"><label>Nova Mensagem</label><textarea id="edit-am-msg"></textarea></div>
+              <div class="form-group" style="margin-top:14px"><label>Novo Banner (vazio = manter)</label><input id="edit-am-ban" placeholder="https://..."></div>
+              <div class="btn-row">
+                <button class="btn btn-success" onclick="salvarEditAM()">💾 Salvar</button>
+                <button class="btn btn-ghost" onclick="document.getElementById('edit-am-box').style.display='none'">Cancelar</button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="btn-row"><button class="btn btn-g" onclick="enviarAnuncio()">📣 Enviar Anúncio</button></div>
-      </div>
-    </div>
 
-    <!-- ENVIAR MSG -->
-    <div class="page" id="page-enviar">
-      <div class="stitle">Enviar Mensagem em Canal</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>Canal</label><select id="env-canal"></select></div>
-          <div class="fg"><label>Menção (opcional)</label><input id="env-mencao" placeholder="@everyone | @here | ID do cargo"></div>
+        <!-- ANÚNCIO -->
+        <div class="page" id="page-anuncio">
+          <div class="section-title">Anúncio com Embed</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>Canal</label><select id="anun-canal"></select></div>
+              <div class="form-group"><label>Título</label><input id="anun-titulo" placeholder="Título do anúncio"></div>
+              <div class="form-group"><label>Menção (opcional)</label><input id="anun-mencao" placeholder="@everyone | @here | ID"></div>
+            </div>
+            <div class="form-group" style="margin-top:14px"><label>Descrição</label><textarea id="anun-desc" placeholder="Conteúdo do anúncio..."></textarea></div>
+            <div class="form-grid" style="margin-top:14px">
+              <div class="form-group"><label>Imagem (URL)</label><input id="anun-img" placeholder="https://..."></div>
+              <div class="form-group"><label>Thumbnail (URL)</label><input id="anun-thumb" placeholder="https://..."></div>
+              <div class="form-group"><label>Rodapé</label><input id="anun-rodape" placeholder="Texto do rodapé"></div>
+              <div class="form-group">
+                <label>Cor do Embed</label>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <input id="anun-cor" type="color" value="#5865f2" style="width:44px;height:38px;padding:2px;background:var(--bg);border:1px solid var(--bdr);border-radius:8px;cursor:pointer">
+                  <span style="color:var(--muted);font-size:.82rem">Clique para escolher</span>
+                </div>
+              </div>
+            </div>
+            <div class="btn-row"><button class="btn btn-primary" onclick="enviarAnuncio()">📣 Enviar Anúncio</button></div>
+          </div>
         </div>
-        <div class="fg" style="margin-top:12px"><label>Mensagem</label><textarea id="env-msg" placeholder="Digite a mensagem..."></textarea></div>
-        <div class="btn-row"><button class="btn btn-g" onclick="enviarMsgCanal()">💬 Enviar</button></div>
-      </div>
-    </div>
 
-    <!-- PING -->
-    <div class="page" id="page-ping">
-      <div class="stitle">Ping Silencioso</div>
-      <div class="card" style="text-align:center;padding:28px">
-        <p style="color:var(--muted);font-size:.88rem;margin-bottom:16px">Envia um <code style="background:var(--bdr);padding:1px 6px;border-radius:4px">.</code> em todos os canais e apaga após 1 segundo.</p>
-        <button class="btn btn-y" onclick="enviarPing()">📢 Disparar Ping Silencioso</button>
-        <div style="color:var(--red);font-size:.88rem;margin-top:8px" id="ping-warn"></div>
-      </div>
-    </div>
+        <!-- ENVIAR MSG -->
+        <div class="page" id="page-enviar">
+          <div class="section-title">Enviar Mensagem</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>Canal</label><select id="env-canal"></select></div>
+              <div class="form-group"><label>Menção (opcional)</label><input id="env-mencao" placeholder="@everyone | @here | ID cargo"></div>
+            </div>
+            <div class="form-group" style="margin-top:14px"><label>Mensagem</label><textarea id="env-msg" placeholder="Digite a mensagem..."></textarea></div>
+            <div class="btn-row"><button class="btn btn-success" onclick="enviarMsgCanal()">💬 Enviar</button></div>
+          </div>
+        </div>
 
-    <!-- EDITAR MSG -->
-    <div class="page" id="page-editmsg">
-      <div class="stitle">Editar Mensagem do Bot</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>Canal</label><select id="em-canal"></select></div>
-          <div class="fg"><label>ID da Mensagem</label><input id="em-msgid" placeholder="ID da mensagem do bot"></div>
+        <!-- EDITAR MSG -->
+        <div class="page" id="page-editmsg">
+          <div class="section-title">Editar Mensagem do Bot</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>Canal</label><select id="em-canal"></select></div>
+              <div class="form-group"><label>ID da Mensagem</label><input id="em-mid" placeholder="ID da mensagem"></div>
+            </div>
+            <div class="form-group" style="margin-top:14px"><label>Novo Conteúdo</label><textarea id="em-txt" placeholder="Novo texto..."></textarea></div>
+            <div class="btn-row"><button class="btn btn-success" onclick="editarMsg()">💾 Salvar Edição</button></div>
+          </div>
         </div>
-        <div class="fg" style="margin-top:12px"><label>Novo Conteúdo</label><textarea id="em-conteudo" placeholder="Novo texto..."></textarea></div>
-        <div class="btn-row"><button class="btn btn-g" onclick="editarMsg()">💾 Salvar Edição</button></div>
-      </div>
-    </div>
 
-    <!-- MODERAÇÃO -->
-    <div class="page" id="page-mod">
-      <div class="stitle">🔨 Banir Membro</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>ID do Usuário</label><input id="ban-uid" placeholder="ID do usuário"></div>
-          <div class="fg"><label>Motivo (opcional)</label><input id="ban-motivo" placeholder="Motivo do ban"></div>
+        <!-- PING -->
+        <div class="page" id="page-ping">
+          <div class="section-title">Ping Silencioso</div>
+          <div class="panel-card" style="text-align:center;padding:36px 24px">
+            <div style="font-size:2.5rem;margin-bottom:12px">📢</div>
+            <div style="font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:8px">Ping Silencioso</div>
+            <p style="color:var(--muted);font-size:.88rem;max-width:400px;margin:0 auto 24px">Envia um <code style="background:var(--card2);padding:1px 6px;border-radius:4px">.</code> em todos os canais de texto e apaga após 1 segundo. Serve para notificar membros online.</p>
+            <button class="btn btn-warning" onclick="enviarPing()">📢 Disparar Ping</button>
+            <div style="color:var(--red);font-size:.85rem;margin-top:10px" id="ping-warn"></div>
+          </div>
         </div>
-        <div class="btn-row"><button class="btn btn-r" onclick="banirMembro()">🔨 Banir</button></div>
-      </div>
-      <div class="stitle">👢 Kickar Membro</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>ID do Usuário</label><input id="kick-uid" placeholder="ID do usuário"></div>
-          <div class="fg"><label>Motivo (opcional)</label><input id="kick-motivo" placeholder="Motivo do kick"></div>
-        </div>
-        <div class="btn-row"><button class="btn btn-y" onclick="kickarMembro()">👢 Kickar</button></div>
-      </div>
-      <div class="stitle">⏱️ Timeout</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>ID do Usuário</label><input id="to-uid" placeholder="ID do usuário"></div>
-          <div class="fg"><label>Duração (minutos)</label><input id="to-min" type="number" value="5" min="1" max="40320"></div>
-          <div class="fg"><label>Motivo (opcional)</label><input id="to-motivo" placeholder="Motivo"></div>
-        </div>
-        <div class="btn-row"><button class="btn btn-y" onclick="timeoutMembro()">⏱️ Aplicar Timeout</button></div>
-      </div>
-      <div class="stitle">🗑️ Limpar Mensagens</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>Canal</label><select id="mod-canal"></select></div>
-          <div class="fg"><label>Quantidade (máx 100)</label><input id="limpar-qtd" type="number" value="10" min="1" max="100"></div>
-        </div>
-        <div class="btn-row"><button class="btn btn-r" onclick="limparMsgs()">🗑️ Limpar</button></div>
-      </div>
-      <div class="stitle">🐢 Slowmode</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>Canal</label><select id="slow-canal"></select></div>
-          <div class="fg"><label>Segundos (0 = desativar)</label><input id="slow-seg" type="number" value="0" min="0" max="21600"></div>
-        </div>
-        <div class="btn-row"><button class="btn btn-b" onclick="aplicarSlowmode()">🐢 Aplicar Slowmode</button></div>
-      </div>
-      <div class="stitle">🔒 Lockdown de Canal</div>
-      <div class="card">
-        <div class="fg" style="max-width:340px;margin-bottom:14px"><label>Canal</label><select id="lock-canal"></select></div>
-        <div class="btn-row">
-          <button class="btn btn-r" onclick="lockdown(true)">🔒 Travar Canal</button>
-          <button class="btn btn-g" onclick="lockdown(false)">🔓 Destravar Canal</button>
-        </div>
-      </div>
-    </div>
 
-    <!-- CARGOS -->
-    <div class="page" id="page-cargos">
-      <div class="stitle">➕ Dar Cargo a Membro</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>ID do Usuário</label><input id="dc-uid" placeholder="ID do usuário"></div>
-          <div class="fg"><label>Cargo</label><select id="dc-cargo"></select></div>
-        </div>
-        <div class="btn-row"><button class="btn btn-g" onclick="darCargo()">➕ Dar Cargo</button></div>
-      </div>
-      <div class="stitle">➖ Remover Cargo de Membro</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>ID do Usuário</label><input id="rc-uid" placeholder="ID do usuário"></div>
-          <div class="fg"><label>Cargo</label><select id="rc-cargo"></select></div>
-        </div>
-        <div class="btn-row"><button class="btn btn-r" onclick="removerCargo()">➖ Remover Cargo</button></div>
-      </div>
-      <div class="stitle">📩 DM em Massa</div>
-      <div class="card">
-        <div class="fg"><label>Mensagem</label><textarea id="dm-msg" placeholder="Mensagem enviada pra todos os membros..."></textarea></div>
-        <p style="color:var(--red);font-size:.82rem;margin-top:8px">⚠️ Envia DM para TODOS os membros. Use com cuidado!</p>
-        <div class="btn-row"><button class="btn btn-p" onclick="dmMassa()">📩 Enviar DM em Massa</button></div>
-      </div>
-    </div>
+        <!-- MODERAÇÃO -->
+        <div class="page" id="page-mod">
+          <div class="section-title">Banir Membro</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><input id="ban-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>Motivo (opcional)</label><input id="ban-mot" placeholder="Motivo do ban"></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-danger" onclick="banirMembro()">🔨 Banir</button></div>
+          </div>
 
-    <!-- INFO -->
-    <div class="page" id="page-info">
-      <div class="stitle">Informações do Servidor</div>
-      <div class="card" id="info-servidor-res"><div class="empty"><span class="spin"></span></div></div>
-      <div class="stitle">Buscar Membro</div>
-      <div class="card">
-        <div class="fgrid">
-          <div class="fg"><label>ID do Usuário</label><input id="info-uid" placeholder="ID do usuário"></div>
+          <div class="section-title">Kickar Membro</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><input id="kick-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>Motivo (opcional)</label><input id="kick-mot" placeholder="Motivo do kick"></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-warning" onclick="kickarMembro()">👢 Kickar</button></div>
+          </div>
+
+          <div class="section-title">Timeout (Mutar Temporário)</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><input id="to-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>Duração (minutos)</label><input id="to-min" type="number" value="5" min="1" max="40320"></div>
+              <div class="form-group"><label>Motivo (opcional)</label><input id="to-mot" placeholder="Motivo"></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-warning" onclick="timeoutMembro()">⏱️ Aplicar Timeout</button></div>
+          </div>
         </div>
-        <div class="btn-row"><button class="btn btn-b" onclick="buscarMembro()">🔍 Buscar</button></div>
-        <div id="info-membro-res" style="margin-top:14px"></div>
-      </div>
-    </div>
 
-    <!-- LOGS -->
-    <div class="page" id="page-logs">
-      <div class="stitle">Histórico de Ações</div>
-      <button class="btn btn-b" style="margin-bottom:12px" onclick="carregarLogs()">🔄 Atualizar</button>
-      <div class="card" style="padding:0;overflow:auto">
-        <table class="ltable">
-          <thead><tr><th>Hora</th><th>Ação</th><th>Detalhe</th><th>Usuário</th></tr></thead>
-          <tbody id="logs-body"><tr><td colspan="4" class="empty"><span class="spin"></span></td></tr></tbody>
-        </table>
-      </div>
-    </div>
+        <!-- CANAIS -->
+        <div class="page" id="page-canal">
+          <div class="section-title">Limpar Mensagens</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>Canal</label><select id="lim-canal"></select></div>
+              <div class="form-group"><label>Quantidade (máx 100)</label><input id="lim-qtd" type="number" value="10" min="1" max="100"></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-danger" onclick="limparMsgs()">🗑️ Limpar Mensagens</button></div>
+          </div>
 
-  </div>
-</div>
+          <div class="section-title">Slowmode</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>Canal</label><select id="slow-canal"></select></div>
+              <div class="form-group"><label>Segundos (0 = desativar)</label><input id="slow-seg" type="number" value="0" min="0" max="21600"></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-primary" onclick="aplicarSlowmode()">🐢 Aplicar Slowmode</button></div>
+          </div>
+
+          <div class="section-title">Lockdown de Canal</div>
+          <div class="panel-card">
+            <div class="form-group" style="max-width:320px;margin-bottom:14px"><label>Canal</label><select id="lock-canal"></select></div>
+            <div class="btn-row">
+              <button class="btn btn-danger" onclick="lockdown(true)">🔒 Travar Canal</button>
+              <button class="btn btn-success" onclick="lockdown(false)">🔓 Destravar Canal</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARGOS -->
+        <div class="page" id="page-cargos">
+          <div class="section-title">Dar Cargo</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><input id="dc-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>Cargo</label><select id="dc-cargo"></select></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-success" onclick="darCargo()">➕ Dar Cargo</button></div>
+          </div>
+
+          <div class="section-title">Remover Cargo</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><input id="rc-uid" placeholder="ID do usuário"></div>
+              <div class="form-group"><label>Cargo</label><select id="rc-cargo"></select></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-danger" onclick="removerCargo()">➖ Remover Cargo</button></div>
+          </div>
+
+          <div class="section-title">DM em Massa</div>
+          <div class="panel-card">
+            <div class="form-group"><label>Mensagem</label><textarea id="dm-msg" placeholder="Mensagem enviada para todos os membros..."></textarea></div>
+            <p style="color:var(--red);font-size:.8rem;margin-top:8px">⚠️ Isso envia DM para TODOS os membros. Use com cuidado!</p>
+            <div class="btn-row"><button class="btn btn-warning" onclick="dmMassa()">📩 Enviar DM em Massa</button></div>
+          </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="page" id="page-info">
+          <div id="info-guild-res"></div>
+          <div class="section-title">Buscar Membro</div>
+          <div class="panel-card">
+            <div class="form-grid">
+              <div class="form-group"><label>ID do Usuário</label><input id="info-uid" placeholder="ID do usuário"></div>
+            </div>
+            <div class="btn-row"><button class="btn btn-primary" onclick="buscarMembro()">🔍 Buscar</button></div>
+            <div id="info-member-res"></div>
+          </div>
+        </div>
+
+        <!-- LOGS -->
+        <div class="page" id="page-logs">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+            <div class="section-title" style="margin:0">Histórico de Ações</div>
+            <button class="btn btn-ghost" onclick="carregarLogs()">↻ Atualizar</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Hora</th><th>Ação</th><th>Detalhe</th><th>Usuário</th></tr></thead>
+              <tbody id="logs-body"><tr><td colspan="4"><div class="empty-state"><span class="spin"></span></div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- content -->
+    </div><!-- main -->
+  </div><!-- layout -->
+</div><!-- app -->
 
 <div class="toast" id="toast"></div>
 
@@ -447,9 +651,9 @@ const API       = "https://website-production-5b8f.up.railway.app";
 const CLIENT_ID = "1465283558342918235";
 const REDIRECT  = "https://commandvirex.netlify.app/index.html";
 
-let TOKEN    = localStorage.getItem("virex_token") || "";
+let TOKEN    = localStorage.getItem("vx_token") || "";
 let ME       = null;
-let GUILD_ID = localStorage.getItem("virex_guild") || "";
+let GUILD_ID = localStorage.getItem("vx_guild") || "";
 let GUILDS   = [];
 
 // ── OAUTH ──
@@ -464,23 +668,21 @@ async function handleCallback() {
   history.replaceState({}, "", location.pathname);
   document.getElementById("lerr").textContent = "⏳ Autenticando...";
   try {
-    const r = await fetch(API + "/api/oauth/callback", {
-      method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({code})
-    });
+    const r = await fetch(API + "/api/oauth/callback", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({code}) });
     const d = await r.json();
     if (!r.ok) throw new Error(d.error || "Erro");
     TOKEN = d.access_token;
-    localStorage.setItem("virex_token", TOKEN);
+    localStorage.setItem("vx_token", TOKEN);
     ME = d;
-    mostrarSelecaoServidor();
+    await mostrarSelecao();
   } catch(e) { document.getElementById("lerr").textContent = "❌ " + e.message; }
 }
 
-async function verificarToken() {
+async function checkToken() {
   if (!TOKEN) return false;
   try {
     const r = await fetch(API + "/api/me", { headers: {"X-Discord-Token": TOKEN} });
-    if (!r.ok) { TOKEN=""; localStorage.removeItem("virex_token"); return false; }
+    if (!r.ok) { TOKEN=""; localStorage.removeItem("vx_token"); return false; }
     ME = await r.json(); return true;
   } catch { return false; }
 }
@@ -488,195 +690,177 @@ async function verificarToken() {
 window.addEventListener("load", async () => {
   await handleCallback();
   if (!ME && TOKEN) {
-    const ok = await verificarToken();
+    const ok = await checkToken();
     if (!ok) return;
     if (GUILD_ID) {
-      // Já tinha servidor salvo, vai direto pro painel
-      await carregarGuilds();
-      const g = GUILDS.find(x => x.id === GUILD_ID);
-      if (g) { entrarNoServidor(g); return; }
+      await fetchGuilds();
+      const g = GUILDS.find(x=>x.id===GUILD_ID);
+      if (g) { entrar(g); return; }
     }
-    mostrarSelecaoServidor();
+    await mostrarSelecao();
   }
 });
 
-// ── SELEÇÃO DE SERVIDOR ──
-async function mostrarSelecaoServidor() {
-  document.getElementById("login").style.display = "none";
-  document.getElementById("servidor-select").style.display = "flex";
-
-  const av = ME.avatar
-    ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`
-    : `https://cdn.discordapp.com/embed/avatars/0.png`;
-  document.getElementById("ss-avatar").src = av;
-  document.getElementById("ss-nome").textContent = ME.username;
-
-  await carregarGuilds();
-}
-
-async function carregarGuilds() {
-  const r = await apiReq("/api/status");
+async function fetchGuilds() {
+  const r = await req("/api/status");
   const d = await r.json();
   GUILDS = d.servidores || [];
 }
 
-function mostrarGridServidores() {
-  document.getElementById("ss-loading").style.display = "none";
-  const grid = document.getElementById("guilds-grid");
-  grid.style.display = "grid";
-  grid.innerHTML = GUILDS.map(g => `
-    <div class="guild-card" onclick="entrarNoServidor(${JSON.stringify(g).replace(/"/g,'&quot;')})">
-      ${g.icon
-        ? `<img src="${g.icon}" alt="" style="width:64px;height:64px;border-radius:50%;margin-bottom:10px">`
-        : `<div class="gno-icon">${g.nome.charAt(0).toUpperCase()}</div>`
-      }
-      <div class="gname">${g.nome}</div>
-      <div class="gmembers">👥 ${g.membros.toLocaleString()} membros</div>
-    </div>`).join("");
-
-  if (!GUILDS.length) {
-    grid.innerHTML = '<div class="empty" style="grid-column:1/-1">Bot não está em nenhum servidor.</div>';
-  }
+async function mostrarSelecao() {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("server-select").style.display = "block";
+  const av = ME.avatar ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("ss-av").src = av;
+  document.getElementById("ss-name").textContent = ME.username;
+  await fetchGuilds();
+  renderGuilds();
 }
 
-// Chama após carregar guilds
-const _origCarregar = carregarGuilds;
-carregarGuilds = async function() {
-  await _origCarregar();
-  mostrarGridServidores();
-};
+function renderGuilds() {
+  document.getElementById("ss-loading").style.display = "none";
+  const grid = document.getElementById("server-grid");
+  grid.style.display = "grid";
+  document.getElementById("ss-sub").textContent = `${GUILDS.length} servidor${GUILDS.length!==1?"es":""} disponíve${GUILDS.length!==1?"is":"l"}`;
+  if (!GUILDS.length) { grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="ei">😔</div><p>O bot não está em nenhum servidor.</p></div>'; return; }
+  grid.innerHTML = GUILDS.map(g => `
+    <div class="server-card" onclick='entrar(${JSON.stringify(g)})'>
+      ${g.icon ? `<img class="sicon" src="${g.icon}" alt="">` : `<div class="sicon-text">${g.nome.charAt(0).toUpperCase()}</div>`}
+      <div class="sinfo">
+        <div class="sname">${g.nome}</div>
+        <div class="smeta">👥 ${g.membros.toLocaleString()} membros</div>
+      </div>
+      <div class="sarrow">›</div>
+    </div>`).join("");
+}
 
-function entrarNoServidor(g) {
+function entrar(g) {
   GUILD_ID = g.id;
-  localStorage.setItem("virex_guild", GUILD_ID);
-  document.getElementById("servidor-select").style.display = "none";
+  localStorage.setItem("vx_guild", GUILD_ID);
+  document.getElementById("server-select").style.display = "none";
   document.getElementById("app").style.display = "block";
 
-  // Atualiza topbar
-  const av = ME.avatar
-    ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png`
-    : `https://cdn.discordapp.com/embed/avatars/0.png`;
-  document.getElementById("uavatar").src = av;
-  document.getElementById("uname").textContent = ME.username;
-  document.getElementById("tb-snome").textContent = g.nome;
-  if (g.icon) document.getElementById("tb-sicon").src = g.icon;
-  else document.getElementById("tb-sicon").style.display = "none";
+  const av = ME.avatar ? `https://cdn.discordapp.com/avatars/${ME.user_id}/${ME.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  document.getElementById("sb-uav").src = av;
+  document.getElementById("sb-uname").textContent = ME.username;
+  document.getElementById("sb-gname").textContent = g.nome;
+  document.getElementById("sb-gmembers").textContent = `👥 ${g.membros.toLocaleString()} membros`;
+  if (g.icon) document.getElementById("sb-gicon").src = g.icon;
+  else { const el = document.getElementById("sb-gicon"); el.style.background = "linear-gradient(135deg,#5865f2,#eb459e)"; el.style.display="flex"; el.style.alignItems="center"; el.style.justifyContent="center"; el.style.color="#fff"; el.style.fontWeight="800"; el.textContent = g.nome.charAt(0).toUpperCase(); }
 
   carregarTudo();
 }
 
 function trocarServidor() {
-  localStorage.removeItem("virex_guild");
+  localStorage.removeItem("vx_guild");
   GUILD_ID = "";
   document.getElementById("app").style.display = "none";
-  document.getElementById("servidor-select").style.display = "flex";
+  document.getElementById("server-select").style.display = "block";
   document.getElementById("ss-loading").style.display = "block";
-  document.getElementById("guilds-grid").style.display = "none";
-  carregarGuilds();
+  document.getElementById("server-grid").style.display = "none";
+  fetchGuilds().then(renderGuilds);
+}
+
+function logout() {
+  localStorage.removeItem("vx_token");
+  localStorage.removeItem("vx_guild");
+  location.reload();
 }
 
 async function carregarTudo() {
-  await Promise.all([
-    carregarCanaisServidor(),
-    carregarCargos(),
-    carregarDash(),
-    carregarAutoMsgs(),
-    carregarInfoServidor(),
-  ]);
+  await Promise.all([carregarCanais(), carregarCargos(), carregarDash(), carregarAutoMsgs(), carregarInfoGuild()]);
 }
 
-// ── API ──
-async function apiReq(path, opts={}) {
-  return fetch(API + path, {
-    ...opts,
-    headers: {"X-Discord-Token": TOKEN, "Content-Type":"application/json", ...(opts.headers||{})}
-  });
-}
+// ── SIDEBAR ──
+function openSidebar()  { document.getElementById("sidebar").classList.add("open"); document.getElementById("overlay").classList.add("open"); }
+function closeSidebar() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("overlay").classList.remove("open"); }
 
-// Alias
-const api = apiReq;
-
-// ── NAVIGATE ──
-function go(id, btn) {
+// ── NAV ──
+function go(id, btn, title) {
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));
   document.getElementById("page-"+id).classList.add("active");
   btn.classList.add("active");
+  document.getElementById("topbar-title").textContent = title;
+  closeSidebar();
   if (id==="logs") carregarLogs();
 }
 
-// ── CANAIS ──
-async function carregarCanaisServidor() {
-  const r = await api(`/api/canais?guild_id=${GUILD_ID}`);
+// ── API ──
+async function req(path, opts={}) {
+  return fetch(API+path, { ...opts, headers:{"X-Discord-Token":TOKEN,"Content-Type":"application/json",...(opts.headers||{})} });
+}
+
+// ── CANAIS / CARGOS ──
+async function carregarCanais() {
+  const r = await req(`/api/canais?guild_id=${GUILD_ID}`);
   const d = await r.json();
   const opts = (d.canais||[]).map(c=>`<option value="${c.id}">#${c.nome}</option>`).join("");
-  ["am-canal","anun-canal","env-canal","em-canal","mod-canal","slow-canal","lock-canal"].forEach(id => {
-    const el = document.getElementById(id); if (el) el.innerHTML = opts;
-  });
+  ["am-canal","anun-canal","env-canal","em-canal","lim-canal","slow-canal","lock-canal"].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
 }
 
 async function carregarCargos() {
-  const r = await api(`/api/cargos?guild_id=${GUILD_ID}`);
+  const r = await req(`/api/cargos?guild_id=${GUILD_ID}`);
   const d = await r.json();
   const opts = (d.cargos||[]).map(c=>`<option value="${c.id}">${c.nome}</option>`).join("");
-  ["dc-cargo","rc-cargo"].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=opts; });
+  ["dc-cargo","rc-cargo"].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=opts;});
 }
 
 // ── DASHBOARD ──
 async function carregarDash() {
-  const [sr, lr] = await Promise.all([api("/api/status"), api("/api/logs")]);
-  const s = await sr.json(); const l = await lr.json();
+  const [sr,lr] = await Promise.all([req("/api/status"),req("/api/logs")]);
+  const s=await sr.json(); const l=await lr.json();
+  const g = GUILDS.find(x=>x.id===GUILD_ID)||{};
   document.getElementById("d-guilds").textContent  = s.servidores.length;
-  const g = GUILDS.find(x=>x.id===GUILD_ID) || s.servidores[0] || {};
   document.getElementById("d-members").textContent = (g.membros||0).toLocaleString();
   document.getElementById("d-auto").textContent    = s.msgs_auto;
   document.getElementById("d-logs").textContent    = l.logs.length;
-  const gi = document.getElementById("guild-info-dash");
-  gi.innerHTML = `
-    <div style="display:flex;align-items:center;gap:14px">
-      ${g.icon?`<img src="${g.icon}" style="width:52px;height:52px;border-radius:50%">`:`<div style="width:52px;height:52px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;color:#fff">${(g.nome||'?').charAt(0)}</div>`}
+  const el=document.getElementById("dash-guild");
+  el.innerHTML=`
+    <div class="guild-hero">
+      ${g.icon?`<img src="${g.icon}" alt="" style="width:64px;height:64px;border-radius:16px">`:`<div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--acc),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;color:#fff;flex-shrink:0">${(g.nome||'?').charAt(0)}</div>`}
       <div>
-        <div style="font-size:1.2rem;font-weight:700">${g.nome||'?'}</div>
-        <div style="color:var(--muted);font-family:var(--mono);font-size:.8rem">ID: ${g.id||'?'}</div>
-        <div style="color:var(--muted);font-size:.84rem;margin-top:4px">👥 ${(g.membros||0).toLocaleString()} membros</div>
+        <div class="gname">${g.nome||'?'}</div>
+        <div class="gid">${g.id||''}</div>
+        <div class="gmeta">👥 ${(g.membros||0).toLocaleString()} membros</div>
       </div>
-      <button class="btn btn-b" style="margin-left:auto" onclick="trocarServidor()">↕ Trocar Servidor</button>
+      <button class="btn btn-ghost switch-btn" onclick="trocarServidor()">↕ Trocar Servidor</button>
     </div>`;
 }
 
 // ── MSG AUTO ──
 async function criarAutoMsg() {
-  const body = {guild_id:GUILD_ID, canal_id:document.getElementById("am-canal").value,
+  const body={guild_id:GUILD_ID,canal_id:document.getElementById("am-canal").value,
     intervalo:document.getElementById("am-intervalo").value.trim(),
     mencao:document.getElementById("am-mencao").value.trim(),
     mensagem:document.getElementById("am-msg").value.trim(),
     banner:document.getElementById("am-banner").value.trim()||null};
-  if (!body.mensagem) return toast("❌ Digite a mensagem!",false);
-  const r=await api("/api/automsg/criar",{method:"POST",body:JSON.stringify(body)});
+  if (!body.mensagem) return toast("Digite a mensagem!","err");
+  const r=await req("/api/automsg/criar",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) { toast("✅ Mensagem automática ativada!"); carregarAutoMsgs(); }
-  else toast("❌ "+(d.error||"Erro"),false);
+  if (d.ok) { toast("Mensagem automática ativada!","ok"); carregarAutoMsgs(); }
+  else toast(d.error||"Erro","err");
 }
 
 async function carregarAutoMsgs() {
-  document.getElementById("am-list").innerHTML='<div class="empty"><span class="spin"></span></div>';
-  const r=await api("/api/automsg"); const d=await r.json();
+  document.getElementById("am-list").innerHTML='<div class="empty-state"><span class="spin"></span></div>';
+  const r=await req("/api/automsg"); const d=await r.json();
   const div=document.getElementById("am-list");
-  if (!d.msgs.length) { div.innerHTML='<div class="empty">Nenhuma mensagem automática ativa.</div>'; return; }
+  if (!d.msgs.length){div.innerHTML='<div class="empty-state"><div class="ei">📭</div><p>Nenhuma mensagem automática ativa.</p></div>';return;}
   div.innerHTML=d.msgs.map(m=>`
-    <div class="amc">
+    <div class="amsg-card">
       <div>
-        <div class="canal"># ${m.canal_nome} <span style="color:var(--muted);font-size:.76rem;font-family:var(--mono)">(${m.canal_id})</span></div>
+        <div class="ch"># ${m.canal_nome} <span style="color:var(--muted);font-size:.72rem;font-family:var(--mono)">${m.canal_id}</span></div>
         <div class="prev">${esc(m.conteudo)}</div>
-        <div class="meta">
-          <span class="mtag">⏱ ${fmtSeg(m.intervalo)}</span>
-          ${m.mencao?`<span class="mtag">📢 ${esc(m.mencao)}</span>`:""}
-          ${m.banner?`<span class="mtag">🖼 banner</span>`:""}
+        <div class="tags">
+          <span class="tag">⏱ ${fmtSeg(m.intervalo)}</span>
+          ${m.mencao?`<span class="tag">📢 ${esc(m.mencao)}</span>`:""}
+          ${m.banner?`<span class="tag">🖼 banner</span>`:""}
         </div>
       </div>
-      <div style="display:flex;gap:7px;flex-shrink:0">
-        <button class="btn btn-y" onclick="abrirEditAM('${m.canal_id}','${esc(m.conteudo)}')">✏️</button>
-        <button class="btn btn-r" onclick="pararAutoMsg('${m.canal_id}')">🛑</button>
+      <div style="display:flex;gap:6px;flex-shrink:0">
+        <button class="btn btn-ghost" style="padding:7px 12px" onclick="abrirEditAM('${m.canal_id}','${esc(m.conteudo)}')">✏️</button>
+        <button class="btn btn-danger"  style="padding:7px 12px" onclick="pararAutoMsg('${m.canal_id}')">🛑</button>
       </div>
     </div>`).join("");
 }
@@ -684,36 +868,36 @@ async function carregarAutoMsgs() {
 function abrirEditAM(cid,msg) {
   document.getElementById("edit-am-cid").value=cid;
   document.getElementById("edit-am-msg").value=msg;
-  document.getElementById("edit-am-intervalo").value="";
-  document.getElementById("edit-am-mencao").value="";
-  document.getElementById("edit-am-banner").value="";
+  document.getElementById("edit-am-int").value="";
+  document.getElementById("edit-am-men").value="";
+  document.getElementById("edit-am-ban").value="";
   document.getElementById("edit-am-box").style.display="block";
   document.getElementById("edit-am-box").scrollIntoView({behavior:"smooth"});
 }
 
-async function salvarEditAutoMsg() {
+async function salvarEditAM() {
   const body={canal_id:document.getElementById("edit-am-cid").value,
     mensagem:document.getElementById("edit-am-msg").value.trim(),
-    intervalo:document.getElementById("edit-am-intervalo").value.trim()||null,
-    mencao:document.getElementById("edit-am-mencao").value.trim()||null,
-    banner:document.getElementById("edit-am-banner").value.trim()||null};
-  const r=await api("/api/automsg/editar",{method:"POST",body:JSON.stringify(body)});
+    intervalo:document.getElementById("edit-am-int").value.trim()||null,
+    mencao:document.getElementById("edit-am-men").value.trim()||null,
+    banner:document.getElementById("edit-am-ban").value.trim()||null};
+  const r=await req("/api/automsg/editar",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) { toast("✅ Atualizada!"); document.getElementById("edit-am-box").style.display="none"; carregarAutoMsgs(); }
-  else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok){toast("Mensagem atualizada!","ok");document.getElementById("edit-am-box").style.display="none";carregarAutoMsgs();}
+  else toast(d.error||"Erro","err");
 }
 
 async function pararAutoMsg(cid) {
   if (!confirm("Parar esta mensagem automática?")) return;
-  const r=await api("/api/automsg/parar",{method:"POST",body:JSON.stringify({canal_id:cid})});
+  const r=await req("/api/automsg/parar",{method:"POST",body:JSON.stringify({canal_id:cid})});
   const d=await r.json();
-  if (d.ok) { toast("🛑 Parada!"); carregarAutoMsgs(); }
-  else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok){toast("Mensagem parada!","ok");carregarAutoMsgs();}
+  else toast(d.error||"Erro","err");
 }
 
 // ── ANÚNCIO ──
 async function enviarAnuncio() {
-  const body={guild_id:GUILD_ID, canal_id:document.getElementById("anun-canal").value,
+  const body={guild_id:GUILD_ID,canal_id:document.getElementById("anun-canal").value,
     titulo:document.getElementById("anun-titulo").value.trim(),
     descricao:document.getElementById("anun-desc").value.trim(),
     mencao:document.getElementById("anun-mencao").value.trim(),
@@ -721,183 +905,187 @@ async function enviarAnuncio() {
     thumbnail:document.getElementById("anun-thumb").value.trim()||null,
     rodape:document.getElementById("anun-rodape").value.trim()||null,
     cor:document.getElementById("anun-cor").value.replace("#","")};
-  if (!body.descricao && !body.titulo) return toast("❌ Preencha título ou descrição!",false);
-  const r=await api("/api/anuncio",{method:"POST",body:JSON.stringify(body)});
+  if(!body.descricao&&!body.titulo)return toast("Preencha título ou descrição!","err");
+  const r=await req("/api/anuncio",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) toast("✅ Anúncio enviado!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Anúncio enviado!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── ENVIAR MSG ──
 async function enviarMsgCanal() {
-  const body={guild_id:GUILD_ID, canal_id:document.getElementById("env-canal").value,
+  const body={guild_id:GUILD_ID,canal_id:document.getElementById("env-canal").value,
     mencao:document.getElementById("env-mencao").value.trim(),
     mensagem:document.getElementById("env-msg").value.trim()};
-  if (!body.mensagem) return toast("❌ Digite a mensagem!",false);
-  const r=await api("/api/enviar_msg",{method:"POST",body:JSON.stringify(body)});
+  if(!body.mensagem)return toast("Digite a mensagem!","err");
+  const r=await req("/api/enviar_msg",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) toast("✅ Mensagem enviada!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Mensagem enviada!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── PING ──
 async function enviarPing() {
-  document.getElementById("ping-warn").textContent="⏳ Disparando...";
-  const r=await api("/api/ping",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID})});
+  document.getElementById("ping-warn").textContent="⏳ Disparando ping...";
+  const r=await req("/api/ping",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID})});
   const d=await r.json();
   document.getElementById("ping-warn").textContent="";
-  if (d.ok) toast("✅ Ping silencioso disparado!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Ping silencioso disparado!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── EDITAR MSG ──
 async function editarMsg() {
-  const body={guild_id:GUILD_ID, canal_id:document.getElementById("em-canal").value,
-    msg_id:document.getElementById("em-msgid").value.trim(),
-    conteudo:document.getElementById("em-conteudo").value.trim()};
-  if (!body.msg_id||!body.conteudo) return toast("❌ Preencha todos os campos!",false);
-  const r=await api("/api/editar_msg",{method:"POST",body:JSON.stringify(body)});
+  const body={guild_id:GUILD_ID,canal_id:document.getElementById("em-canal").value,
+    msg_id:document.getElementById("em-mid").value.trim(),
+    conteudo:document.getElementById("em-txt").value.trim()};
+  if(!body.msg_id||!body.conteudo)return toast("Preencha todos os campos!","err");
+  const r=await req("/api/editar_msg",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) toast("✅ Mensagem editada!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Mensagem editada!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── MODERAÇÃO ──
-async function banirMembro() {
+async function banirMembro(){
   const uid=document.getElementById("ban-uid").value.trim();
-  if (!uid) return toast("❌ Digite o ID!",false);
-  if (!confirm(`Banir usuário ${uid}?`)) return;
-  const r=await api("/api/ban",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("ban-motivo").value.trim()})});
+  if(!uid)return toast("Digite o ID!","err");
+  if(!confirm(`Banir usuário ${uid}?`))return;
+  const r=await req("/api/ban",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("ban-mot").value.trim()})});
   const d=await r.json();
-  if (d.ok) toast("🔨 Usuário banido!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Usuário banido!","ok");else toast(d.error||"Erro","err");
 }
-
-async function kickarMembro() {
+async function kickarMembro(){
   const uid=document.getElementById("kick-uid").value.trim();
-  if (!uid) return toast("❌ Digite o ID!",false);
-  if (!confirm(`Kickar usuário ${uid}?`)) return;
-  const r=await api("/api/kick",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("kick-motivo").value.trim()})});
+  if(!uid)return toast("Digite o ID!","err");
+  if(!confirm(`Kickar usuário ${uid}?`))return;
+  const r=await req("/api/kick",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,motivo:document.getElementById("kick-mot").value.trim()})});
   const d=await r.json();
-  if (d.ok) toast("👢 Usuário kickado!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Usuário kickado!","ok");else toast(d.error||"Erro","err");
 }
-
-async function timeoutMembro() {
+async function timeoutMembro(){
   const uid=document.getElementById("to-uid").value.trim();
-  if (!uid) return toast("❌ Digite o ID!",false);
-  const body={guild_id:GUILD_ID,user_id:uid,minutos:parseInt(document.getElementById("to-min").value)||5,motivo:document.getElementById("to-motivo").value.trim()};
-  const r=await api("/api/timeout",{method:"POST",body:JSON.stringify(body)});
+  if(!uid)return toast("Digite o ID!","err");
+  const body={guild_id:GUILD_ID,user_id:uid,minutos:parseInt(document.getElementById("to-min").value)||5,motivo:document.getElementById("to-mot").value.trim()};
+  const r=await req("/api/timeout",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) toast(`⏱️ Timeout de ${body.minutos}min aplicado!`); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast(`Timeout de ${body.minutos}min aplicado!`,"ok");else toast(d.error||"Erro","err");
 }
-
-async function limparMsgs() {
-  const qtd=parseInt(document.getElementById("limpar-qtd").value)||10;
-  if (!confirm(`Deletar ${qtd} mensagens?`)) return;
-  const r=await api("/api/limpar",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("mod-canal").value,quantidade:qtd})});
+async function limparMsgs(){
+  const qtd=parseInt(document.getElementById("lim-qtd").value)||10;
+  if(!confirm(`Deletar ${qtd} mensagens?`))return;
+  const r=await req("/api/limpar",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("lim-canal").value,quantidade:qtd})});
   const d=await r.json();
-  if (d.ok) toast(`🗑️ ${d.deletadas} mensagens deletadas!`); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast(`${d.deletadas} mensagens deletadas!`,"ok");else toast(d.error||"Erro","err");
 }
-
-async function aplicarSlowmode() {
+async function aplicarSlowmode(){
   const body={guild_id:GUILD_ID,canal_id:document.getElementById("slow-canal").value,segundos:parseInt(document.getElementById("slow-seg").value)||0};
-  const r=await api("/api/slowmode",{method:"POST",body:JSON.stringify(body)});
+  const r=await req("/api/slowmode",{method:"POST",body:JSON.stringify(body)});
   const d=await r.json();
-  if (d.ok) toast(`🐢 Slowmode ${body.segundos}s aplicado!`); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast(`Slowmode ${body.segundos}s aplicado!`,"ok");else toast(d.error||"Erro","err");
 }
-
-async function lockdown(travar) {
-  if (!confirm(travar?"Travar este canal?":"Destravar este canal?")) return;
-  const r=await api("/api/lockdown",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("lock-canal").value,travar})});
+async function lockdown(travar){
+  if(!confirm(travar?"Travar este canal?":"Destravar este canal?"))return;
+  const r=await req("/api/lockdown",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,canal_id:document.getElementById("lock-canal").value,travar})});
   const d=await r.json();
-  if (d.ok) toast(travar?"🔒 Canal travado!":"🔓 Canal destravado!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast(travar?"Canal travado!":"Canal destravado!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── CARGOS ──
-async function darCargo() {
+async function darCargo(){
   const uid=document.getElementById("dc-uid").value.trim();
-  if (!uid) return toast("❌ Digite o ID!",false);
-  const r=await api("/api/dar_cargo",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,cargo_id:document.getElementById("dc-cargo").value})});
+  if(!uid)return toast("Digite o ID!","err");
+  const r=await req("/api/dar_cargo",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,cargo_id:document.getElementById("dc-cargo").value})});
   const d=await r.json();
-  if (d.ok) toast("✅ Cargo dado!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Cargo dado!","ok");else toast(d.error||"Erro","err");
 }
-
-async function removerCargo() {
+async function removerCargo(){
   const uid=document.getElementById("rc-uid").value.trim();
-  if (!uid) return toast("❌ Digite o ID!",false);
-  const r=await api("/api/remover_cargo",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,cargo_id:document.getElementById("rc-cargo").value})});
+  if(!uid)return toast("Digite o ID!","err");
+  const r=await req("/api/remover_cargo",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,user_id:uid,cargo_id:document.getElementById("rc-cargo").value})});
   const d=await r.json();
-  if (d.ok) toast("✅ Cargo removido!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("Cargo removido!","ok");else toast(d.error||"Erro","err");
 }
-
-async function dmMassa() {
+async function dmMassa(){
   const msg=document.getElementById("dm-msg").value.trim();
-  if (!msg) return toast("❌ Digite a mensagem!",false);
-  if (!confirm("Enviar DM para TODOS os membros?")) return;
-  const r=await api("/api/dm_massa",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,mensagem:msg})});
+  if(!msg)return toast("Digite a mensagem!","err");
+  if(!confirm("Enviar DM para TODOS os membros?"))return;
+  const r=await req("/api/dm_massa",{method:"POST",body:JSON.stringify({guild_id:GUILD_ID,mensagem:msg})});
   const d=await r.json();
-  if (d.ok) toast("📩 DM em massa iniciada!"); else toast("❌ "+(d.error||"Erro"),false);
+  if(d.ok)toast("DM em massa iniciada!","ok");else toast(d.error||"Erro","err");
 }
 
 // ── INFO ──
-async function carregarInfoServidor() {
-  const el=document.getElementById("info-servidor-res");
-  if (!el) return;
-  el.innerHTML='<div class="empty"><span class="spin"></span></div>';
-  const r=await api(`/api/info_servidor?guild_id=${GUILD_ID}`);
+async function carregarInfoGuild(){
+  const el=document.getElementById("info-guild-res");
+  if(!el)return;
+  const r=await req(`/api/info_servidor?guild_id=${GUILD_ID}`);
   const d=await r.json();
-  if (d.error) { el.innerHTML=`<div class="empty">${d.error}</div>`; return; }
+  if(d.error){el.innerHTML=`<div class="empty-state"><p>${d.error}</p></div>`;return;}
   el.innerHTML=`
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
-      ${d.icon?`<img src="${d.icon}" style="width:56px;height:56px;border-radius:50%">`:`<div style="width:56px;height:56px;border-radius:50%;background:var(--acc);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;color:#fff">${d.nome.charAt(0)}</div>`}
-      <div><div style="font-size:1.3rem;font-weight:700">${d.nome}</div><div style="color:var(--muted);font-family:var(--mono);font-size:.8rem">${d.id}</div></div>
+    <div class="guild-hero">
+      ${d.icon?`<img src="${d.icon}" style="width:64px;height:64px;border-radius:16px">`:`<div style="width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,var(--acc),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;color:#fff;flex-shrink:0">${d.nome.charAt(0)}</div>`}
+      <div><div class="gname">${d.nome}</div><div class="gid">${d.id}</div></div>
     </div>
     <div class="info-grid">
-      <div class="info-item"><div class="k">Dono</div><div class="v">${d.dono}</div></div>
-      <div class="info-item"><div class="k">Membros</div><div class="v">${d.membros.toLocaleString()} (${d.humanos} humanos · ${d.bots} bots)</div></div>
-      <div class="info-item"><div class="k">Canais</div><div class="v">${d.canais_texto} texto · ${d.canais_voz} voz</div></div>
-      <div class="info-item"><div class="k">Cargos</div><div class="v">${d.cargos}</div></div>
-      <div class="info-item"><div class="k">Criado em</div><div class="v">${d.criado}</div></div>
-      <div class="info-item"><div class="k">Boost</div><div class="v">Nível ${d.boost_level} · ${d.boosts} boosts</div></div>
+      <div class="info-item"><div class="ik">Dono</div><div class="iv">${d.dono}</div></div>
+      <div class="info-item"><div class="ik">Membros</div><div class="iv">${d.membros.toLocaleString()}</div></div>
+      <div class="info-item"><div class="ik">Humanos / Bots</div><div class="iv">${d.humanos} / ${d.bots}</div></div>
+      <div class="info-item"><div class="ik">Canais Texto</div><div class="iv">${d.canais_texto}</div></div>
+      <div class="info-item"><div class="ik">Canais Voz</div><div class="iv">${d.canais_voz}</div></div>
+      <div class="info-item"><div class="ik">Cargos</div><div class="iv">${d.cargos}</div></div>
+      <div class="info-item"><div class="ik">Criado em</div><div class="iv">${d.criado}</div></div>
+      <div class="info-item"><div class="ik">Boost</div><div class="iv">Nível ${d.boost_level} · ${d.boosts} boosts</div></div>
     </div>`;
 }
 
-async function buscarMembro() {
+async function buscarMembro(){
   const uid=document.getElementById("info-uid").value.trim();
-  if (!uid) return toast("❌ Digite o ID!",false);
-  document.getElementById("info-membro-res").innerHTML='<div class="empty"><span class="spin"></span></div>';
-  const r=await api(`/api/info_membro?guild_id=${GUILD_ID}&user_id=${uid}`);
+  if(!uid)return toast("Digite o ID!","err");
+  document.getElementById("info-member-res").innerHTML='<div class="empty-state"><span class="spin"></span></div>';
+  const r=await req(`/api/info_membro?guild_id=${GUILD_ID}&user_id=${uid}`);
   const d=await r.json();
-  if (d.error) { document.getElementById("info-membro-res").innerHTML=`<div class="empty">${d.error}</div>`; return; }
-  document.getElementById("info-membro-res").innerHTML=`
+  if(d.error){document.getElementById("info-member-res").innerHTML=`<div class="empty-state"><p>${d.error}</p></div>`;return;}
+  document.getElementById("info-member-res").innerHTML=`
     <div class="member-card">
       <img src="${d.avatar}" alt="">
-      <div style="flex:1">
-        <div style="font-size:1.1rem;font-weight:700">${d.nome}${d.bot?' <span style="background:var(--acc);color:#fff;font-size:.7rem;padding:1px 6px;border-radius:4px;margin-left:4px">BOT</span>':''}</div>
-        ${d.nick?`<div style="color:var(--muted);font-size:.88rem">Nick: ${d.nick}</div>`:""}
-        <div style="color:var(--muted);font-size:.82rem;font-family:var(--mono);margin-top:2px">ID: ${d.id}</div>
-        <div style="color:var(--muted);font-size:.82rem;margin-top:6px">📅 Entrou: ${d.entrou} · Conta criada: ${d.conta_criada}</div>
-        <div class="roles">${d.cargos.map(r=>`<span class="role-tag">${r}</span>`).join("")}</div>
+      <div>
+        <div class="mname">${d.nome} ${d.bot?'<span class="badge badge-blue">BOT</span>':''}</div>
+        ${d.nick?`<div class="mmeta">Nick: ${d.nick}</div>`:""}
+        <div class="mmeta" style="font-family:var(--mono);font-size:.75rem">ID: ${d.id}</div>
+        <div class="mmeta" style="margin-top:6px">📅 Entrou: ${d.entrou} · Conta criada: ${d.conta_criada}</div>
+        <div class="role-pills">${d.cargos.map(r=>`<span class="role-pill">${r}</span>`).join("")}</div>
       </div>
     </div>`;
 }
 
 // ── LOGS ──
-async function carregarLogs() {
-  const r=await api("/api/logs"); const d=await r.json();
+const LOG_BADGES = {
+  automsg_criar:'badge-green', anuncio:'badge-green', enviar_msg:'badge-green',
+  automsg_parar:'badge-red', ban:'badge-red', kick:'badge-red', lockdown_on:'badge-red',
+  ping_silencioso:'badge-yellow', timeout:'badge-yellow', slowmode:'badge-yellow',
+  editar_msg:'badge-blue', automsg_editar:'badge-blue', dar_cargo:'badge-blue',
+  limpar_msgs:'badge-pink', remover_cargo:'badge-pink', lockdown_off:'badge-green', dm_massa:'badge-orange'
+};
+async function carregarLogs(){
+  const r=await req("/api/logs"); const d=await r.json();
   const tb=document.getElementById("logs-body");
-  if (!d.logs.length) { tb.innerHTML='<tr><td colspan="4" class="empty">Nenhuma ação.</td></tr>'; return; }
+  if(!d.logs.length){tb.innerHTML='<tr><td colspan="4"><div class="empty-state"><div class="ei">📋</div><p>Nenhuma ação registrada.</p></div></td></tr>';return;}
   tb.innerHTML=d.logs.map(l=>`
     <tr>
-      <td style="font-family:var(--mono);font-size:.76rem;color:var(--muted);white-space:nowrap">${l.hora}</td>
-      <td><span class="badge ${l.acao}">${l.acao.replace(/_/g," ")}</span></td>
-      <td style="color:var(--muted)">${esc(l.detalhe)}</td>
-      <td>${esc(l.usuario)}</td>
+      <td style="font-family:var(--mono);font-size:.75rem;color:var(--muted);white-space:nowrap">${l.hora}</td>
+      <td><span class="badge ${LOG_BADGES[l.acao]||'badge-blue'}">${l.acao.replace(/_/g," ")}</span></td>
+      <td style="color:var(--txt2)">${esc(l.detalhe)}</td>
+      <td style="font-weight:600">${esc(l.usuario)}</td>
     </tr>`).join("");
 }
 
 // ── UTILS ──
 function fmtSeg(s){if(s>=3600)return(s/3600)+"h";if(s>=60)return(s/60)+"m";return s+"s"}
 function esc(t){return String(t||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-function toast(msg,ok=true){
+function toast(msg,type="ok"){
   const t=document.getElementById("toast");
-  t.textContent=msg;t.className="toast show "+(ok?"ok":"err");
-  setTimeout(()=>t.classList.remove("show"),3000);
+  const icons={ok:"✅",err:"❌",info:"ℹ️"};
+  t.innerHTML=`<span>${icons[type]||""}</span><span>${msg}</span>`;
+  t.className=`toast ${type} show`;
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.classList.remove("show"),3200);
 }
 </script>
 </body>
