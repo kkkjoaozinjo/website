@@ -15,7 +15,7 @@ PREFIX        = "!"
 WEB_PORT      = int(os.getenv("PORT", 5000))
 CLIENT_ID     = os.getenv("CLIENT_ID", "1465283558342918235")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "VltQZe5OLaRPKgsbpp_bLzmpCuQTH_XL")
-REDIRECT_URI  = os.getenv("REDIRECT_URI", "https://commandvirex.netlify.app/callback.html")
+REDIRECT_URI  = os.getenv("REDIRECT_URI", "https://commandvirex.netlify.app/index.html")
 OWNER_IDS     = set(int(x) for x in os.getenv("OWNER_IDS", "0").split(",") if x.strip().isdigit())
 
 intents = discord.Intents.all()
@@ -267,7 +267,7 @@ async def cors_mw(request, handler):
                               "Access-Control-Allow-Headers": "X-Discord-Token, Content-Type"})
     return response
 
-# ===================== ROTAS API =====================
+# ===================== ROTAS EXISTENTES =====================
 
 async def route_oauth(request):
     data = await request.json()
@@ -314,6 +314,27 @@ async def route_canais(request):
     if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
     return web.json_response({"canais": [{"id": str(c.id), "nome": c.name}
         for c in g.text_channels if c.permissions_for(g.me).send_messages]})
+
+async def route_membros(request):
+    await check_auth(request)
+    gid = int(request.rel_url.query.get("guild_id", 0))
+    q   = request.rel_url.query.get("q", "").lower()
+    g = bot.get_guild(gid)
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    membros = [m for m in g.members if not m.bot]
+    if q: membros = [m for m in membros if q in m.name.lower() or q in str(m.id)]
+    return web.json_response({"membros": [
+        {"id": str(m.id), "nome": str(m), "nick": m.nick or "", "avatar": str(m.display_avatar.url)}
+        for m in membros[:50]]})
+
+async def route_cargos(request):
+    await check_auth(request)
+    gid = int(request.rel_url.query.get("guild_id", 0))
+    g = bot.get_guild(gid)
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    return web.json_response({"cargos": [
+        {"id": str(r.id), "nome": r.name, "cor": str(r.color)}
+        for r in g.roles if r.name != "@everyone"]})
 
 async def route_automsg_list(request):
     await check_auth(request)
@@ -406,20 +427,251 @@ async def route_logs(request):
     await check_auth(request)
     return web.json_response({"logs": logs_acoes[:200]})
 
+# ===================== NOVAS ROTAS =====================
+
+async def route_anuncio(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    c = g.get_channel(int(data.get("canal_id",0)))
+    if not c: return web.json_response({"error": "Canal não encontrado"}, status=404)
+    try:
+        cor = int(data.get("cor","5865f2").replace("#",""), 16)
+    except: cor = 0x5865f2
+    embed = discord.Embed(
+        title=data.get("titulo",""),
+        description=data.get("descricao",""),
+        color=cor
+    )
+    if data.get("imagem"): embed.set_image(url=data["imagem"])
+    if data.get("thumbnail"): embed.set_thumbnail(url=data["thumbnail"])
+    if data.get("rodape"): embed.set_footer(text=data["rodape"])
+    mencao = resolver_mencao(g, data.get("mencao",""))
+    await c.send(content=mencao or None, embed=embed)
+    add_log("anuncio", f"Canal #{c.name}", sess["username"])
+    return web.json_response({"ok": True})
+
+async def route_ban(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    try:
+        uid = int(data.get("user_id",0))
+        membro = g.get_member(uid) or discord.Object(id=uid)
+        await g.ban(membro, reason=data.get("motivo","Banido pelo painel"), delete_message_days=0)
+        add_log("ban", f"User {uid} — {data.get('motivo','')}", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_kick(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    try:
+        m = g.get_member(int(data.get("user_id",0)))
+        if not m: return web.json_response({"error": "Membro não encontrado"}, status=404)
+        await m.kick(reason=data.get("motivo","Kickado pelo painel"))
+        add_log("kick", f"{m} — {data.get('motivo','')}", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_timeout(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    try:
+        m = g.get_member(int(data.get("user_id",0)))
+        if not m: return web.json_response({"error": "Membro não encontrado"}, status=404)
+        minutos = int(data.get("minutos", 5))
+        until = discord.utils.utcnow() + __import__("datetime").timedelta(minutes=minutos)
+        await m.timeout(until, reason=data.get("motivo","Timeout pelo painel"))
+        add_log("timeout", f"{m} por {minutos}min — {data.get('motivo','')}", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_limpar(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    c = g.get_channel(int(data.get("canal_id",0)))
+    if not c: return web.json_response({"error": "Canal não encontrado"}, status=404)
+    try:
+        qtd = min(int(data.get("quantidade",10)), 100)
+        deleted = await c.purge(limit=qtd)
+        add_log("limpar_msgs", f"{len(deleted)} msgs em #{c.name}", sess["username"])
+        return web.json_response({"ok": True, "deletadas": len(deleted)})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_slowmode(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    c = g.get_channel(int(data.get("canal_id",0)))
+    if not c: return web.json_response({"error": "Canal não encontrado"}, status=404)
+    try:
+        seg = int(data.get("segundos",0))
+        await c.edit(slowmode_delay=seg)
+        add_log("slowmode", f"#{c.name} → {seg}s", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_lockdown(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    c = g.get_channel(int(data.get("canal_id",0)))
+    if not c: return web.json_response({"error": "Canal não encontrado"}, status=404)
+    try:
+        travar = data.get("travar", True)
+        overwrite = c.overwrites_for(g.default_role)
+        overwrite.send_messages = False if travar else None
+        await c.set_permissions(g.default_role, overwrite=overwrite)
+        acao = "lockdown_on" if travar else "lockdown_off"
+        add_log(acao, f"#{c.name}", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_dar_cargo(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    try:
+        m = g.get_member(int(data.get("user_id",0)))
+        if not m: return web.json_response({"error": "Membro não encontrado"}, status=404)
+        r = g.get_role(int(data.get("cargo_id",0)))
+        if not r: return web.json_response({"error": "Cargo não encontrado"}, status=404)
+        await m.add_roles(r, reason="Cargo dado pelo painel")
+        add_log("dar_cargo", f"{r.name} → {m}", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_remover_cargo(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    try:
+        m = g.get_member(int(data.get("user_id",0)))
+        if not m: return web.json_response({"error": "Membro não encontrado"}, status=404)
+        r = g.get_role(int(data.get("cargo_id",0)))
+        if not r: return web.json_response({"error": "Cargo não encontrado"}, status=404)
+        await m.remove_roles(r, reason="Cargo removido pelo painel")
+        add_log("remover_cargo", f"{r.name} de {m}", sess["username"])
+        return web.json_response({"ok": True})
+    except Exception as e: return web.json_response({"error": str(e)}, status=500)
+
+async def route_dm_massa(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    msg = data.get("mensagem","")
+    if not msg: return web.json_response({"error": "Mensagem vazia"}, status=400)
+    enviados = 0
+    async def do():
+        nonlocal enviados
+        for m in g.members:
+            if m.bot: continue
+            try: await m.send(msg); enviados += 1; await asyncio.sleep(1)
+            except: pass
+    asyncio.ensure_future(do())
+    add_log("dm_massa", f"Servidor {g.name}", sess["username"])
+    return web.json_response({"ok": True, "msg": "DM em massa iniciada em background"})
+
+async def route_info_servidor(request):
+    await check_auth(request)
+    gid = int(request.rel_url.query.get("guild_id",0))
+    g = bot.get_guild(gid)
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    bots    = sum(1 for m in g.members if m.bot)
+    humanos = g.member_count - bots
+    return web.json_response({
+        "nome": g.name,
+        "id": str(g.id),
+        "dono": str(g.owner),
+        "membros": g.member_count,
+        "humanos": humanos,
+        "bots": bots,
+        "canais_texto": len(g.text_channels),
+        "canais_voz": len(g.voice_channels),
+        "cargos": len(g.roles),
+        "criado": g.created_at.strftime("%d/%m/%Y"),
+        "icon": str(g.icon.url) if g.icon else None,
+        "boost_level": g.premium_tier,
+        "boosts": g.premium_subscription_count,
+    })
+
+async def route_info_membro(request):
+    await check_auth(request)
+    gid = int(request.rel_url.query.get("guild_id",0))
+    uid = int(request.rel_url.query.get("user_id",0))
+    g = bot.get_guild(gid)
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    m = g.get_member(uid)
+    if not m: return web.json_response({"error": "Membro não encontrado"}, status=404)
+    return web.json_response({
+        "nome": str(m),
+        "id": str(m.id),
+        "nick": m.nick or "",
+        "avatar": str(m.display_avatar.url),
+        "entrou": m.joined_at.strftime("%d/%m/%Y %H:%M") if m.joined_at else "?",
+        "conta_criada": m.created_at.strftime("%d/%m/%Y"),
+        "cargos": [r.name for r in m.roles if r.name != "@everyone"],
+        "bot": m.bot,
+        "status": str(m.status),
+    })
+
+async def route_enviar_msg_canal(request):
+    sess = await check_auth(request)
+    data = await request.json()
+    g = bot.get_guild(int(data.get("guild_id",0)))
+    if not g: return web.json_response({"error": "Servidor não encontrado"}, status=404)
+    c = g.get_channel(int(data.get("canal_id",0)))
+    if not c: return web.json_response({"error": "Canal não encontrado"}, status=404)
+    mencao = resolver_mencao(g, data.get("mencao",""))
+    await c.send(content=(mencao + "\n" if mencao else "") + data.get("mensagem",""))
+    add_log("enviar_msg", f"#{c.name}", sess["username"])
+    return web.json_response({"ok": True})
+
+# ===================== APP =====================
+
 def criar_app():
     app = web.Application(middlewares=[cors_mw])
-    app.router.add_route("OPTIONS", "/{p:.*}",         lambda r: web.Response())
-    app.router.add_post("/api/oauth/callback",          route_oauth)
-    app.router.add_get ("/api/me",                     route_me)
-    app.router.add_get ("/api/status",                 route_status)
-    app.router.add_get ("/api/canais",                 route_canais)
-    app.router.add_get ("/api/automsg",                route_automsg_list)
-    app.router.add_post("/api/automsg/criar",          route_automsg_criar)
-    app.router.add_post("/api/automsg/editar",         route_automsg_editar)
-    app.router.add_post("/api/automsg/parar",          route_automsg_parar)
-    app.router.add_post("/api/ping",                   route_ping)
-    app.router.add_post("/api/editar_msg",             route_editar_msg)
-    app.router.add_get ("/api/logs",                   route_logs)
+    app.router.add_route("OPTIONS", "/{p:.*}", lambda r: web.Response())
+    app.router.add_post("/api/oauth/callback",    route_oauth)
+    app.router.add_get ("/api/me",                route_me)
+    app.router.add_get ("/api/status",            route_status)
+    app.router.add_get ("/api/canais",            route_canais)
+    app.router.add_get ("/api/membros",           route_membros)
+    app.router.add_get ("/api/cargos",            route_cargos)
+    app.router.add_get ("/api/automsg",           route_automsg_list)
+    app.router.add_post("/api/automsg/criar",     route_automsg_criar)
+    app.router.add_post("/api/automsg/editar",    route_automsg_editar)
+    app.router.add_post("/api/automsg/parar",     route_automsg_parar)
+    app.router.add_post("/api/ping",              route_ping)
+    app.router.add_post("/api/editar_msg",        route_editar_msg)
+    app.router.add_post("/api/anuncio",           route_anuncio)
+    app.router.add_post("/api/ban",               route_ban)
+    app.router.add_post("/api/kick",              route_kick)
+    app.router.add_post("/api/timeout",           route_timeout)
+    app.router.add_post("/api/limpar",            route_limpar)
+    app.router.add_post("/api/slowmode",          route_slowmode)
+    app.router.add_post("/api/lockdown",          route_lockdown)
+    app.router.add_post("/api/dar_cargo",         route_dar_cargo)
+    app.router.add_post("/api/remover_cargo",     route_remover_cargo)
+    app.router.add_post("/api/dm_massa",          route_dm_massa)
+    app.router.add_get ("/api/info_servidor",     route_info_servidor)
+    app.router.add_get ("/api/info_membro",       route_info_membro)
+    app.router.add_post("/api/enviar_msg",        route_enviar_msg_canal)
+    app.router.add_get ("/api/logs",              route_logs)
     return app
 
 @bot.event
